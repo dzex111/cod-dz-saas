@@ -11,13 +11,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user) redirect("/login");
 
   const isAdmin = (user.email?.toLowerCase() || "") === "kinezedge@gmail.com" || (process.env.ADMIN_EMAILS || "").split(",").map(s => s.trim().toLowerCase()).includes(user.email?.toLowerCase() || "");
-  const { data: membership } = await supabase.from("merchant_members").select("merchant_id, merchants(business_name, subdomain, subscription_status, trial_ends_at, subscription_ends_at)").eq("user_id", user.id).single();
+  const { data: membership } = await supabase.from("merchant_members").select("merchant_id, merchants(business_name, subdomain, subscription_status)").eq("user_id", user.id).single();
   if (!membership) {
     if (isAdmin) redirect("/admin/subscriptions");
     redirect("/register");
   }
 
-  const merchant = membership.merchants as unknown as { business_name: string; subdomain: string; subscription_status: string; trial_ends_at: string; subscription_ends_at: string };
+  const merchant = membership.merchants as unknown as { business_name: string; subdomain: string; subscription_status: string };
 
   const navItems = [
     { href: "/dashboard", label: "الإحصائيات", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
@@ -31,114 +31,48 @@ export default async function DashboardLayout({ children }: { children: React.Re
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <aside className="w-72 bg-white border-l border-gray-200 hidden lg:flex flex-col">
-        {/* Logo */}
-        <div className="p-6 border-b border-gray-100">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gray-900 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">C</span>
-            </div>
-            <div>
-              <span className="font-bold text-gray-900 text-lg block leading-tight">COD DZ</span>
-              <span className="text-xs text-gray-400">لوحة التحكم</span>
-            </div>
-          </Link>
+    <div className="min-h-screen bg-zinc-50 flex">
+      <aside className="w-64 bg-zinc-900 text-white p-5 hidden lg:flex flex-col">
+        <div className="flex items-center gap-2 mb-8">
+          <div className="w-8 h-8 rounded-lg bg-white text-zinc-900 flex items-center justify-center font-black text-sm">C</div>
+          <span className="font-black text-base">{merchant.business_name}</span>
         </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="space-y-0.5 text-sm font-medium">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition text-sm font-medium"
-            >
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <Link key={item.href} href={item.href} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 transition text-zinc-300 hover:text-white">
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
               {item.label}
             </Link>
           ))}
           {isAdmin && (
-            <Link href="/admin/subscriptions" className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-blue-600 bg-blue-50 hover:bg-blue-100 transition text-sm font-medium mt-4">
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <Link href="/admin/subscriptions" className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-zinc-300 hover:text-white hover:bg-white/10 transition mt-3">
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
               </svg>
               لوحة الأدمن
             </Link>
           )}
         </nav>
-
-        {/* Store Link */}
-        <div className="p-4 border-t border-gray-100">
-          <div className="bg-gray-50 rounded-xl p-4">
-            <div className="text-xs font-semibold text-gray-500 mb-2">رابط متجرك</div>
-            <div className="text-sm font-mono text-gray-900 mb-3 truncate" dir="ltr">{BASE}/{merchant.subdomain}</div>
-            <a
-              href={`https://${BASE}/${merchant.subdomain}`}
-              target="_blank"
-              className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-800 transition"
-            >
-              عرض المتجر
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-              </svg>
-            </a>
-          </div>
+        <div className="mt-auto pt-4 border-t border-white/10">
+          <a href={`https://${BASE}/${merchant.subdomain}`} target="_blank" className="flex items-center justify-center gap-2 bg-white text-zinc-900 py-2 rounded-lg text-sm font-bold hover:bg-zinc-100 transition">
+            عرض المتجر ↗
+          </a>
         </div>
       </aside>
-
-      {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
-          <div className="flex items-center gap-4">
-            <div className="lg:hidden">
-              <Link href="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">C</span>
-                </div>
-              </Link>
-            </div>
-            <h1 className="font-bold text-gray-900 text-lg">{merchant.business_name}</h1>
-          </div>
-          <div className="flex items-center gap-4">
+        <header className="bg-white border-b border-zinc-200 px-6 py-4 flex justify-between items-center">
+          <div className="font-bold text-zinc-900">{merchant.business_name}</div>
+          <div className="flex items-center gap-3">
             <ThemeToggle />
-            <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
-              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">
-                {user.email?.[0]?.toUpperCase()}
-              </div>
-              <span className="font-medium">{user.email}</span>
-            </div>
+            <span className="hidden sm:inline text-sm text-zinc-500">{user.email}</span>
             <form action={async () => { "use server"; const s = await createClient(); await s.auth.signOut(); redirect("/login"); }}>
-              <button className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
-                خروج
-              </button>
+              <button className="px-3 py-1.5 rounded-lg border border-zinc-200 text-sm font-medium text-zinc-600 hover:bg-zinc-50 transition">خروج</button>
             </form>
           </div>
         </header>
-
-        {/* Store URL Bar */}
-        <div className="bg-gray-900 text-white px-6 py-2.5 flex items-center justify-center gap-3 text-sm">
-          <span className="font-mono text-gray-300" dir="ltr">{BASE}/{merchant.subdomain}</span>
-          <a
-            href={`https://${BASE}/${merchant.subdomain}`}
-            target="_blank"
-            className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-md text-xs font-medium transition"
-          >
-            عرض
-            <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-          </a>
-        </div>
-
-        {/* Page Content */}
-        <main className="p-6 flex-1 max-w-7xl w-full mx-auto">
-          {children}
-        </main>
+        <main className="p-6 flex-1 max-w-6xl w-full mx-auto">{children}</main>
       </div>
     </div>
   );
