@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f0f0f;
+  --font-arabic: "Tajawal", "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-latin: "Inter", system-ui, sans-serif;
+}
+.dark {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+}
+.dark body {
+  background: var(--background);
+  color: var(--foreground);
+}
+.dark h1, .dark h2, .dark h3, .dark h4 {
+  color: #fafafa;
+}
+.dark .bg-white { background-color: #18181b !important; }
+.dark .bg-zinc-50 { background-color: #0a0a0a !important; }
+.dark .bg-zinc-100 { background-color: #27272a !important; }
+.dark .text-zinc-900 { color: #fafafa !important; }
+.dark .text-zinc-700 { color: #d4d4d8 !important; }
+.dark .text-zinc-600 { color: #a1a1aa !important; }
+.dark .border-zinc-200 { border-color: #27272a !important; }
+.dark .border-zinc-300 { border-color: #3f3f46 !important; }
+
+* {
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-arabic);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* أرقام لاتينية واضحة */
+.font-mono, [dir="ltr"] {
+  font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", monospace;
+}
+
+/* تحسين التباين والقراءة */
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+  color: #0f0f0f;
+}
+
+/* روابط عالية التباين */
+a {
+  text-underline-offset: 3px;
+}
+
+/* تركيز واضح لذوي الاحتياجات */
+*:focus-visible {
+  outline: 2px solid #18181b;
+  outline-offset: 2px;
+}
