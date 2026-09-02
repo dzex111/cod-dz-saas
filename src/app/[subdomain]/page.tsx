@@ -45,43 +45,105 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
           {cfg.announcement || "LIVRAISON 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
         </div>
-        <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.9)] backdrop-blur border-b border-white/10">
-          <div className="font-mono text-xs tracking-[0.14em]">NOVA <span className="opacity-40">TECH</span> — {merchant.business_name}</div>
-          <div className="text-xs font-mono opacity-60">{products?.length || 0} produits</div>
+        <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
+          <div className="font-mono text-xs tracking-[0.14em] text-white">NOVA <span className="text-white/60">TECH</span> — {merchant.business_name}</div>
+          <div className="text-xs font-mono text-white/60">{products?.length || 0} produits</div>
         </header>
 
-        {/* Hero — exact as Electronics file */}
-        <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[82vh] border-b border-white/10">
+        {/* Hero — fixed contrast: stroke 0.85, text 60-75% */}
+        <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[82vh] border-b border-white/20">
           <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
-            <div className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40 flex gap-4 mb-6">
+            <div className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/60 flex gap-4 mb-6">
               <span>EDITION 2024</span><span>58 WILAYAS</span><span>GARANTIE</span>
             </div>
             <h1 className="text-[12vw] lg:text-[5.4vw] leading-[0.88] tracking-[-0.06em] font-bold uppercase">
-              <span className="block overflow-hidden"><span className="block">NOVA</span></span>
-              <span className="block overflow-hidden"><span className="block" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.28)", color: "transparent" }}>TECH</span></span>
+              <span className="block overflow-hidden"><span className="block text-white">NOVA</span></span>
+              <span className="block overflow-hidden"><span className="block" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.85)", color: "transparent" }}>TECH</span></span>
             </h1>
-            <p className="mt-6 max-w-[380px] text-sm leading-relaxed opacity-50">Performance pure, design minimal — conçu pour les produits électroniques et téléphones.</p>
+            <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">Performance pure, design minimal — conçu pour les produits électroniques et téléphones.</p>
             <div className="mt-8">
               <a href="#collection" className="h-[46px] px-7 bg-[#EDEDED] text-[#0B0B0C] font-mono text-xs tracking-[0.14em] uppercase font-bold inline-flex items-center hover:bg-white">Explorer la collection</a>
             </div>
           </div>
-          <div className="relative bg-[radial-gradient(90%_70%_at_50%_30%,#18181A_0%,#0F0F10_60%,#0B0B0C_100%)] flex items-center justify-center p-8 lg:p-12 min-h-[400px] border-t lg:border-t-0 lg:border-s border-white/10">
+          <div className="relative bg-[radial-gradient(90%_70%_at_50%_30%,#18181A_0%,#0F0F10_60%,#0B0B0C_100%)] flex items-center justify-center p-8 lg:p-12 min-h-[400px] border-t lg:border-t-0 lg:border-s border-white/20">
             <img src={heroImage} alt={merchant.business_name} className="w-full max-w-[480px] aspect-square object-contain drop-shadow-2xl" />
           </div>
         </section>
 
         <section id="collection" className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">Collection Tech</h2>
+            <h2 className="font-mono text-xs tracking-[0.18em] uppercase text-white/40">Collection Tech</h2>
+            <span className="text-xs font-mono text-white/40">{products?.length || 0} produits</span>
+          </div>
+          {products && products.length ? (
+            <StorefrontClient products={products as never} subdomain={subdomain} merchantSubdomain={merchant.subdomain} />
+          ) : (
+            <div className="text-center py-16 border border-dashed border-white/20 bg-white/[0.03] text-sm text-white/60">Aucun produit</div>
+          )}
+        </section>
+        <footer className="border-t border-white/20 py-6 text-center text-xs font-mono text-white/40">© {merchant.business_name} — NOVA TECH</footer>
+      </div>
+    );
+  }
+
+  if (cfg.template === "digital") {
+    return (
+      <div className="min-h-screen bg-[#F6F7FF] text-[#111]">
+        <style>{`@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');`}</style>
+        <div className="h-[28px] bg-[#111] text-white flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
+          {cfg.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
+        </div>
+        <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-white/90 backdrop-blur border-b border-[#E8EAF6]">
+          <div className="font-mono text-xs tracking-[0.14em]">NOVA <span className="opacity-40">DIGITAL</span> — {merchant.business_name}</div>
+          <div className="text-xs font-mono opacity-60">{products?.length || 0} licences</div>
+        </header>
+
+        {/* Hero Digital — light, license-focused */}
+        <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[78vh] border-b border-[#E8EAF6] max-w-[1600px] mx-auto">
+          <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 bg-white border border-[#E8EAF6] rounded-full px-3 py-1 text-[10px] tracking-[0.14em] uppercase font-bold w-fit">
+              <span className="w-2 h-2 rounded-full bg-[#4F46E5] animate-pulse" /> Licence officielle • Livraison instantanée
+            </div>
+            <h1 className="mt-6 text-[11vw] lg:text-[5vw] leading-[0.9] tracking-[-0.04em] font-black">
+              <span className="block">DIGITAL</span>
+              <span className="block text-transparent" style={{ WebkitTextStroke: "1.2px #111" }}>PRODUCTS</span>
+            </h1>
+            <p className="mt-5 max-w-[420px] text-sm leading-relaxed opacity-60">Produits numériques premium — comptes, logiciels, abonnements. Clé livrée instantanément après paiement, support 24/7.</p>
+            <div className="mt-8 flex gap-3">
+              <a href="#collection" className="h-[46px] px-7 bg-[#111] text-white font-mono text-xs tracking-[0.14em] uppercase font-bold inline-flex items-center hover:bg-black">Explorer les licences</a>
+              <span className="self-center text-xs opacity-40 font-mono">{products?.length || 0} produits</span>
+            </div>
+            <div className="mt-8 flex gap-6 text-[10px] tracking-[0.12em] uppercase opacity-40 font-mono">
+              <span>WINDOWS • MACOS</span><span>•</span><span>INSTANT DELIVERY</span>
+            </div>
+          </div>
+          <div className="relative bg-[#EEF0FF] flex items-center justify-center p-8 lg:p-10 min-h-[380px] border-t lg:border-t-0 lg:border-s border-[#E8EAF6]">
+            <div className="w-full max-w-[520px] bg-white rounded-2xl border border-[#E8EAF6] shadow-xl overflow-hidden">
+              <div className="h-9 flex items-center gap-1.5 px-4 border-b border-[#E8EAF6] bg-[#FAFAFF]">
+                <span className="w-3 h-3 rounded-full bg-red-400" /><span className="w-3 h-3 rounded-full bg-yellow-400" /><span className="w-3 h-3 rounded-full bg-green-400" />
+                <span className="ml-3 text-[11px] font-mono opacity-40">licence — {merchant.business_name}</span>
+              </div>
+              <img src={heroImage} alt={merchant.business_name} className="w-full aspect-[16/10] object-cover" />
+              <div className="p-4 flex items-center justify-between">
+                <div className="text-xs font-mono opacity-60">LICENCE KEY ••••• ••••• •••••</div>
+                <div className="text-xs font-bold bg-[#111] text-white px-3 py-1.5 rounded-full">Activer</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="collection" className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">Licences Digitales</h2>
             <span className="text-xs font-mono opacity-40">{products?.length || 0} produits</span>
           </div>
           {products && products.length ? (
             <StorefrontClient products={products as never} subdomain={subdomain} merchantSubdomain={merchant.subdomain} />
           ) : (
-            <div className="text-center py-16 border border-dashed border-white/10 bg-white/[0.03] text-sm opacity-60">Aucun produit</div>
+            <div className="text-center py-16 border border-dashed border-[#E8EAF6] bg-white text-sm opacity-60">Aucun produit numérique</div>
           )}
         </section>
-        <footer className="border-t border-white/10 py-6 text-center text-xs font-mono opacity-40">© {merchant.business_name} — NOVA TECH</footer>
+        <footer className="border-t border-[#E8EAF6] py-6 text-center text-xs font-mono opacity-40 bg-white">© {merchant.business_name} — NOVA DIGITAL</footer>
       </div>
     );
   }

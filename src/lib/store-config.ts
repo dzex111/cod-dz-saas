@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export type StoreTemplate = "atelier" | "tech";
+export type StoreTemplate = "atelier" | "tech" | "digital";
 
 export type StoreConfig = {
   template: StoreTemplate;
@@ -19,6 +19,11 @@ export type StoreConfig = {
   benefits?: string[];
   faq?: { q: string; a: string }[];
   cta_text?: string;
+  // Digital template extensions
+  hero_subtitle_digital?: string;
+  show_download_link?: boolean;
+  download_text?: string;
+  license_text?: string;
 };
 
 export const DEFAULT_CONFIG: StoreConfig = {
@@ -44,6 +49,11 @@ export const DEFAULT_CONFIG: StoreConfig = {
     { q: "Paiement?", a: "À la livraison" },
   ],
   cta_text: "Commander — Paiement à la livraison",
+  // Digital template defaults
+  hero_subtitle_digital: "",
+  show_download_link: true,
+  download_text: " téléchargement",
+  license_text: "رخصة الاستخدام",
 };
 
 // Server side fetch (using service role)

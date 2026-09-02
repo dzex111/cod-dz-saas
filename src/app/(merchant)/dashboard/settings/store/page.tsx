@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-type Template = "atelier" | "tech";
+type Template = "atelier" | "tech" | "digital";
 
 type Config = {
   template: Template;
@@ -20,6 +20,10 @@ type Config = {
   benefits?: string[];
   faq?: { q: string; a: string }[];
   cta_text?: string;
+  hero_subtitle_digital?: string;
+  show_download_link?: boolean;
+  download_text?: string;
+  license_text?: string;
 };
 
 const DEFAULT: Config = {
@@ -114,6 +118,7 @@ export default function StoreSettingsPage() {
   const templates: { id: Template; name: string; desc: string }[] = [
     { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من ملفك Sales-Landing — فاخر، serif، مناسب للفاشن" },
     { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "مستوحى من Electronics-V4-Final.html — داكن، تقني، مناسب للهواتف" },
+    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "مستوحى من Digital-Products-Landing.html — minimal، licenses، suitable للبرمجيات والتطبيقات" },
   ];
 
   return (
@@ -238,7 +243,7 @@ export default function StoreSettingsPage() {
             <label className="text-xs font-bold">وصف الهيرو</label>
             <textarea value={config.hero_subtitle} onChange={e=>setConfig({...config, hero_subtitle: e.target.value})} rows={2} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="جودة عالية..." />
           </div>
-          {(config.template === "atelier" || config.template === "tech") && (
+          {(config.template === "atelier" || config.template === "tech" || config.template === "digital") && (
             <>
               <div>
                 <label className="text-xs font-bold">نص الشارة (Badge)</label>
@@ -247,6 +252,21 @@ export default function StoreSettingsPage() {
               <div>
                 <label className="text-xs font-bold">نص زر الطلب</label>
                 <input value={config.cta_text || ""} onChange={e=>setConfig({...config, cta_text: e.target.value})} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="اطلب الآن" />
+              </div>
+            </>
+          )}
+          {config.template === "digital" && (
+            <>
+              <div>
+                <label className="text-xs font-bold">رابط التنزيل</label>
+                <div className="flex items-center gap-2 mt-1">
+                  <input type="checkbox" checked={config.show_download_link !== false} onChange={e=>setConfig({...config, show_download_link: e.target.checked})} className="w-5 h-5 accent-ink" />
+                  <span className="text-sm">{config.download_text || "تنزيل"}</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-bold">نص الرخصة</label>
+                <textarea value={config.license_text || ""} onChange={e=>setConfig({...config, license_text: e.target.value})} rows={1} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="رخصة الاستخدام للمنتج..." />
               </div>
             </>
           )}
@@ -272,12 +292,12 @@ export default function StoreSettingsPage() {
                 <div className="mt-3 bg-[#111] text-white text-center py-2 text-xs tracking-[0.14em] uppercase">Commander</div>
               </div>
             )}
-            {config.template==="tech" && (
-              <div className="bg-[#0B0B0C] p-6 text-[#EDEDED]">
-                <div className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">NOVA TECH</div>
-                <h2 className="text-2xl font-bold mt-3 tracking-tight">NOVA PRO</h2>
-                <p className="text-sm opacity-60 mt-1">مثالي للإلكترونيات والهواتف — داكن تقني</p>
-                <div className="mt-3 bg-[#EDEDED] text-[#0B0B0C] text-center py-2 text-xs font-mono uppercase">Commander — Tech</div>
+            {config.template==="digital" && (
+              <div className="bg-[#0B0B0C] p-6 text-[#EDEDED] rounded-xl border border-white/20 overflow-hidden">
+                <div className="font-mono text-xs tracking-[0.18em] uppercase opacity-60">NOVA DIGITAL</div>
+                <h2 className="text-xl font-bold mt-3 tracking-tight">NOVA DIGITAL</h2>
+                <p className="text-sm opacity-60 mt-1">برمجيات وحلول رقمية — تراخيص أصلية، دعم فني 24/7</p>
+                <div className="mt-4 bg-[#111] text-white text-center py-3 text-xs font-mono uppercase">تنزيل — licence key</div>
               </div>
             )}
           </div>
