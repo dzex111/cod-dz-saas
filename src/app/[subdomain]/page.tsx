@@ -2,7 +2,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { IconPackage, IconStore } from "@/components/icons";
+import { IconPackage } from "@/components/icons";
 import { getStoreConfig } from "@/lib/store-config";
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
@@ -32,17 +32,17 @@ export default async function StorefrontHome({ params, searchParams }: { params:
   else if (sort === "price_desc") query = query.order("price", { ascending: false });
   else query = query.order("created_at", { ascending: false });
   const { data: products } = await query.limit(24);
-  const { data: cats } = await supabaseAdmin.from("products").select("category").eq("merchant_id", merchant.id).not("category", "is", null);
-  const categories = [...new Set((cats || []).map(c=>c.category).filter(Boolean))] as string[];
+  const heroProduct = products?.[0];
+  const heroImage = heroProduct?.image_url || merchant.banner_url || "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=1500&fit=crop";
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111]">
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'); .font-serif{font-family:'Instrument Serif',serif;}`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'); .font-serif{font-family:'Instrument Serif',serif;} .marquee{animation:marquee 28s linear infinite;} @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
       <div className="h-[36px] w-full border-b border-[#E8E6E1] bg-[#FAF9F6] flex items-center overflow-hidden">
-        <div className="flex w-[200%] marquee will-change-transform" style={{ animation: "marquee 28s linear infinite" } as never}>
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="flex w-[200%] marquee">
+          {Array.from({ length: 8 }).map((_, i) => (
             <span key={i} className="whitespace-nowrap text-[10px] tracking-[0.18em] uppercase font-medium px-8">
-              {cfg.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON"}
+              {cfg.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — RETOURS 14 JOURS — ATELIER ALG NO.04"}
             </span>
           ))}
         </div>
@@ -50,43 +50,66 @@ export default async function StorefrontHome({ params, searchParams }: { params:
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur border-b border-[#E8E6E1] h-[56px] flex items-center">
         <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center justify-between">
           <div className="font-serif text-[17px] tracking-[-0.02em]">ATELIER <span className="opacity-40">/</span> ALG</div>
-          <Link href="/" className="text-[11px] tracking-[0.12em] uppercase opacity-60 hover:opacity-100">ORDELY</Link>
+          <div className="text-[11px] tracking-[0.12em] uppercase opacity-60">{merchant.business_name}</div>
         </div>
       </header>
-      <div className="max-w-[1600px] mx-auto px-5 lg:px-8 py-8">
-        <div className="text-center py-8 border-b border-[#E8E6E1] mb-8">
-          <h1 className="font-serif text-4xl">{merchant.business_name}</h1>
-          <p className="text-sm opacity-60 mt-2 max-w-xl mx-auto">{merchant.description || "Boutique officielle"}</p>
-          <form className="mt-6 flex flex-wrap gap-2 max-w-3xl mx-auto justify-center">
-            <input name="q" defaultValue={q || ""} placeholder="Rechercher..." className="flex-1 min-w-[220px] border border-[#E8E6E1] rounded-[4px] px-4 py-2.5 text-sm bg-white focus:border-[#111] outline-none" />
-            <select name="cat" defaultValue={cat || ""} className="border border-[#E8E6E1] rounded-[4px] px-3 py-2.5 text-sm bg-white">
-              <option value="">Toutes catégories</option>
-              {categories.map(c=><option key={c} value={c}>{c}</option>)}
-            </select>
-            <button className="px-6 bg-[#111] text-white rounded-[4px] text-sm hover:bg-black">Rechercher</button>
-          </form>
-        </div>
 
+      {/* Hero exact as Desktop file */}
+      <section className="relative w-full border-b border-[#E8E6E1] overflow-hidden">
+        <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row min-h-[calc(100vh-92px)]">
+          <div className="w-full lg:w-[50%] px-5 lg:px-8 pt-10 lg:pt-[9vh] pb-8 flex flex-col justify-between">
+            <div>
+              <div className="font-serif leading-[0.9] tracking-[-0.03em] text-[13vw] lg:text-[7vw]">
+                <div className="overflow-hidden"><span className="block">NOUVELLE</span></div>
+                <div className="overflow-hidden flex items-center gap-3"><span className="text-[8vw] lg:text-[4vw] font-light opacity-20">/</span><span className="block">COLLECTION</span></div>
+                <div className="overflow-hidden flex items-center gap-3"><span className="text-[8vw] lg:text-[4vw] font-light opacity-20">/</span><span className="block">NO. 04</span></div>
+              </div>
+              <div className="mt-8 flex gap-8 text-[10px] leading-relaxed tracking-[0.08em] uppercase opacity-60 max-w-md">
+                <div className="w-[1px] h-12 bg-[#111] opacity-10 hidden sm:block" />
+                <div>
+                  DISPONIBLE À ALGER, ORAN,<br />CONSTANTINE — LIVRAISON<br />24/48H. ÉDITION LIMITÉE,<br />FABRICATION ATELIER.
+                </div>
+              </div>
+            </div>
+            <div className="mt-10 flex gap-6 text-[10px] tracking-[0.12em] uppercase opacity-50">
+              <span>FW26</span><span>•</span><span>58 WILAYAS</span><span>•</span><span>PAY ON DELIVERY</span>
+            </div>
+          </div>
+          <div className="w-full lg:w-[50%] bg-[#EDEBE6] border-t lg:border-t-0 lg:border-s border-[#E8E6E1] relative overflow-hidden">
+            <img src={heroImage} alt={merchant.business_name} className="w-full h-[60vh] lg:h-full lg:min-h-[calc(100vh-92px)] object-cover" />
+            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full text-xs font-medium border border-[#E8E6E1]">DROP NO.04 — LOOK 01</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products — below hero, not before */}
+      <section className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-serif text-2xl">Collection</h2>
+          <span className="text-xs tracking-[0.12em] uppercase opacity-50">{products?.length || 0} produits</span>
+        </div>
         {products && products.length ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((p) => (
-              <Link key={p.id} href={`/${subdomain}/p/${p.slug}`} className="group bg-white border border-[#E8E6E1] rounded-[4px] overflow-hidden hover:border-[#111] transition-colors">
-                {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-64 object-cover group-hover:scale-[1.01] transition duration-300" /> : <div className="h-64 bg-[#FAF9F6] flex items-center justify-center border-b border-[#E8E6E1]"><IconPackage className="w-8 h-8 opacity-30" /></div>}
-                <div className="p-4">
-                  <div className="font-serif text-sm">{p.name}</div>
-                  <div className="text-sm font-medium mt-2">{p.price.toLocaleString("fr-DZ")} DZD</div>
+              <Link key={p.id} href={`/${subdomain}/p/${p.slug}`} className="group">
+                <div className="bg-white border border-[#E8E6E1] overflow-hidden">
+                  {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-[380px] object-cover group-hover:scale-[1.01] transition duration-500" /> : <div className="h-[380px] bg-[#FAF9F6] flex items-center justify-center"><IconPackage className="w-8 h-8 opacity-20" /></div>}
+                  <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center">
+                    <span className="text-xs font-medium truncate">{p.name}</span>
+                    <span className="text-xs font-serif">{p.price.toLocaleString("fr-DZ")} DZD</span>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 bg-white border border-dashed border-[#E8E6E1] rounded-[4px]">
-            <IconStore className="w-8 h-8 mx-auto opacity-20" />
-            <p className="font-medium mt-3">Aucun produit</p>
+          <div className="text-center py-16 border border-dashed border-[#E8E6E1] bg-white">
+            <p className="text-sm opacity-60">Aucun produit — ajoutez votre premier produit</p>
           </div>
         )}
-      </div>
-      <footer className="border-t border-[#E8E6E1] py-6 text-center text-xs opacity-50">{cfg.footer_text || `© ${merchant.business_name} — ORDELY`}</footer>
+      </section>
+
+      <footer className="border-t border-[#E8E6E1] py-6 text-center text-xs opacity-50">© {merchant.business_name} — ORDELY</footer>
     </div>
   );
 }
