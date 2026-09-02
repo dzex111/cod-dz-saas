@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import CheckoutForm from "@/app/[subdomain]/p/[slug]/CheckoutForm";
 
 type Product = {
@@ -30,13 +31,18 @@ export default function StorefrontClient({ products, subdomain, merchantSubdomai
     <>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((p) => (
-          <button key={p.id} onClick={() => handleSelect(p)} className="group text-left bg-white border border-[#E8E6E1] overflow-hidden hover:border-[#111] transition-colors">
-            {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-[380px] object-cover group-hover:scale-[1.01] transition duration-500" /> : <div className="h-[380px] bg-[#FAF9F6] flex items-center justify-center text-xs opacity-40">Sans image</div>}
-            <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center">
-              <span className="text-xs font-medium truncate">{p.name}</span>
-              <span className="text-xs font-serif">{p.price.toLocaleString("fr-DZ")} DZD</span>
+          <div key={p.id} className="group bg-white border border-[#E8E6E1] overflow-hidden hover:border-[#111] transition-colors flex flex-col">
+            <Link href={`/${subdomain}/p/${p.slug}`} className="block">
+              {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-[380px] object-cover group-hover:scale-[1.01] transition duration-500" /> : <div className="h-[380px] bg-[#FAF9F6] flex items-center justify-center text-xs opacity-40">Sans image</div>}
+              <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center">
+                <span className="text-xs font-medium truncate">{p.name}</span>
+                <span className="text-xs font-serif">{p.price.toLocaleString("fr-DZ")} DZD</span>
+              </div>
+            </Link>
+            <div className="px-3 pb-3">
+              <button onClick={() => handleSelect(p)} className="w-full bg-[#111] text-white text-xs tracking-[0.12em] uppercase py-2.5 rounded-[4px] hover:bg-black transition-colors">Acheter</button>
             </div>
-          </button>
+          </div>
         ))}
       </div>
 
