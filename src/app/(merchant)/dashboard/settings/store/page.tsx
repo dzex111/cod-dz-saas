@@ -112,11 +112,7 @@ export default function StoreSettingsPage() {
   }
 
   const templates: { id: Template; name: string; desc: string }[] = [
-    { id: "atelier", name: "Atelier — من ملفك", desc: "مستوحى من Sales-Landing-Modern-Dz.html — serif + marquee" },
-    { id: "pro", name: "Pro — احترافي", desc: "قالب حقيقي كامل: صور، أنيميشن، FAQ" },
-    { id: "minimal", name: "Minimal", desc: "نظيف، أبيض — بسيط" },
-    { id: "bold", name: "Bold", desc: "داكن، قوي — هيرو كبير" },
-    { id: "warm", name: "Warm", desc: "دافئ، ترابي — ودود" },
+    { id: "atelier", name: "Atelier — القالب الاحترافي", desc: "مستوحى من ملفك Sales-Landing-Modern-Dz.html — جاهز وحقيقي" },
   ];
 
   return (

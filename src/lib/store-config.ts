@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export type StoreTemplate = "minimal" | "bold" | "warm" | "pro" | "atelier";
+export type StoreTemplate = "atelier";
 
 export type StoreConfig = {
   template: StoreTemplate;
@@ -22,29 +22,28 @@ export type StoreConfig = {
 };
 
 export const DEFAULT_CONFIG: StoreConfig = {
-  template: "pro",
-  primary_color: "#2563EB",
-  accent_color: "#0F172A",
+  template: "atelier",
+  primary_color: "#111111",
+  accent_color: "#111111",
   hero_title: "",
   hero_subtitle: "",
-  announcement: "توصيل سريع لـ 58 ولاية • دفع عند الاستلام",
+  announcement: "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — RETOURS 14 JOURS — ATELIER ALG NO.04",
   show_reviews: true,
   show_features: true,
   show_shipping: true,
-  footer_text: "",
-  badge_text: "جديد • الأكثر طلباً",
+  footer_text: "© ATELIER ALG — ORDELY",
+  badge_text: "NOUVEAUTÉ",
   features: [
-    { title: "دفع عند الاستلام", desc: "ادفع عند وصول الطلب لباب منزلك" },
-    { title: "توصيل 58 ولاية", desc: "24-48 ساعة للشمال، 72 ساعة للجنوب" },
-    { title: "ضمان استرجاع", desc: "14 يوم ضمان استرجاع بدون أسئلة" },
+    { title: "Paiement à la livraison", desc: "24-48h Nord" },
+    { title: "Retours 14j", desc: "Garantie" },
+    { title: "58 Wilayas", desc: "Livraison" },
   ],
-  benefits: ["جودة عالية مضمونة", "تغليف آمن", "دعم سريع عبر الهاتف"],
+  benefits: ["Qualité", "Emballage", "Support"],
   faq: [
-    { q: "كم يستغرق التوصيل؟", a: "الشمال 24-48 ساعة، الجنوب 2-3 أيام." },
-    { q: "هل الدفع عند الاستلام؟", a: "نعم، تدفع عند استلام الطلب." },
-    { q: "هل يمكن الإرجاع؟", a: "نعم خلال 14 يوم مع ضمان كامل." },
+    { q: "Livraison?", a: "24-48h Nord, 2-3j Sud" },
+    { q: "Paiement?", a: "À la livraison" },
   ],
-  cta_text: "اطلب الآن — الدفع عند الاستلام",
+  cta_text: "Commander — Paiement à la livraison",
 };
 
 // Server side fetch (using service role)
