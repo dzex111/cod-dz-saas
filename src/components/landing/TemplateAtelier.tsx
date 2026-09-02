@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import CheckoutForm from "@/app/[subdomain]/p/[slug]/CheckoutForm";
-import Reviews from "@/app/[subdomain]/p/[slug]/Reviews";
 
 type Product = {
   id: string;
@@ -24,7 +23,6 @@ type Config = {
   hero_title?: string;
   hero_subtitle?: string;
   announcement?: string;
-  show_reviews: boolean;
   footer_text?: string;
 };
 
@@ -143,12 +141,6 @@ export default function TemplateAtelier({ product, merchant, config }: { product
           </div>
         </div>
       </section>
-
-      {config.show_reviews && (
-        <section className="max-w-[1600px] mx-auto px-5 lg:px-8 pb-10">
-          <Reviews productId={product.id} merchantId={merchant.id} />
-        </section>
-      )}
 
       <footer className="border-t border-[#E8E6E1] bg-[#FAF9F6] py-8">
         <div className="max-w-[1600px] mx-auto px-5 lg:px-8 flex justify-between text-xs">
