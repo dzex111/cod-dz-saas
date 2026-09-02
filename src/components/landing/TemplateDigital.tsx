@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 type Product = { id: string; name: string; slug: string; description: string | null; price: number; compare_at_price: number | null; image_url: string | null; };
-type Merchant = { id: string; business_name: string; subdomain: string; phone: string | null; logo_url: string | null; };
+type Merchant = { id: string; business_name: string; subdomain: string; phone: string | null; logo_url: string | null; banner_url?: string | null; description?: string | null; };
 
 type Config = {
   template: "digital";
@@ -40,13 +40,21 @@ export default function TemplateDigital({ product, merchant, config }: { product
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');
       `}</style>
-      <div className="h-[28px] bg-background text-foreground flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
-        {config.announcement || "LIVRAISON 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
+      <div className="h-[28px] bg-[#111] text-white flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
+        {config.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
       </div>
       <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.9)] backdrop-blur border-b border-white/10">
-        <div className="font-mono text-xs tracking-[0.14em]">NOVA <span className="text-white/60">DIGITAL</span></div>
+        <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-white">
+          {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20" />}
+          <span>NOVA <span className="text-white/60">DIGITAL</span></span>
+        </div>
         <a href="#order" className="font-mono text-xs tracking-[0.12em] border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-colors">PANIER (1)</a>
       </header>
+      {merchant.banner_url && (
+        <div className="w-full h-[180px] overflow-hidden border-b border-white/20">
+          <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
+        </div>
+      )}
 
       <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[82vh] border-b border-white/10">
         <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
@@ -57,7 +65,7 @@ export default function TemplateDigital({ product, merchant, config }: { product
             <span className="block overflow-hidden"><span className="block text-white">{t1}</span></span>
             <span className="block overflow-hidden"><span className="block" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.85)", color: "transparent" }}>{t2}</span></span>
           </h1>
-          <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">{config.hero_subtitle || product.description || "Software premium, delivery instantanée — licence officielle, support 24/7."}</p>
+          <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">{config.hero_subtitle || merchant.description || product.description || "Software premium, delivery instantanée — licence officielle, support 24/7."}</p>
           <div className="mt-8 flex gap-3">
             <a href="#order" className="h-[46px] px-7 bg-[#EDEDED] text-[#0B0B0C] font-mono text-xs tracking-[0.14em] uppercase font-bold flex items-center hover:bg-white">Commander — {product.price.toLocaleString("fr-DZ")} DZD</a>
             {product.compare_at_price && <span className="self-center text-sm line-through opacity-30">{Number(product.compare_at_price).toLocaleString("fr-DZ")} DZD</span>}

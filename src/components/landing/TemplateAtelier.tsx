@@ -17,6 +17,8 @@ type Merchant = {
   subdomain: string;
   phone: string | null;
   logo_url: string | null;
+  banner_url?: string | null;
+  description?: string | null;
 };
 type Config = {
   primary_color: string;
@@ -61,7 +63,10 @@ export default function TemplateAtelier({ product, merchant, config }: { product
       {/* Header */}
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur-[12px] border-b border-[#E8E6E1] h-[56px] flex items-center">
         <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center justify-between">
-          <div className="font-serif text-[17px] tracking-[-0.02em]">ATELIER <span className="opacity-40">/</span> ALG</div>
+          <div className="flex items-center gap-3">
+            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-8 h-8 rounded object-cover border border-[#E8E6E1]" />}
+            <div className="font-serif text-[17px] tracking-[-0.02em]">ATELIER <span className="opacity-40">/</span> ALG</div>
+          </div>
           <div className="flex items-center gap-6 text-[11px] tracking-[0.12em] uppercase">
             <a href="#order" className="hover:opacity-60 transition-opacity">Panier (1)</a>
             <span className="hidden sm:inline opacity-30">—</span>
@@ -69,6 +74,11 @@ export default function TemplateAtelier({ product, merchant, config }: { product
           </div>
         </div>
       </header>
+      {merchant.banner_url && (
+        <div className="w-full h-[180px] overflow-hidden border-b border-[#E8E6E1]">
+          <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
+        </div>
+      )}
 
       {/* Hero */}
       <section ref={heroRef} className="relative w-full border-b border-[#E8E6E1] overflow-hidden">
@@ -79,7 +89,7 @@ export default function TemplateAtelier({ product, merchant, config }: { product
                 <span className="reveal"><span className={inView ? "in" : ""} style={{ transitionDelay: "0.1s" }}>{config.hero_title || product.name.split(" ")[0] || "ATELIER"}</span></span>
                 <span className="reveal"><span className={inView ? "in" : ""} style={{ transitionDelay: "0.2s" }}>{product.name.split(" ").slice(1).join(" ") || "EDIT.04"}</span></span>
               </div>
-              <p className="mt-6 text-sm leading-6 max-w-md text-[#111]/70">{config.hero_subtitle || product.description || "Une pièce pensée pour le quotidien algérien — coupe précise, matière durable, détails maîtrisés."}</p>
+              <p className="mt-6 text-sm leading-6 max-w-md text-[#111]/70">{config.hero_subtitle || merchant.description || product.description || "Une pièce pensée pour le quotidien algérien — coupe précise, matière durable, détails maîtrisés."}</p>
               <div className="mt-6 flex items-baseline gap-4">
                 <span className="font-serif text-3xl">{product.price.toLocaleString("fr-DZ")} DZD</span>
                 {product.compare_at_price && <span className="text-sm line-through opacity-40">{Number(product.compare_at_price).toLocaleString("fr-DZ")} DZD</span>}

@@ -46,10 +46,18 @@ export default async function StorefrontHome({ params, searchParams }: { params:
           {cfg.announcement || "LIVRAISON 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
         </div>
         <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
-          <div className="font-mono text-xs tracking-[0.14em] text-white">NOVA <span className="text-white/60">TECH</span> — {merchant.business_name}</div>
+          <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-white">
+            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20" />}
+            <span>NOVA <span className="text-white/60">TECH</span> — {merchant.business_name}</span>
+          </div>
           <div className="text-xs font-mono text-white/60">{products?.length || 0} produits</div>
         </header>
 
+        {merchant.banner_url && (
+          <div className="w-full h-[180px] lg:h-[260px] overflow-hidden border-b border-white/20">
+            <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
+          </div>
+        )}
         {/* Hero — fixed contrast: stroke 0.85, text 60-75% */}
         <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[82vh] border-b border-white/20">
           <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
@@ -60,7 +68,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
               <span className="block overflow-hidden"><span className="block text-white">NOVA</span></span>
               <span className="block overflow-hidden"><span className="block" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.85)", color: "transparent" }}>TECH</span></span>
             </h1>
-            <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">Performance pure, design minimal — conçu pour les produits électroniques et téléphones.</p>
+            <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">{merchant.description || "Performance pure, design minimal — conçu pour les produits électroniques et téléphones."}</p>
             <div className="mt-8">
               <a href="#collection" className="h-[46px] px-7 bg-[#EDEDED] text-[#0B0B0C] font-mono text-xs tracking-[0.14em] uppercase font-bold inline-flex items-center hover:bg-white">Explorer la collection</a>
             </div>
@@ -94,10 +102,18 @@ export default async function StorefrontHome({ params, searchParams }: { params:
           {cfg.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
         </div>
         <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-white/90 backdrop-blur border-b border-[#E8EAF6]">
-          <div className="font-mono text-xs tracking-[0.14em]">NOVA <span className="opacity-40">DIGITAL</span> — {merchant.business_name}</div>
+          <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em]">
+            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-[#E8EAF6]" />}
+            <span>NOVA <span className="opacity-40">DIGITAL</span> — {merchant.business_name}</span>
+          </div>
           <div className="text-xs font-mono opacity-60">{products?.length || 0} licences</div>
         </header>
 
+        {merchant.banner_url && (
+          <div className="w-full h-[180px] lg:h-[260px] overflow-hidden border-b border-[#E8EAF6] max-w-[1600px] mx-auto">
+            <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
+          </div>
+        )}
         {/* Hero Digital — light, license-focused */}
         <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[78vh] border-b border-[#E8EAF6] max-w-[1600px] mx-auto">
           <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
@@ -108,7 +124,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
               <span className="block">DIGITAL</span>
               <span className="block text-transparent" style={{ WebkitTextStroke: "1.2px #111" }}>PRODUCTS</span>
             </h1>
-            <p className="mt-5 max-w-[420px] text-sm leading-relaxed opacity-60">Produits numériques premium — comptes, logiciels, abonnements. Clé livrée instantanément après paiement, support 24/7.</p>
+            <p className="mt-5 max-w-[420px] text-sm leading-relaxed opacity-60">{merchant.description || "Produits numériques premium — comptes, logiciels, abonnements. Clé livrée instantanément après paiement, support 24/7."}</p>
             <div className="mt-8 flex gap-3">
               <a href="#collection" className="h-[46px] px-7 bg-[#111] text-white font-mono text-xs tracking-[0.14em] uppercase font-bold inline-flex items-center hover:bg-black">Explorer les licences</a>
               <span className="self-center text-xs opacity-40 font-mono">{products?.length || 0} produits</span>
@@ -162,11 +178,19 @@ export default async function StorefrontHome({ params, searchParams }: { params:
       </div>
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur border-b border-[#E8E6E1] h-[56px] flex items-center">
         <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center justify-between">
-          <div className="font-serif text-[17px] tracking-[-0.02em]">ATELIER <span className="opacity-40">/</span> ALG</div>
+          <div className="flex items-center gap-3">
+            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-8 h-8 rounded object-cover border border-[#E8E6E1]" />}
+            <div className="font-serif text-[17px] tracking-[-0.02em]">ATELIER <span className="opacity-40">/</span> ALG</div>
+          </div>
           <div className="text-[11px] tracking-[0.12em] uppercase opacity-60">{merchant.business_name}</div>
         </div>
       </header>
 
+      {merchant.banner_url && (
+        <div className="w-full h-[180px] lg:h-[220px] overflow-hidden border-b border-[#E8E6E1]">
+          <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
+        </div>
+      )}
       {/* Hero exact as Desktop file */}
       <section className="relative w-full border-b border-[#E8E6E1] overflow-hidden">
         <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-row min-h-[calc(100vh-92px)]">
