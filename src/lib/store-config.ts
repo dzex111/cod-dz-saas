@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export type StoreTemplate = "minimal" | "bold" | "warm";
+export type StoreTemplate = "minimal" | "bold" | "warm" | "pro";
 
 export type StoreConfig = {
   template: StoreTemplate;
@@ -13,12 +13,18 @@ export type StoreConfig = {
   show_features: boolean;
   show_shipping: boolean;
   footer_text?: string;
+  // Pro template extensions
+  badge_text?: string;
+  features?: { title: string; desc: string }[];
+  benefits?: string[];
+  faq?: { q: string; a: string }[];
+  cta_text?: string;
 };
 
 export const DEFAULT_CONFIG: StoreConfig = {
-  template: "minimal",
-  primary_color: "#E53535",
-  accent_color: "#111111",
+  template: "pro",
+  primary_color: "#2563EB",
+  accent_color: "#0F172A",
   hero_title: "",
   hero_subtitle: "",
   announcement: "توصيل سريع لـ 58 ولاية • دفع عند الاستلام",
@@ -26,6 +32,19 @@ export const DEFAULT_CONFIG: StoreConfig = {
   show_features: true,
   show_shipping: true,
   footer_text: "",
+  badge_text: "جديد • الأكثر طلباً",
+  features: [
+    { title: "دفع عند الاستلام", desc: "ادفع عند وصول الطلب لباب منزلك" },
+    { title: "توصيل 58 ولاية", desc: "24-48 ساعة للشمال، 72 ساعة للجنوب" },
+    { title: "ضمان استرجاع", desc: "14 يوم ضمان استرجاع بدون أسئلة" },
+  ],
+  benefits: ["جودة عالية مضمونة", "تغليف آمن", "دعم سريع عبر الهاتف"],
+  faq: [
+    { q: "كم يستغرق التوصيل؟", a: "الشمال 24-48 ساعة، الجنوب 2-3 أيام." },
+    { q: "هل الدفع عند الاستلام؟", a: "نعم، تدفع عند استلام الطلب." },
+    { q: "هل يمكن الإرجاع؟", a: "نعم خلال 14 يوم مع ضمان كامل." },
+  ],
+  cta_text: "اطلب الآن — الدفع عند الاستلام",
 };
 
 // Server side fetch (using service role)

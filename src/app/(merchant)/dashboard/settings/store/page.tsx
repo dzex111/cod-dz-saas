@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-type Template = "minimal" | "bold" | "warm";
+type Template = "minimal" | "bold" | "warm" | "pro";
 
 type Config = {
   template: Template;
@@ -15,12 +15,17 @@ type Config = {
   show_features: boolean;
   show_shipping: boolean;
   footer_text: string;
+  badge_text?: string;
+  features?: { title: string; desc: string }[];
+  benefits?: string[];
+  faq?: { q: string; a: string }[];
+  cta_text?: string;
 };
 
 const DEFAULT: Config = {
-  template: "minimal",
-  primary_color: "#E53535",
-  accent_color: "#111111",
+  template: "pro",
+  primary_color: "#2563EB",
+  accent_color: "#0F172A",
   hero_title: "",
   hero_subtitle: "",
   announcement: "توصيل سريع لـ 58 ولاية • دفع عند الاستلام",
@@ -28,6 +33,19 @@ const DEFAULT: Config = {
   show_features: true,
   show_shipping: true,
   footer_text: "",
+  badge_text: "جديد • الأكثر طلباً",
+  features: [
+    { title: "دفع عند الاستلام", desc: "ادفع عند وصول الطلب" },
+    { title: "توصيل 58 ولاية", desc: "24-48 ساعة للشمال" },
+    { title: "ضمان استرجاع", desc: "14 يوم ضمان" },
+  ],
+  benefits: ["جودة عالية", "تغليف آمن", "دعم سريع"],
+  faq: [
+    { q: "كم يستغرق التوصيل؟", a: "الشمال 24-48 ساعة، الجنوب 2-3 أيام." },
+    { q: "هل الدفع عند الاستلام؟", a: "نعم." },
+    { q: "هل يمكن الإرجاع؟", a: "نعم خلال 14 يوم." },
+  ],
+  cta_text: "اطلب الآن — الدفع عند الاستلام",
 };
 
 export default function StoreSettingsPage() {
@@ -94,9 +112,10 @@ export default function StoreSettingsPage() {
   }
 
   const templates: { id: Template; name: string; desc: string }[] = [
-    { id: "minimal", name: "Minimal", desc: "نظيف، أبيض، مساحات واسعة — مثل Apple" },
-    { id: "bold", name: "Bold", desc: "داكن، قوي، هيرو كبير — مثل Nike" },
-    { id: "warm", name: "Warm", desc: "دافئ، ترابي، ودود — مثل متاجر طبيعية" },
+    { id: "pro", name: "Pro — احترافي", desc: "قالب حقيقي كامل: صور، أنيميشن، FAQ — موصى به" },
+    { id: "minimal", name: "Minimal", desc: "نظيف، أبيض — بسيط" },
+    { id: "bold", name: "Bold", desc: "داكن، قوي — هيرو كبير" },
+    { id: "warm", name: "Warm", desc: "دافئ، ترابي — ودود" },
   ];
 
   return (
@@ -221,6 +240,22 @@ export default function StoreSettingsPage() {
             <label className="text-xs font-bold">وصف الهيرو</label>
             <textarea value={config.hero_subtitle} onChange={e=>setConfig({...config, hero_subtitle: e.target.value})} rows={2} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="جودة عالية..." />
           </div>
+          {config.template === "pro" && (
+            <>
+              <div>
+                <label className="text-xs font-bold">نص الشارة (Badge)</label>
+                <input value={config.badge_text || ""} onChange={e=>setConfig({...config, badge_text: e.target.value})} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="الأكثر طلباً" />
+              </div>
+              <div>
+                <label className="text-xs font-bold">نص زر الطلب</label>
+                <input value={config.cta_text || ""} onChange={e=>setConfig({...config, cta_text: e.target.value})} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="اطلب الآن" />
+              </div>
+              <div className="p-3 bg-subtle border border-border rounded-xl">
+                <div className="text-xs font-bold">ملاحظة Pro</div>
+                <div className="text-xs text-muted mt-1">هذا القالب يعرض صور المنتج مع أنيميشن، FAQ تفاعلي، ومميزات تفاعلية. يمكنك أيضاً وضع ملف HTML كامل في Desktop وسأحوله لقالب — أخبرني فقط.</div>
+              </div>
+            </>
+          )}
           <div>
             <label className="text-xs font-bold">نص الفوتر</label>
             <input value={config.footer_text} onChange={e=>setConfig({...config, footer_text: e.target.value})} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="© متجري — جميع الحقوق" />
@@ -234,6 +269,20 @@ export default function StoreSettingsPage() {
         <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
           <h3 className="font-bold mb-4">معاينة حية — القالب: {config.template}</h3>
           <div className="rounded-xl border border-border overflow-hidden">
+            {config.template==="pro" && (
+              <div className="bg-card p-6">
+                <div className="text-xs bg-primary-light text-primary inline-block px-3 py-1 rounded-full font-medium" style={{ color: config.primary_color }}>{config.badge_text || "الأكثر طلباً"}</div>
+                <h2 className="text-2xl font-bold mt-3">{config.hero_title || form.business_name || "منتجك هنا"}</h2>
+                <p className="text-muted mt-2 text-sm">{config.hero_subtitle || form.description || "وصف احترافي مع صور وأنيميشن"}</p>
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  <div className="aspect-square bg-subtle rounded-xl border border-border" />
+                  <div className="aspect-square bg-subtle rounded-xl border border-border" />
+                  <div className="aspect-square bg-subtle rounded-xl border border-border" />
+                </div>
+                <div className="mt-4 bg-primary text-white text-center py-2 rounded-lg text-sm font-medium" style={{ background: config.primary_color }}>{config.cta_text || "اطلب الآن"}</div>
+                <p className="text-xs text-muted mt-2 text-center">مع أنيميشن وسكرول سلس و hover</p>
+              </div>
+            )}
             {config.template==="minimal" && (
               <div className="bg-white p-8 text-center">
                 <div className="text-xs tracking-widest font-bold text-muted-soft uppercase">{config.announcement}</div>
@@ -257,7 +306,7 @@ export default function StoreSettingsPage() {
               </div>
             )}
           </div>
-          <p className="text-xs text-muted-soft mt-3">المعاينة تقريبية — افتح متجرك الحقيقي لترى التطبيق الكامل على منتج فعلي.</p>
+          <p className="text-xs text-muted-soft mt-3">المعاينة تقريبية — افتح متجرك الحقيقي لترى التطبيق الكامل على منتج فعلي. يمكنك وضع ملف HTML في Desktop وسأحوله لقالب Pro.</p>
         </div>
       )}
     </div>

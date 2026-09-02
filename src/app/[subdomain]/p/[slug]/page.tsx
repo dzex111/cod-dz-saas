@@ -4,6 +4,7 @@ import CheckoutForm from "./CheckoutForm";
 import Reviews from "./Reviews";
 import { IconPackage, IconShield, IconTruck } from "@/components/icons";
 import { getStoreConfig } from "@/lib/store-config";
+import TemplatePro from "@/components/landing/TemplatePro";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -117,67 +118,28 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
     );
   }
 
-  // DEFAULT: MINIMAL (professional)
+  // DEFAULT: PRO — القالب الأول الاحترافي الحقيقي
+  // Also handles "minimal" for backward compatibility
   return (
-    <div className="min-h-screen bg-background">
-      {cfg.announcement && <div className="bg-primary text-white text-center text-xs font-bold py-2 px-4 tracking-wide">{cfg.announcement}</div>}
-      <header className="border-b border-border bg-card/80 backdrop-blur-xl sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href={`/${subdomain}`} className="flex items-center gap-3">
-            {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-9 h-9 rounded-xl object-cover border border-border shadow-sm" /> : <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center font-black text-sm">{merchant.business_name[0]}</div>}
-            <div>
-              <div className="font-black leading-none" style={{ color: primary }}>{merchant.business_name}</div>
-              <div className="text-xs text-muted">دفع عند الاستلام • 58 ولاية</div>
-            </div>
-          </Link>
-          <div className="flex items-center gap-2">
-            {merchant.phone && <div className="hidden md:flex text-xs font-mono bg-background border border-border rounded-full px-3 py-1.5" dir="ltr">{merchant.phone}</div>}
-            
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-2 gap-8 items-start">
-        <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
-          {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-[500px] object-cover" /> : <div className="h-[500px] bg-card-hover flex items-center justify-center"><IconPackage className="w-10 h-10 text-muted-soft" /></div>}
-          <div className="p-7">
-            <h1 className="text-[28px] font-black leading-tight">{cfg.hero_title || product.name}</h1>
-            <p className="text-[15px] text-muted mt-3 leading-7">{cfg.hero_subtitle || product.description}</p>
-            <div className="mt-6 flex items-baseline gap-3">
-              <span className="text-3xl font-black" style={{ color: primary }}>{product.price.toLocaleString("fr-DZ")} دج</span>
-              {product.compare_at_price && <span className="line-through text-muted-soft text-sm">{Number(product.compare_at_price).toLocaleString("fr-DZ")} دج</span>}
-              {product.compare_at_price && <span className="bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded-full text-xs font-bold">تخفيض</span>}
-            </div>
-            {cfg.show_features && (
-              <div className="mt-6 flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 px-3.5 py-1.5 rounded-full text-xs font-bold"><IconShield className="w-3.5 h-3.5" /> دفع عند الاستلام</span>
-                <span className="inline-flex items-center gap-1.5 bg-background border border-border px-3.5 py-1.5 rounded-full text-xs font-bold"><IconTruck className="w-3.5 h-3.5" /> توصيل 58 ولاية</span>
-                <span className="inline-flex items-center gap-1.5 bg-background border border-border px-3.5 py-1.5 rounded-full text-xs font-bold"> ضمان استرجاع</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="lg:sticky lg:top-[88px] space-y-4">
-          <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-            <h2 className="text-xl font-black">اطلب الآن</h2>
-            <p className="text-sm text-muted mt-1">املأ بياناتك وسيتصل بك فريق التأكيد — الدفع عند الاستلام</p>
-            <div className="mt-5"><CheckoutForm merchantSubdomain={merchant.subdomain} productSlug={product.slug} price={product.price} /></div>
-          </div>
-          {cfg.show_shipping && (
-            <div className="bg-background border border-border rounded-xl p-4 text-xs leading-6">
-              <div className="font-bold"> توصيل سريع</div>
-              <div className="text-muted">48 ولاية شمالية خلال 24-48 ساعة، الجنوب خلال 3 أيام. الدفع عند الاستلام.</div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {cfg.show_reviews && <div className="max-w-7xl mx-auto px-6 pb-10"><Reviews productId={product.id} merchantId={merchant.id} /></div>}
-      <footer className="border-t border-border bg-card py-8 text-center">
-        <div className="text-sm font-bold">{cfg.footer_text || `© ${merchant.business_name}`}</div>
-        <div className="text-sm text-muted mt-1">مدعوم من <span className="font-bold" style={{ color: primary }}>ORDELY</span> — منصة جزائرية</div>
-      </footer>
-    </div>
+    <TemplatePro
+      product={product as never}
+      merchant={merchant as never}
+      config={{
+        primary_color: primary,
+        accent_color: cfg.accent_color || "#0F172A",
+        hero_title: cfg.hero_title,
+        hero_subtitle: cfg.hero_subtitle,
+        announcement: cfg.announcement,
+        badge_text: cfg.badge_text,
+        features: cfg.features,
+        benefits: cfg.benefits,
+        faq: cfg.faq,
+        cta_text: cfg.cta_text,
+        show_reviews: cfg.show_reviews,
+        show_features: cfg.show_features,
+        show_shipping: cfg.show_shipping,
+        footer_text: cfg.footer_text,
+      }}
+    />
   );
 }
