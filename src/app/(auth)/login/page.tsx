@@ -34,51 +34,51 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-6">
+        <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center text-white font-bold text-lg">C</div>
-            <span className="font-extrabold text-xl text-zinc-900">COD DZ</span>
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-lg">C</div>
+            <span className="font-extrabold text-xl text-foreground">COD DZ</span>
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-7">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-extrabold text-zinc-900">تسجيل الدخول</h1>
-            <p className="text-sm text-zinc-500 mt-1">أدخل بياناتك للوصول للوحة التحكم</p>
+        <div className="bg-card rounded-2xl shadow-lg border border-border p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-extrabold text-foreground">تسجيل الدخول</h1>
+            <p className="text-sm text-muted-soft mt-1">أدخل بياناتك للوصول للوحة التحكم</p>
           </div>
 
           {err && (
-            <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-sm font-medium mb-5">
+            <div className="bg-primary/10 border border-primary/20 text-primary p-3 rounded-xl text-sm font-medium mb-5">
               {err}
             </div>
           )}
 
-          <form onSubmit={handle} className="space-y-4">
+          <form onSubmit={handle} className="space-y-5">
             <div>
-              <label className="block text-sm font-bold text-zinc-700 mb-1.5">البريد الإلكتروني</label>
-              <input dir="ltr" placeholder="name@example.com" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-2 border-zinc-200 rounded-xl px-4 py-3 bg-white text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 outline-none transition" />
+              <label className="block text-sm font-bold text-muted-soft mb-1.5">البريد الإلكتروني</label>
+              <input dir="ltr" placeholder="name@example.com" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none transition" />
             </div>
             <div>
-              <label className="block text-sm font-bold text-zinc-700 mb-1.5">كلمة المرور</label>
-              <input placeholder="••••••••" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border-2 border-zinc-200 rounded-xl px-4 py-3 bg-white text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 outline-none transition" />
+              <label className="block text-sm font-bold text-muted-soft mb-1.5">كلمة المرور</label>
+              <input placeholder="••••••••" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none transition" />
             </div>
-            <button disabled={loading} className="w-full bg-zinc-900 text-white py-3 rounded-xl font-bold hover:bg-zinc-800 disabled:opacity-50 transition">
+            <button disabled={loading} className="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primary-dark disabled:opacity-50 transition">
               {loading ? "جاري الدخول..." : "دخول"}
             </button>
           </form>
 
-          <div className="mt-5 p-3 bg-zinc-50 rounded-xl border border-zinc-100">
-            <div className="text-xs font-bold text-zinc-600">حساب تجريبي:</div>
-            <div className="text-sm text-zinc-700 font-mono" dir="ltr">test10614@coddz.com / kikou@2007</div>
+          <div className="mt-6 p-4 bg-background/50 rounded-xl border border-border/20">
+            <div className="text-xs font-bold text-muted-soft">حساب تجريبي:</div>
+            <div className="text-sm text-foreground font-mono" dir="ltr">test10614@coddz.com / kikou@2007</div>
           </div>
-        </div>
 
-        <p className="text-center text-sm text-zinc-500 mt-4">
-          ليس لديك حساب؟ <Link href="/register" className="text-zinc-900 font-bold hover:underline">أنشئ متجرك</Link>
-        </p>
-        <p className="text-center text-xs text-zinc-400 mt-2"><Link href="/" className="hover:text-zinc-600">← الرئيسية</Link></p>
+          <p className="text-center text-sm text-muted-soft mt-4">
+            ليس لديك حساب؟ <Link href="/register" className="color-primary font-bold hover:underline">أنشئ متجرك</Link>
+          </p>
+          <p className="text-center text-xs text-muted-soft mt-2"><Link href="/" className="hover:text-muted-600">← الرئيسية</Link></p>
+        </div>
       </div>
     </div>
   );

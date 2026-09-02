@@ -37,22 +37,22 @@ export default function BlacklistsPage() {
 
   return (
     <div className="max-w-xl space-y-6">
-      <h1 className="text-xl font-black text-zinc-900">القائمة السوداء — مجانية</h1>
-      <p className="text-sm text-zinc-700 font-medium">أي رقم هنا يُعلم تلقائياً كـ <span className="font-bold text-red-600">fake</span> عند الطلب.</p>
-      <form onSubmit={add} className="bg-white rounded-2xl border-2 border-zinc-200 p-5 flex gap-2">
-        <input required placeholder="07XXXXXXXX" value={phone} onChange={e=>setPhone(e.target.value)} className="flex-1 border-2 border-zinc-300 rounded-xl px-4 py-3 text-left bg-white focus:border-zinc-900 outline-none" dir="ltr" />
-        <input placeholder="السبب" value={reason} onChange={e=>setReason(e.target.value)} className="w-32 border-2 border-zinc-300 rounded-xl px-3 py-3 bg-white focus:border-zinc-900 outline-none" />
-        <button className="px-5 bg-zinc-900 text-white rounded-xl font-bold hover:bg-black">حظر</button>
+      <h1 className="text-xl font-extrabold text-foreground">القائمة السوداء — مجانية</h1>
+      <p className="text-sm font-medium">أي رقم هنا يُعلم تلقائياً كـ <span className="font-bold text-red-500">fake</span> عند الطلب.</p>
+      <form onSubmit={add} className="bg-card rounded-2xl border border-border p-5 flex gap-2">
+        <input required placeholder="07XXXXXXXX" value={phone} onChange={e=>setPhone(e.target.value)} className="flex-1 border border-border rounded-xl px-4 py-3 text-left bg-card focus:border-primary outline-none" dir="ltr" />
+        <input placeholder="السبب" value={reason} onChange={e=>setReason(e.target.value)} className="border border-border rounded-xl px-3 py-3 bg-card focus:border-primary outline-none" />
+        <button className="px-5 bg-primary text-white rounded-xl font-bold hover:bg-primary-dark">حظر</button>
       </form>
-      <div className="bg-white rounded-2xl border-2 border-zinc-200 overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border overflow-hidden">
         <div className="divide-y">
           {list.map(e=>(
             <div key={e.id} className="p-4 flex justify-between items-center">
-              <div><div className="font-mono font-bold" dir="ltr">{e.phone_number}</div><div className="text-xs text-zinc-600">{e.reason} • {new Date(e.created_at).toLocaleDateString("ar-DZ")}</div></div>
-              <button onClick={()=>remove(e.id)} className="text-xs bg-white border-2 border-zinc-300 px-3 py-1 rounded-full font-bold hover:bg-zinc-50">إزالة</button>
+              <div><div className="font-mono font-bold" dir="ltr">{e.phone_number}</div><div className="text-sm text-muted-soft">{e.reason} • {new Date(e.created_at).toLocaleDateString("ar-DZ")}</div></div>
+              <button onClick={()=>remove(e.id)} className="text-xs bg-card border border-border rounded-full font-bold hover:bg-border">إزالة</button>
             </div>
           ))}
-          {list.length===0 && <div className="p-8 text-center text-zinc-600 font-medium">لا أرقام محظورة — نظيف ✓</div>}
+          {list.length===0 && <div className="p-8 text-center text-muted-soft font-medium">لا أرقام محظورة — نظيف ✓</div>}
         </div>
       </div>
     </div>

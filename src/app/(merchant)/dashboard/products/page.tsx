@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { IconPackage, IconLink } from "@/components/icons";
 
-type Product = { id: string; name: string; slug: string; price: number; stock_quantity: number; is_active: boolean; image_url: string | null; category: string | null };
-
 const BASE = process.env.NEXT_PUBLIC_BASE_DOMAIN || "coddz.com";
+
+type Product = { id: string; name: string; slug: string; price: number; description: string | null; image_url: string | null; category: string | null; is_active: boolean; compare_at_price: number | null };
 
 export default function ProductsPage() {
   const supabase = createClient();
@@ -15,6 +15,7 @@ export default function ProductsPage() {
   const [uploading, setUploading] = useState(false);
   const [merchantId, setMerchantId] = useState<string | null>(null);
   const [subdomain, setSubdomain] = useState<string>("");
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   async function load() {
     const { data: { user } } = await supabase.auth.getUser();
@@ -32,7 +33,6 @@ export default function ProductsPage() {
   async function compressAndUpload(file: File): Promise<string | null> {
     setUploading(true);
     try {
-      // ضغط مجاني عبر canvas (max 1024, quality 0.8)
       const img = await createImageBitmap(file);
       const max = 1024;
       let { width, height } = img;
@@ -52,6 +52,7 @@ export default function ProductsPage() {
       if (error) throw error;
       const { data } = supabase.storage.from("product-images").getPublicUrl(path);
       setForm((f) => ({ ...f, image_url: data.publicUrl }));
+      setImagePreview(data.publicUrl);
       return data.publicUrl;
     } catch (e) {
       alert(e instanceof Error ? e.message : "فشل الرفع");
@@ -74,7 +75,7 @@ export default function ProductsPage() {
       category: form.category || null,
       is_active: true,
     });
-    if (!error) { setForm({ name: "", slug: "", price: "", description: "", image_url: "", category: "" }); load(); } else alert(error.message);
+    if (!error) { setForm({ name: "", slug: "", price: "", description: "", image_url: "", category: "" }); setImagePreview(null); load(); } else alert(error.message);
     setLoading(false);
   }
 
@@ -87,67 +88,67 @@ export default function ProductsPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap gap-4 justify-between items-start">
         <div>
-          <h1 className="text-2xl font-black text-zinc-900 tracking-tight">المنتجات</h1>
-          <p className="text-sm font-medium text-zinc-600 mt-1">أدر منتجاتك وشاركها برابط احترافي — مجاني</p>
+          <h1 className="text-2xl font-extrabold text-foreground tracking-tight">المنتجات</h1>
+          <p className="text-sm font-medium text-muted-soft mt-1">أدر منتجاتك وشاركها برابط احترافي — مجاني</p>
         </div>
         {subdomain && (
-          <div className="bg-white border-2 border-zinc-200 rounded-2xl px-5 py-3 flex items-center gap-3">
-            <IconLink className="w-5 h-5 text-zinc-700" />
+          <div className="bg-card rounded-xl p-4 flex items-center gap-3 border border-border">
+            <IconLink className="w-5 h-5 text-primary" />
             <div>
-              <div className="text-xs font-bold text-zinc-600">رابط متجرك (شاركه)</div>
-              <div className="font-mono text-sm font-bold text-zinc-900" dir="ltr">{BASE}/{subdomain}</div>
+              <div className="text-xs font-bold text-muted-soft">رابط متجرك (شاركه)</div>
+              <div className="font-mono text-sm font-bold text-foreground" dir="ltr">{BASE}/{subdomain}</div>
             </div>
-            <button onClick={() => { navigator.clipboard.writeText(`https://${BASE}/${subdomain}`); alert("تم نسخ رابط المتجر"); }} className="ml-2 px-4 py-2 bg-zinc-900 text-white rounded-xl text-xs font-bold hover:bg-black">نسخ</button>
+            <button onClick={() => { navigator.clipboard.writeText(`https://${BASE}/${subdomain}`); alert("تم نسخ رابط المتجر"); }} className="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-dark">نسخ</button>
           </div>
         )}
       </div>
-      <form onSubmit={create} className="bg-white rounded-2xl border-2 border-zinc-200 p-5 grid md:grid-cols-2 gap-4">
+      <form onSubmit={create} className="bg-card rounded-2xl border border-border p-5 grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold text-zinc-900 mb-1">اسم المنتج</label>
-          <input required placeholder="مثال: ساعة فاخرة" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full border-2 border-zinc-300 rounded-xl px-4 py-3 bg-white text-zinc-900 focus:border-zinc-900 outline-none" />
+          <label className="block text-sm font-bold text-muted-soft mb-1">اسم المنتج</label>
+          <input required placeholder="مثال: ساعة فاخرة" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground focus:border-primary outline-none" />
         </div>
         <div>
-          <label className="block text-xs font-bold text-zinc-900 mb-1">slug (رابط)</label>
-          <input required placeholder="montre-luxe" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") })} className="w-full border-2 border-zinc-300 rounded-xl px-4 py-3 text-left bg-white focus:border-zinc-900 outline-none" dir="ltr" />
+          <label className="block text-sm font-bold text-muted-soft mb-1">slug (رابط)</label>
+          <input required placeholder="montre-luxe" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") })} className="w-full border border-border rounded-xl px-4 py-3 text-left bg-card focus:border-primary outline-none" dir="ltr" />
         </div>
         <div>
-          <label className="block text-xs font-bold text-zinc-900 mb-1">السعر (دج)</label>
-          <input required placeholder="2500" type="number" min={1} value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full border-2 border-zinc-300 rounded-xl px-4 py-3 bg-white focus:border-zinc-900 outline-none" />
+          <label className="block text-sm font-bold text-muted-soft mb-1">السعر (دج)</label>
+          <input required placeholder="2500" type="number" min={1} value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-card focus:border-primary outline-none" />
         </div>
         <div>
-          <label className="block text-xs font-bold text-zinc-900 mb-1">صورة المنتج (رفع مجاني)</label>
+          <label className="block text-sm font-bold text-muted-soft mb-1">صورة المنتج (رفع مجاني)</label>
           <div className="flex gap-2">
-            <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) compressAndUpload(f); }} className="flex-1 border-2 border-zinc-300 rounded-xl px-3 py-2 text-sm bg-white file:mr-2 file:bg-zinc-900 file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1" />
-            {uploading && <span className="text-xs font-bold text-zinc-600 py-2">جاري الضغط...</span>}
+            <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) { setImagePreview(URL.createObjectURL(f)); compressAndUpload(f); }}} className="flex-1 border border-border rounded-xl px-3 py-2 text-sm bg-card file:mr-2 file:bg-card file:text-foreground file:border-0 file:rounded-lg file:px-3 file:py-1" />
+            {uploading && <span className="text-xs font-bold text-muted-soft py-2">جاري الضغط...</span>}
           </div>
-          {form.image_url && <a href={form.image_url} target="_blank" className="text-xs text-emerald-700 font-bold underline">✓ مرفوعة — معاينة</a>}
-          <input placeholder="أو رابط خارجي (اختياري)" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full border border-zinc-200 rounded-xl px-3 py-2 text-xs mt-2 text-left bg-zinc-50" dir="ltr" />
+          {imagePreview && <a href={imagePreview} target="_blank" className="text-sm text-primary font-bold underline">✓ مرفوعة — معاينة</a>}
+          <input placeholder="أو رابط خارجي (اختياري)" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full border border-border rounded-xl px-3 py-2 text-sm bg-card/5" dir="ltr" />
         </div>
         <div>
-          <label className="block text-xs font-bold text-zinc-900 mb-1">الفئة (اختياري)</label>
-          <input list="cats" placeholder="مثال: إلكترونيات، ملابس" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full border-2 border-zinc-300 rounded-xl px-4 py-3 bg-white focus:border-zinc-900 outline-none" />
+          <label className="block text-sm font-bold text-muted-soft mb-1">الفئة (اختياري)</label>
+          <input list="cats" placeholder="مثال: إلكترونيات، ملابس" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-card focus:border-primary outline-none" />
           <datalist id="cats"><option value="إلكترونيات"/><option value="ملابس"/><option value="منزل"/><option value="جمال"/><option value="أطفال"/></datalist>
         </div>
-        <textarea placeholder="الوصف (اختياري)" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="border-2 border-zinc-300 rounded-xl px-4 py-3 md:col-span-2 bg-white focus:border-zinc-900 outline-none" rows={2} />
-        <button disabled={loading || uploading} className="bg-zinc-900 text-white py-3.5 rounded-xl font-bold hover:bg-black disabled:opacity-50 md:col-span-2 shadow-sm">{loading ? "جاري..." : "إضافة منتج — مجاني"}</button>
+        <textarea placeholder="الوصف (اختياري)" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="border border-border rounded-xl px-4 py-3 bg-card focus:border-primary outline-none md:col-span-2" rows={2} />
+        <button disabled={loading || uploading} className="bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-primary-dark disabled:opacity-50 md:col-span-2 shadow-sm">{loading ? "جاري..." : "إضافة منتج — مجاني"}</button>
       </form>
       <div className="grid md:grid-cols-2 gap-5">
         {products.map((p) => (
-          <div key={p.id} className="bg-white rounded-2xl border-2 border-zinc-200 p-5 flex gap-5 hover:border-zinc-300 hover:shadow-sm transition">
-            {p.image_url ? <img src={p.image_url} alt={p.name} className="w-24 h-24 rounded-2xl object-cover border border-zinc-200" /> : <div className="w-24 h-24 rounded-2xl bg-zinc-50 border-2 border-zinc-200 flex items-center justify-center"><IconPackage className="w-8 h-8 text-zinc-400" /></div>}
+          <div key={p.id} className="bg-card rounded-2xl border border-border p-5 flex gap-5 hover:border-border transition">
+            {p.image_url ? <img src={p.image_url} alt={p.name} className="w-24 h-24 rounded-xl object-cover border border-border" /> : <div className="w-24 h-24 rounded-xl bg-card/5 border border-border flex items-center justify-center"><IconPackage className="w-8 h-8 text-primary" /></div>}
             <div className="flex-1 min-w-0">
-              <div className="font-extrabold text-zinc-900 truncate">{p.name} {p.category && <span className="text-xs bg-zinc-100 border border-zinc-200 px-2 py-0.5 rounded-full font-bold">#{p.category}</span>}</div>
-              <div className="text-xs text-zinc-600 font-mono truncate" dir="ltr">{BASE}/{subdomain}/p/{p.slug}</div>
-              <div className="text-zinc-900 font-black">{p.price} دج</div>
+              <div className="font-extrabold text-foreground truncate">{p.name} {p.category && <span className="text-xs bg-card/2 border border-card/2 px-2 py-0.5 rounded-full font-bold">#{p.category}</span>}</div>
+              <div className="text-sm text-muted-soft font-mono truncate" dir="ltr">{BASE}/{subdomain}/p/{p.slug}</div>
+              <div className="text-foreground font-black mt-1">{p.price} دج</div>
               <div className="mt-2 flex flex-wrap gap-1.5">
-                <button onClick={() => toggleActive(p)} className={`text-xs px-3 py-1 rounded-full font-bold border ${p.is_active ? "bg-zinc-900 text-white border-zinc-900" : "bg-white text-zinc-600 border-zinc-300"}`}>{p.is_active ? "✓ نشط" : "مخفي"}</button>
-                <button onClick={() => { const url = `https://${BASE}/${subdomain}/p/${p.slug}`; navigator.clipboard.writeText(url); alert("تم نسخ: " + url); }} className="text-xs bg-zinc-900 text-white px-3 py-1.5 rounded-full font-bold hover:bg-black">نسخ الرابط المجاني</button>
-                <button onClick={async () => { if (confirm("حذف المنتج؟")) { await supabase.from("products").delete().eq("id", p.id); load(); } }} className="text-xs bg-white border-2 border-zinc-300 px-3 py-1 rounded-full font-bold hover:bg-zinc-50">حذف</button>
+                <button onClick={() => toggleActive(p)} className={`text-xs px-3 py-1 rounded-full font-bold border ${p.is_active ? "bg-primary/10 text-primary" : "bg-card/2 text-muted-soft border-card/2"} ${p.is_active ? "" : "opacity-50"} `}>{p.is_active ? "✓ نشط" : "مخفي"}</button>
+                <button onClick={() => { const url = `https://${BASE}/${subdomain}/p/${p.slug}`; navigator.clipboard.writeText(url); alert("تم نسخ: " + url); }} className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-bold hover:bg-primary/20">نسخ الرابط المجاني</button>
+                <button onClick={async () => { if (confirm("حذف المنتج؟")) { await supabase.from("products").delete().eq("id", p.id); load(); } }} className="text-xs bg-card border border-border rounded-full font-bold hover:bg-border">حذف</button>
               </div>
             </div>
           </div>
         ))}
-        {products.length === 0 && <div className="text-center text-zinc-600 font-medium p-8 md:col-span-2 bg-white rounded-2xl border-2 border-dashed border-zinc-300">لا منتجات بعد — أضف أول منتج أعلاه</div>}
+        {products.length === 0 && <div className="text-center text-muted-soft font-medium p-8 md:col-span-2 bg-card rounded-2xl border border-border">لا منتجات بعد — أضف أول منتج أعلاه</div>}
       </div>
     </div>
   );
