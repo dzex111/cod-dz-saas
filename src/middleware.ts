@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { updateSession } from "@/lib/supabase/middleware";
 
-const BASE_DOMAIN = process.env.NEXT_PUBLIC_BASE_DOMAIN || "ordely.com";
+const BASE_DOMAIN = process.env.NEXT_PUBLIC_BASE_DOMAIN || "cod-dz-saas.vercel.app";
 
 // كاش مجاني في الذاكرة لتقليل استهلاك Supabase (60 ثانية) — مع حد أقصى
 const merchantCache = new Map<string, { merchant: { id: string; subscription_status: string; trial_ends_at: string; subscription_ends_at: string } | null; expires: number }>();

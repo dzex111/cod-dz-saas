@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import DashboardNav, { DashboardNavMobile } from "@/components/DashboardNav";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_DOMAIN || "cod-dz-saas.vercel.app";
 
@@ -19,12 +20,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const merchant = membership.merchants as unknown as { business_name: string; subdomain: string; subscription_status: string };
 
   const nav = [
-    { href: "/dashboard", label: "الرئيسية", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6", active: true },
+    { href: "/dashboard", label: "الرئيسية", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
     { href: "/dashboard/orders", label: "الطلبات", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
     { href: "/dashboard/products", label: "المنتجات", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
     { href: "/dashboard/blacklists", label: "القائمة السوداء", icon: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" },
     { href: "/dashboard/coupons", label: "الكوبونات", icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" },
-    { href: "/dashboard/settings/store", label: "تخصيص المتجر ✨", icon: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" },
+    { href: "/dashboard/settings/store", label: "تخصيص المتجر", icon: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" },
     { href: "/dashboard/settings/shipping", label: "الشحن", icon: "M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" },
     { href: "/dashboard/settings/billing", label: "الفوترة", icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" },
   ];
@@ -57,16 +58,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </a>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          <div className="text-[11px] font-bold tracking-widest text-muted-soft uppercase px-3 mb-2">القائمة</div>
-          {nav.map((item) => (
-            <Link key={item.href} href={item.href} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${item.active ? "bg-primary text-white shadow-sm" : "text-muted hover:text-foreground hover:bg-card-hover"}`}>
-              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8}>
-                <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-              </svg>
-              <span className="flex-1">{item.label}</span>
-            </Link>
-          ))}
+        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+          <div className="text-xs font-medium tracking-widest text-muted uppercase px-3 mb-2">Menu</div>
+          <DashboardNav items={nav} />
 
           {isAdmin && (
             <Link href="/admin/subscriptions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-sm font-bold mt-4">
@@ -102,9 +96,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           
         </div>
         <div className="flex gap-1.5 px-3 pb-3 overflow-x-auto">
-          {nav.map(i=>(
-            <Link key={i.href} href={i.href} className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border ${i.active ? "bg-primary text-white border-primary" : "bg-background border-border text-muted"}`}>{i.label}</Link>
-          ))}
+          <DashboardNavMobile items={nav} />
         </div>
       </div>
 
