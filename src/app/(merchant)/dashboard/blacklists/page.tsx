@@ -56,7 +56,7 @@ export default function BlacklistsPage() {
               <button onClick={()=>remove(e.id)} className="text-xs bg-background border border-border rounded-full px-3 py-1.5 font-bold hover:bg-card-hover transition-colors">إزالة</button>
             </div>
           ))}
-          {list.length===0 && <div className="p-10 text-center text-muted text-sm bg-background">لا أرقام محظورة — نظيف ✓</div>}
+          {list.length===0 && <div className="p-10 text-center text-muted text-sm bg-background">لا أرقام محظورة — نظيف </div>}
         </div>
       </div>
     </div>

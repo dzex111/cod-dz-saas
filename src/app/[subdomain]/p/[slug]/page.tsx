@@ -152,7 +152,7 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 px-3.5 py-1.5 rounded-full text-xs font-bold"><IconShield className="w-3.5 h-3.5" /> دفع عند الاستلام</span>
                 <span className="inline-flex items-center gap-1.5 bg-background border border-border px-3.5 py-1.5 rounded-full text-xs font-bold"><IconTruck className="w-3.5 h-3.5" /> توصيل 58 ولاية</span>
-                <span className="inline-flex items-center gap-1.5 bg-background border border-border px-3.5 py-1.5 rounded-full text-xs font-bold">✓ ضمان استرجاع</span>
+                <span className="inline-flex items-center gap-1.5 bg-background border border-border px-3.5 py-1.5 rounded-full text-xs font-bold"> ضمان استرجاع</span>
               </div>
             )}
           </div>
@@ -166,7 +166,7 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
           </div>
           {cfg.show_shipping && (
             <div className="bg-background border border-border rounded-xl p-4 text-xs leading-6">
-              <div className="font-bold">🚚 توصيل سريع</div>
+              <div className="font-bold"> توصيل سريع</div>
               <div className="text-muted">48 ولاية شمالية خلال 24-48 ساعة، الجنوب خلال 3 أيام. الدفع عند الاستلام.</div>
             </div>
           )}

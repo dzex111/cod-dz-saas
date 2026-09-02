@@ -122,7 +122,7 @@ export default function ProductsPage() {
             <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) { setImagePreview(URL.createObjectURL(f)); compressAndUpload(f); }}} className="flex-1 border border-border rounded-xl px-3 py-2 text-sm bg-background file:mr-2 file:bg-primary file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1.5 file:text-xs file:font-bold" />
             {uploading && <span className="text-xs font-bold text-muted py-2">جاري الضغط...</span>}
           </div>
-          {imagePreview && <a href={imagePreview} target="_blank" className="text-xs text-primary font-bold underline mt-1 inline-block">✓ مرفوعة — معاينة</a>}
+          {imagePreview && <a href={imagePreview} target="_blank" className="text-xs text-primary font-bold underline mt-1 inline-block"> مرفوعة — معاينة</a>}
           <input placeholder="أو رابط خارجي (اختياري)" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full mt-2 border border-border rounded-xl px-3 py-2 text-xs bg-background placeholder:text-muted-soft" dir="ltr" />
         </div>
         <div>
@@ -143,7 +143,7 @@ export default function ProductsPage() {
               <div className="text-xs text-muted-soft font-mono truncate mt-0.5" dir="ltr">{BASE}/{subdomain}/p/{p.slug}</div>
               <div className="text-foreground font-black mt-1 text-sm">{p.price.toLocaleString("fr-DZ")} دج</div>
               <div className="mt-2 flex flex-wrap gap-1.5">
-                <button onClick={() => toggleActive(p)} className={`text-xs px-3 py-1 rounded-full font-bold border ${p.is_active ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-zinc-50 text-muted border-border"}`}>{p.is_active ? "✓ نشط" : "مخفي"}</button>
+                <button onClick={() => toggleActive(p)} className={`text-xs px-3 py-1 rounded-full font-bold border ${p.is_active ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-zinc-50 text-muted border-border"}`}>{p.is_active ? " نشط" : "مخفي"}</button>
                 <button onClick={() => { const url = `https://${BASE}/${subdomain}/p/${p.slug}`; navigator.clipboard.writeText(url); alert("تم نسخ: " + url); }} className="text-xs bg-background border border-border px-3 py-1.5 rounded-full font-bold hover:bg-card-hover">نسخ الرابط</button>
                 <button onClick={async () => { if (confirm("حذف المنتج؟")) { await supabase.from("products").delete().eq("id", p.id); load(); } }} className="text-xs bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-full font-bold">حذف</button>
               </div>

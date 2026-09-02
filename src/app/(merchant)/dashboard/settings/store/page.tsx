@@ -88,7 +88,7 @@ export default function StoreSettingsPage() {
     const res = await fetch("/api/store-config", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ merchantId, config: toSave }) });
     const jr = await res.json();
     if (!res.ok) { setMsg(jr.error || "فشل حفظ التصميم"); setSaving(false); return; }
-    setMsg("✓ تم حفظ كل التخصيصات — متجرك تحدث فوراً");
+    setMsg(" تم حفظ كل التخصيصات — متجرك تحدث فوراً");
     setSaving(false);
     setTimeout(()=>setMsg(""), 4000);
   }
@@ -128,7 +128,7 @@ export default function StoreSettingsPage() {
               <div className="grid gap-3">
                 {templates.map(t=>(
                   <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`text-right p-4 rounded-xl border-2 text-sm transition-all ${config.template===t.id ? "border-primary bg-primary text-white" : "border-border bg-background hover:border-border-strong"}`}>
-                    <div className="font-black">{t.name} {config.template===t.id && "✓"}</div>
+                    <div className="font-black">{t.name} {config.template===t.id && ""}</div>
                     <div className={`text-xs mt-1 ${config.template===t.id ? "text-white/70" : "text-muted"}`}>{t.desc}</div>
                   </button>
                 ))}
@@ -199,7 +199,7 @@ export default function StoreSettingsPage() {
             </div>
 
             <button onClick={save} disabled={saving} className="w-full bg-primary text-white rounded-xl py-4 font-black hover:opacity-90 disabled:opacity-40 transition-opacity shadow-sm">
-              {saving ? "جاري الحفظ..." : "حفظ كل التخصيصات ✓"}
+              {saving ? "جاري الحفظ..." : "حفظ كل التخصيصات "}
             </button>
             {msg && <div className="text-center text-sm font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-xl p-3">{msg}</div>}
           </div>

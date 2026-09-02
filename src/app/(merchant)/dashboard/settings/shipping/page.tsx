@@ -43,6 +43,16 @@ export default function ShippingPage() {
     else alert(error.message);
   }
 
+  async function disconnect() {
+    if (!confirm(`هل أنت متأكد من إزالة ربط ${provider === "yalidine" ? "Yalidine" : "ZR Express"}؟`)) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    const { data: mem } = await supabase.from("merchant_members").select("merchant_id").eq("user_id", user!.id).single();
+    if (!mem) return;
+    const { error } = await supabase.from("shipping_configs").delete().eq("merchant_id", mem.merchant_id).eq("provider_name", provider);
+    if (!error) { setForm({ api_id: "", api_token: "" }); load(); alert("تمت إزالة الربط"); }
+    else alert(error.message);
+  }
+
   return (
     <div className="max-w-xl space-y-6">
       <div>
@@ -54,16 +64,21 @@ export default function ShippingPage() {
         <button onClick={()=>setProvider("yalidine")} className={`p-4 rounded-lg border text-right flex flex-col gap-1 transition-colors ${provider === "yalidine" ? "border-primary bg-primary text-white shadow-sm" : "border-border bg-card text-foreground hover:bg-card-hover"}`}>
           <div className="font-black text-sm">Yalidine</div>
           <div className={`text-xs ${provider==="yalidine"?"text-white/70":"text-muted"}`}>تغطية 58 ولاية</div>
-          {existing.yalidine && <div className={`text-xs mt-1 font-bold ${provider==="yalidine"?"text-emerald-300":"text-emerald-600"}`}>✓ مربوط</div>}
+          {existing.yalidine && <div className={`text-xs mt-1 font-bold ${provider==="yalidine"?"text-emerald-300":"text-emerald-600"}`}> مربوط</div>}
         </button>
         <button onClick={()=>setProvider("zr_express")} className={`p-4 rounded-lg border text-right flex flex-col gap-1 transition-colors ${provider === "zr_express" ? "border-primary bg-primary text-white shadow-sm" : "border-border bg-card text-foreground hover:bg-card-hover"}`}>
           <div className="font-black text-sm">ZR Express</div>
           <div className={`text-xs ${provider==="zr_express"?"text-white/70":"text-muted"}`}>شريك ثانٍ — نفس المبدأ</div>
-          {existing.zr_express && <div className={`text-xs mt-1 font-bold ${provider==="zr_express"?"text-emerald-300":"text-emerald-600"}`}>✓ مربوط</div>}
+          {existing.zr_express && <div className={`text-xs mt-1 font-bold ${provider==="zr_express"?"text-emerald-300":"text-emerald-600"}`}> مربوط</div>}
         </button>
       </div>
 
-      {existing[provider] && <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm font-bold text-emerald-700">مربوط حالياً — ID: {existing[provider].api_id} ✓</div>}
+      {existing[provider] && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-center justify-between">
+          <span className="text-sm font-bold text-emerald-700">مربوط حالياً — ID: {existing[provider].api_id}</span>
+          <button type="button" onClick={disconnect} className="text-xs bg-white border border-emerald-200 text-emerald-700 px-3 py-1.5 rounded-lg hover:bg-emerald-50 font-medium">إزالة الربط</button>
+        </div>
+      )}
 
       <form onSubmit={save} className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
         <h3 className="font-bold text-foreground">{provider==="yalidine"?"Yalidine — X-API-ID / X-API-TOKEN":"ZR Express — API ID / API TOKEN"}</h3>
@@ -77,7 +92,7 @@ export default function ShippingPage() {
         </div>
         <p className="text-xs text-muted leading-5">تجده في لوحة {provider==="yalidine"?"Yalidine":"ZR Express"} → الإعدادات → API. يبقى في حسابك فقط.</p>
         <button className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:bg-primary-hover transition-colors shadow-sm">حفظ ربط {provider==="yalidine"?"Yalidine":"ZR Express"}</button>
-        {saved && <div className="text-emerald-600 text-sm font-bold text-center">تم الحفظ بنجاح ✓</div>}
+        {saved && <div className="text-emerald-600 text-sm font-bold text-center">تم الحفظ بنجاح </div>}
       </form>
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm leading-6 font-medium text-amber-800">

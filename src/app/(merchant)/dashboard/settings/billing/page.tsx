@@ -20,7 +20,7 @@ export default function BillingPage() {
       if (data) setMerchant(data);
     })();
     const params = new URLSearchParams(window.location.search);
-    if (params.get("chargily")==="success") setMsg("✓ تم الدفع عبر Chargily — سيُفعل اشتراكك تلقائياً عند تأكيد Webhook");
+    if (params.get("chargily")==="success") setMsg(" تم الدفع عبر Chargily — سيُفعل اشتراكك تلقائياً عند تأكيد Webhook");
     if (params.get("chargily")==="cancel") setMsg("تم إلغاء الدفع — يمكنك المحاولة مجدداً أو استخدام BaridiMob");
   }, []);
 
@@ -30,7 +30,7 @@ export default function BillingPage() {
     const res = await fetch("/api/chargily/create", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ months }) });
     const j = await res.json();
     if (!res.ok) {
-      if (j.fallback==="baridimob") setMsg("Chargily غير مفعّل حالياً (مفاتيح تجريبية) — استخدم BaridiMob المجاني بالأسفل ✓");
+      if (j.fallback==="baridimob") setMsg("Chargily غير مفعّل حالياً (مفاتيح تجريبية) — استخدم BaridiMob المجاني بالأسفل ");
       else setMsg(j.error || "فشل إنشاء جلسة الدفع");
       setChargilyLoading(false);
       return;
@@ -49,7 +49,7 @@ export default function BillingPage() {
     const res = await fetch("/api/baridimob/submit", { method: "POST", body: fd });
     const j = await res.json();
     if (!res.ok) setMsg(j.error || "فشل");
-    else { setMsg("✓ تم رفع الإيصال — سيتم المراجعة قريباً"); setForm({ reference: "", amount: "" }); setFile(null); }
+    else { setMsg(" تم رفع الإيصال — سيتم المراجعة قريباً"); setForm({ reference: "", amount: "" }); setFile(null); }
   }
 
   return (
@@ -64,7 +64,7 @@ export default function BillingPage() {
           <div className="flex justify-between items-center">
             <div>
               <div className="text-xs font-bold tracking-widest text-muted-soft uppercase">حالة الاشتراك</div>
-              <div className="font-black text-foreground mt-1">{merchant.subscription_status === "active" ? "✓ نشط" : merchant.subscription_status === "trial" ? "تجريبي" : merchant.subscription_status}</div>
+              <div className="font-black text-foreground mt-1">{merchant.subscription_status === "active" ? " نشط" : merchant.subscription_status === "trial" ? "تجريبي" : merchant.subscription_status}</div>
               <div className="text-xs text-emerald-600 font-bold mt-1">يعمل مجاناً عبر vercel.app</div>
             </div>
             <div className="text-left bg-background border border-border rounded-xl px-4 py-3">

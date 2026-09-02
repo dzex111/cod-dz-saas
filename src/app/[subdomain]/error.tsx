@@ -17,7 +17,7 @@ export default function StorefrontError({
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-6">
       <div className="bg-white rounded-xl border-2 border-zinc-200 p-8 text-center max-w-md">
-        <div className="text-4xl mb-3">⚠️</div>
+        <div className="text-4xl mb-3"></div>
         <h1 className="font-black text-zinc-900 text-lg">خطأ في المتجر</h1>
         <p className="text-sm text-zinc-600 mt-2 font-medium">
           {error.message || "حدث خطأ — حاول مرة أخرى"}

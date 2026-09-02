@@ -52,9 +52,9 @@ export default function LoginPage() {
             <h1 className="text-3xl font-bold leading-tight">Every order,<br />under control.</h1>
             <p className="text-white/70 mt-4 leading-relaxed">Run your COD operations from one organized workspace. Verify, track and fulfill — without the chaos.</p>
             <ul className="mt-8 space-y-3 text-sm">
-              <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs">✓</span> Order workspace with clear status</li>
-              <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs">✓</span> Duplicate & risk signals before fulfillment</li>
-              <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs">✓</span> Team workflow & operational analytics</li>
+              <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs"></span> Order workspace with clear status</li>
+              <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs"></span> Duplicate & risk signals before fulfillment</li>
+              <li className="flex gap-3"><span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs"></span> Team workflow & operational analytics</li>
             </ul>
           </div>
         </div>

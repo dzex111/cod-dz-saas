@@ -104,14 +104,14 @@ export default async function DashboardLayout({ children }: { children: React.Re
         {/* Top bar — alive with search + actions */}
         <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-xl border-b border-border px-6 py-4 flex items-center justify-between gap-4">
           <div>
-            <h1 className="font-black text-lg leading-none">مرحباً، {merchant.business_name} 👋</h1>
+            <h1 className="font-black text-lg leading-none">مرحباً، {merchant.business_name} </h1>
             <p className="text-xs text-muted mt-1">هذا ما يحدث في متجرك اليوم</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="hidden md:flex items-center gap-2 bg-card border border-border rounded-full pl-2 pr-4 py-1.5 shadow-sm">
               <svg viewBox="0 0 24 24" className="w-4 h-4 text-muted-soft" fill="none" stroke="currentColor" strokeWidth={1.8}><path d="M21 21l-4.35-4.35M11 19a8 8 0 110-16 8 8 0 010 16z" /></svg>
               <input placeholder="بحث في الطلبات..." className="bg-transparent outline-none text-sm w-32 placeholder:text-muted-soft" />
-              <span className="text-[10px] bg-background border border-border px-1.5 py-0.5 rounded font-mono">⌘K</span>
+              <span className="text-[10px] bg-background border border-border px-1.5 py-0.5 rounded font-mono">K</span>
             </div>
             
             <button className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center hover:bg-card-hover transition-colors relative">

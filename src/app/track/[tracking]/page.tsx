@@ -10,7 +10,7 @@ export default async function TrackPage({ params }: { params: Promise<{ tracking
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
         <div className="bg-card rounded-xl border border-border p-8 text-center max-w-md">
-          <div className="text-4xl mb-2">🔍</div>
+          <div className="text-4xl mb-2"></div>
           <h1 className="font-extrabold text-foreground">رقم التتبع غير موجود</h1>
           <p className="text-muted-soft mt-2">تأكد من الرقم أو تواصل مع المتجر</p>
           <Link href="/" className="inline-block mt-4 px-5 py-2 bg-primary text-white rounded-xl font-bold">الرئيسية</Link>
@@ -37,7 +37,7 @@ export default async function TrackPage({ params }: { params: Promise<{ tracking
         <div className="space-y-3">
           {steps.map(s=>(
             <div key={s.key} className={`flex items-center gap-3 p-3 rounded-xl border ${s.done?"border-primary/20":"border-border"} ${s.done?"bg-primary/5":"bg-card/5"}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${s.done?"bg-primary":"bg-muted-soft"} ${s.done?"text-primary":"text-muted-soft"}`}>{s.done?"✓":"○"}</div>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${s.done?"bg-primary":"bg-muted-soft"} ${s.done?"text-primary":"text-muted-soft"}`}>{s.done?"":"○"}</div>
               <div className={`font-bold ${s.done?"text-primary":"text-muted-soft"}`}>{s.label}</div>
             </div>
           ))}

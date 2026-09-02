@@ -56,7 +56,7 @@ export default async function DashboardPage() {
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
               <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2}><path d="M5 13l4 4L19 7" /></svg>
             </div>
-            <span className="text-xs font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full">✓ جاهز للشحن</span>
+            <span className="text-xs font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full"> جاهز للشحن</span>
           </div>
           <div className="text-3xl font-black mt-3 text-emerald-600">{confirmed ?? 0}</div>
           <div className="text-xs font-bold text-muted mt-1">طلبات مؤكدة</div>
@@ -157,7 +157,7 @@ export default async function DashboardPage() {
               </Link>
             </div>
           )) : <div className="p-12 text-center">
-            <div className="w-14 h-14 rounded-xl bg-background border border-border flex items-center justify-center mx-auto mb-3">📦</div>
+            <div className="w-14 h-14 rounded-xl bg-background border border-border flex items-center justify-center mx-auto mb-3"></div>
             <p className="font-bold">لا توجد طلبات بعد</p>
             <p className="text-sm text-muted mt-1">شارك رابط منتجك وابدأ البيع!</p>
           </div>}
