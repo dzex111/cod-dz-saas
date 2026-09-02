@@ -38,7 +38,7 @@ export default function TemplateTech({ product, merchant, config }: { product: P
           </h1>
           <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">{config.hero_subtitle || merchant.description || product.description || "Performance pure, design minimal — conçu pour durer."}</p>
           <div className="mt-8 flex gap-3">
-            <a href="#order" className={`h-[46px] px-7 font-mono text-xs tracking-[0.14em] uppercase font-bold flex items-center text-white ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : ""}`} style={{ background: config.cta_color || "#EDEDED", color: config.cta_color ? "#fff" : "#0B0B0C", fontFamily: config.font==="cairo" ? "'Cairo', sans-serif" : config.font==="tajawal" ? "'Tajawal', sans-serif" : undefined }}>Commander — {product.price.toLocaleString("fr-DZ")} DZD</a>
+            {/* CTA hero removed — order only at bottom */}
             {product.compare_at_price && <span className="self-center text-sm line-through opacity-30">{Number(product.compare_at_price).toLocaleString("fr-DZ")} DZD</span>}
           </div>
         </div>

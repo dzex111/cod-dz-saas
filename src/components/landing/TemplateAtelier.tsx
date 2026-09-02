@@ -87,7 +87,7 @@ export default function TemplateAtelier({ product, merchant, config }: { product
                 <span className="font-serif text-3xl">{product.price.toLocaleString("fr-DZ")} DZD</span>
                 {product.compare_at_price && <span className="text-sm line-through opacity-40">{Number(product.compare_at_price).toLocaleString("fr-DZ")} DZD</span>}
               </div>
-              <a href="#order" className={`mt-8 inline-flex text-white px-8 py-3 text-xs tracking-[0.14em] uppercase font-bold ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : "rounded-none"}`} style={{ background: config.cta_color || "#111", fontFamily: config.font==="instrument" ? "'Instrument Serif', serif" : config.font==="cairo" ? "'Cairo', sans-serif" : config.font==="tajawal" ? "'Tajawal', sans-serif" : undefined }}>Commander — Paiement à la livraison</a>
+              {/* CTA hero removed — order only at bottom #order to avoid duplicate */}
             </div>
             <div className="mt-10 flex gap-8 text-xs">
               <div><div className="font-medium">58 Wilayas</div><div className="opacity-50">Livraison 24-48h</div></div>

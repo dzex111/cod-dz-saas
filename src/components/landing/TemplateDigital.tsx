@@ -68,9 +68,7 @@ export default function TemplateDigital({ product, merchant, config }: { product
               </>
             )}
           </div>
-          <a href="#order" className="mt-6 inline-flex items-center justify-center h-[48px] px-8 rounded-full font-bold text-white hover:opacity-90 transition-opacity" style={{ background: accent }}>
-            {config.cta_text || `Commander — ${product.price.toLocaleString("fr-DZ")} DZD`}
-          </a>
+          {/* CTA hero removed — order only at bottom #order to avoid duplicate blue button */}
           <div className="mt-6 flex gap-4 text-xs font-mono tracking-[0.1em] uppercase text-[#666]">
             <span>Livraison instantanée</span><span>•</span><span>Support 24/7</span><span>•</span><span>Garantie</span>
           </div>

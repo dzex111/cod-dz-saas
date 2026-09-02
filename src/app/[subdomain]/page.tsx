@@ -245,11 +245,11 @@ export default async function StorefrontHome({ params, searchParams }: { params:
 
         <div className="beauty-label"><span>Collection / 04 — En stock</span><span>Livraison 24/48H — 58 Wilayas</span></div>
 
-        {/* Grid exact — uses StorefrontClient for drawer but also renders beauty cards fallback if needed */}
+        {/* Grid exact — beauty cards with proper links (no window in server component) */}
         <section id="shop" className="beauty-grid">
           {products && products.length ? (
             products.slice(0,8).map((p:any)=>(
-              <div key={p.id} className="beauty-card" onClick={()=>{ window.location.href=`/${merchant.subdomain}/p/${p.slug}`; }}>
+              <a key={p.id} href={`/${merchant.subdomain}/p/${p.slug}`} className="beauty-card" style={{ textDecoration: "none", color: "inherit" }}>
                 <div className="beauty-card-img">
                   <span className="beauty-badge">Naturel</span>
                   <img src={p.image_url || heroImage} alt={p.name} loading="lazy" />
@@ -258,9 +258,9 @@ export default async function StorefrontHome({ params, searchParams }: { params:
                   <div className="beauty-name">{p.name}</div>
                   <div className="beauty-subname">{p.description?.slice(0,40) || "Soin naturel"}</div>
                   <div className="beauty-ing">{(p.name.split(" ").slice(0,3) as string[]).map((t:string)=><span key={t}>{t}</span>)}</div>
-                  <div className="beauty-priceRow"><div className="beauty-price">{Number(p.price).toLocaleString("fr-DZ")} DA</div><button className="beauty-btnBuy" onClick={(e)=>{ e.stopPropagation(); window.location.href=`/${merchant.subdomain}/p/${p.slug}`; }}>Ajouter</button></div>
+                  <div className="beauty-priceRow"><div className="beauty-price">{Number(p.price).toLocaleString("fr-DZ")} DA</div><span className="beauty-btnBuy">Ajouter</span></div>
                 </div>
-              </div>
+              </a>
             ))
           ) : (
             <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, background: "#FEFEFD", fontSize: 12, color: "#8A7F75" }}>Aucun soin — ajoutez votre premier produit</div>
