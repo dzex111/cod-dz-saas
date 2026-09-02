@@ -5,6 +5,9 @@ import { IconPackage } from "@/components/icons";
 import { getStoreConfig } from "@/lib/store-config";
 import StorefrontClient from "@/components/StorefrontClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
   const { subdomain } = await params;
   const admin = createAdminClient();

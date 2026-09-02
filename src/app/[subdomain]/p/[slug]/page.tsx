@@ -5,6 +5,9 @@ import TemplateAtelier from "@/components/landing/TemplateAtelier";
 import TemplateTech from "@/components/landing/TemplateTech";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string; slug: string }> }): Promise<Metadata> {
   const { subdomain, slug } = await params;
   const admin = createAdminClient();

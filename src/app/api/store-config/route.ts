@@ -37,9 +37,9 @@ export async function POST(req: NextRequest) {
 
   const admin = getAdmin();
   const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });
-  // Use admin to bypass RLS
   const arrayBuf = await blob.arrayBuffer();
-  const { error } = await admin.storage.from("store-configs").upload(`${merchantId}.json`, arrayBuf, { upsert: true, contentType: "application/json" });
+  const { error } = await admin.storage.from("store-configs").upload(`${merchantId}.json`, arrayBuf, { upsert: true, contentType: "application/json", cacheControl: "0" });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  // Also purge cache by re-uploading with same content but different cacheControl already handled
   return NextResponse.json({ success: true });
 }
