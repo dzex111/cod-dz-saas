@@ -64,8 +64,8 @@ export default function TemplateAtelier({ product, merchant, config }: { product
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur-[12px] border-b border-[#E8E6E1] h-[56px] flex items-center">
         <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-8 h-8 rounded object-cover border border-[#E8E6E1]" />}
-            <div className="font-serif text-[17px] tracking-[-0.02em]">ATELIER <span className="opacity-40">/</span> ALG</div>
+            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-8 h-8 rounded object-cover border border-[#E8E6E1] bg-white" />}
+            <div className="font-serif text-[17px] tracking-[-0.02em]">{merchant.business_name}</div>
           </div>
           <div className="flex items-center gap-6 text-[11px] tracking-[0.12em] uppercase">
             <a href="#order" className="hover:opacity-60 transition-opacity">Panier (1)</a>

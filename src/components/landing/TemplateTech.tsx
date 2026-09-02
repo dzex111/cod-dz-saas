@@ -22,8 +22,8 @@ export default function TemplateTech({ product, merchant, config }: { product: P
       </div>
       <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
         <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-white">
-          {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20" />}
-          <span>NOVA <span className="text-white/60">TECH</span></span>
+          {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20 bg-white" />}
+          <span className="font-bold tracking-[0.14em]">{merchant.business_name}</span>
         </div>
         <a href="#order" className="font-mono text-xs tracking-[0.12em] border border-white/30 px-4 py-2 hover:bg-white hover:text-black transition-colors">PANIER (1)</a>
       </header>
@@ -99,7 +99,7 @@ export default function TemplateTech({ product, merchant, config }: { product: P
         </div>
       </section>
 
-      <footer className="border-t border-white/10 py-6 text-center text-xs font-mono opacity-40">© {merchant.business_name} • NOVA TECH — ORDELY</footer>
+      <footer className="border-t border-white/10 py-6 text-center text-xs font-mono opacity-40">© {merchant.business_name} — ORDELY</footer>
     </div>
   );
 }
