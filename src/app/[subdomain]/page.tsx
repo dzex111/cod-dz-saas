@@ -49,7 +49,28 @@ export default async function StorefrontHome({ params, searchParams }: { params:
           <div className="font-mono text-xs tracking-[0.14em]">NOVA <span className="opacity-40">TECH</span> — {merchant.business_name}</div>
           <div className="text-xs font-mono opacity-60">{products?.length || 0} produits</div>
         </header>
-        <section className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
+
+        {/* Hero — exact as Electronics file */}
+        <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[82vh] border-b border-white/10">
+          <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
+            <div className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40 flex gap-4 mb-6">
+              <span>EDITION 2024</span><span>58 WILAYAS</span><span>GARANTIE</span>
+            </div>
+            <h1 className="text-[12vw] lg:text-[5.4vw] leading-[0.88] tracking-[-0.06em] font-bold uppercase">
+              <span className="block overflow-hidden"><span className="block">NOVA</span></span>
+              <span className="block overflow-hidden"><span className="block" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.28)", color: "transparent" }}>TECH</span></span>
+            </h1>
+            <p className="mt-6 max-w-[380px] text-sm leading-relaxed opacity-50">Performance pure, design minimal — conçu pour les produits électroniques et téléphones.</p>
+            <div className="mt-8">
+              <a href="#collection" className="h-[46px] px-7 bg-[#EDEDED] text-[#0B0B0C] font-mono text-xs tracking-[0.14em] uppercase font-bold inline-flex items-center hover:bg-white">Explorer la collection</a>
+            </div>
+          </div>
+          <div className="relative bg-[radial-gradient(90%_70%_at_50%_30%,#18181A_0%,#0F0F10_60%,#0B0B0C_100%)] flex items-center justify-center p-8 lg:p-12 min-h-[400px] border-t lg:border-t-0 lg:border-s border-white/10">
+            <img src={heroImage} alt={merchant.business_name} className="w-full max-w-[480px] aspect-square object-contain drop-shadow-2xl" />
+          </div>
+        </section>
+
+        <section id="collection" className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">Collection Tech</h2>
             <span className="text-xs font-mono opacity-40">{products?.length || 0} produits</span>
