@@ -43,52 +43,55 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4 py-10">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold">C</div>
-            <span className="font-extrabold text-xl text-foreground">COD DZ</span>
+      <div className="w-full max-w-[440px]">
+        <div className="text-center mb-7">
+          <Link href="/" className="inline-flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-ink flex items-center justify-center text-white font-black">C</div>
+            <span className="font-black text-xl text-foreground tracking-tight">COD DZ</span>
           </Link>
-          <p className="text-sm font-bold text-emerald-600 mt-2">✓ مجاني 100%</p>
+          <div className="inline-flex mt-3 bg-emerald-500 text-white text-xs font-black px-3 py-1 rounded-full">✓ مجاني 100% — بدون بطاقة</div>
         </div>
 
-        <div className="bg-card rounded-2xl shadow-lg border border-border p-7">
-          <h1 className="text-2xl font-extrabold text-foreground text-center mb-5">أنشئ متجرك الآن</h1>
+        <div className="bg-card rounded-[24px] shadow-xl border border-border p-7">
+          <h1 className="text-[22px] font-black text-foreground text-center">أنشئ متجرك الآن</h1>
+          <p className="text-sm text-muted text-center mt-1">جاهز في أقل من دقيقة — رابط احترافي فوري</p>
 
-          {err && <div className="bg-primary/10 border border-primary/20 text-primary p-3 rounded-xl text-sm font-medium mb-5">{err}</div>}
+          {err && <div className="mt-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium">{err}</div>}
 
-          <form onSubmit={handle} className="space-y-5">
+          <form onSubmit={handle} className="mt-6 space-y-4">
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">اسم النشاط</label>
-              <input placeholder="مثال: متجر الأناقة" required value={form.business_name} onChange={(e) => upd("business_name", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none" />
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">اسم النشاط</label>
+              <input placeholder="مثال: متجر الأناقة" required value={form.business_name} onChange={(e) => upd("business_name", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
             </div>
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">النطاق الفرعي</label>
-              <div className="flex rounded-xl border border-border focus-within:border-primary overflow-hidden bg-card">
-                <input placeholder="mystore" required value={form.subdomain} onChange={(e) => upd("subdomain", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))} className="flex-1 px-4 py-3 bg-card text-foreground placeholder:text-muted-soft outline-none text-left" dir="ltr" />
-                <span className="px-3 py-3 bg-primary/10 text-primary-soft text-sm font-mono border-l-2 border-primary" dir="ltr">.coddz.com</span>
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">النطاق الفرعي</label>
+              <div className="flex rounded-xl border border-border focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10 overflow-hidden bg-background transition">
+                <input placeholder="mystore" required value={form.subdomain} onChange={(e) => upd("subdomain", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))} className="flex-1 px-4 py-3 bg-transparent text-foreground placeholder:text-muted-soft outline-none text-left" dir="ltr" />
+                <span className="px-3.5 py-3 bg-card-hover text-muted text-sm font-mono font-semibold border-s border-border flex items-center" dir="ltr">.cod-dz-saas.vercel.app</span>
               </div>
+              <p className="text-xs text-muted-soft mt-1">3-30 حرف، أحرف صغيرة وأرقام فقط</p>
             </div>
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">رقم الهاتف</label>
-              <input dir="ltr" placeholder="07XXXXXXXX" required value={form.phone} onChange={(e) => upd("phone", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none text-left" />
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">رقم الهاتف</label>
+              <input dir="ltr" placeholder="07XXXXXXXX" required value={form.phone} onChange={(e) => upd("phone", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-left" />
             </div>
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">البريد الإلكتروني</label>
-              <input dir="ltr" placeholder="name@example.com" type="email" required value={form.email} onChange={(e) => upd("email", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none text-left" />
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">البريد الإلكتروني</label>
+              <input dir="ltr" placeholder="name@example.com" type="email" required value={form.email} onChange={(e) => upd("email", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-left" />
             </div>
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">كلمة المرور</label>
-              <input placeholder="8 أحرف على الأقل" type="password" required value={form.password} onChange={(e) => upd("password", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none" />
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">كلمة المرور</label>
+              <input placeholder="8 أحرف على الأقل" type="password" required value={form.password} onChange={(e) => upd("password", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
             </div>
-            <button disabled={loading} className="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primary-dark disabled:opacity-50 transition">
-              {loading ? "جاري الإنشاء..." : "أنشئ متجرك — مجاناً"}
+            <button disabled={loading} className="w-full bg-ink text-white py-3.5 rounded-xl font-bold hover:bg-ink-hover disabled:opacity-50 transition-colors shadow-sm">
+              {loading ? "جاري الإنشاء..." : "أنشئ متجري — مجاناً"}
             </button>
+            <p className="text-center text-xs text-muted-soft">بالتسجيل توافق على الشروط — 14 يوم تجربة كاملة</p>
           </form>
         </div>
 
-        <p className="text-center text-sm text-muted-soft mt-4">لديك حساب؟ <Link href="/login" className="color-primary font-bold hover:underline">سجل الدخول</Link></p>
-        <p className="text-center text-xs text-muted-soft mt-2"><Link href="/" className="hover:text-muted-600">← الرئيسية</Link></p>
+        <p className="text-center text-sm text-muted mt-4">لديك حساب؟ <Link href="/login" className="font-bold text-primary hover:underline">سجل الدخول</Link></p>
+        <p className="text-center text-xs text-muted-soft mt-2"><Link href="/" className="hover:text-muted">← الرئيسية</Link></p>
       </div>
     </div>
   );

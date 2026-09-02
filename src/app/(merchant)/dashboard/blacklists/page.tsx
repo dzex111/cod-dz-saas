@@ -24,8 +24,10 @@ export default function BlacklistsPage() {
     const clean = phone.replace(/[^0-9]/g,"");
     if (!/^(05|06|07)[0-9]{8}$/.test(clean)) { alert("رقم غير صحيح"); return; }
     const { data: { user } } = await supabase.auth.getUser();
-    const { data: mem } = await supabase.from("merchant_members").select("merchant_id").eq("user_id", user!.id).single();
-    const { error } = await supabase.from("blacklists").insert({ merchant_id: mem!.merchant_id, phone_number: clean, reason: reason || "يدوي" });
+    if (!user) return;
+    const { data: mem } = await supabase.from("merchant_members").select("merchant_id").eq("user_id", user.id).single();
+    if (!mem) return;
+    const { error } = await supabase.from("blacklists").insert({ merchant_id: mem.merchant_id, phone_number: clean, reason: reason || "يدوي" });
     if (error) alert(error.message);
     else { setPhone(""); setReason(""); load(); }
   }
@@ -37,22 +39,24 @@ export default function BlacklistsPage() {
 
   return (
     <div className="max-w-xl space-y-6">
-      <h1 className="text-xl font-extrabold text-foreground">القائمة السوداء — مجانية</h1>
-      <p className="text-sm font-medium">أي رقم هنا يُعلم تلقائياً كـ <span className="font-bold text-red-500">fake</span> عند الطلب.</p>
-      <form onSubmit={add} className="bg-card rounded-2xl border border-border p-5 flex gap-2">
-        <input required placeholder="07XXXXXXXX" value={phone} onChange={e=>setPhone(e.target.value)} className="flex-1 border border-border rounded-xl px-4 py-3 text-left bg-card focus:border-primary outline-none" dir="ltr" />
-        <input placeholder="السبب" value={reason} onChange={e=>setReason(e.target.value)} className="border border-border rounded-xl px-3 py-3 bg-card focus:border-primary outline-none" />
-        <button className="px-5 bg-primary text-white rounded-xl font-bold hover:bg-primary-dark">حظر</button>
+      <div>
+        <h1 className="text-xl font-black tracking-tight text-foreground">القائمة السوداء</h1>
+        <p className="text-sm text-muted mt-1">أي رقم هنا يُعلم تلقائياً كـ <span className="font-bold text-red-600">وهمي</span> عند الطلب — مجانية.</p>
+      </div>
+      <form onSubmit={add} className="bg-card rounded-[20px] border border-border p-4 flex gap-2 shadow-sm">
+        <input required placeholder="07XXXXXXXX" value={phone} onChange={e=>setPhone(e.target.value)} className="flex-1 border border-border rounded-xl px-4 py-3 text-left bg-background focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm placeholder:text-muted-soft" dir="ltr" />
+        <input placeholder="السبب" value={reason} onChange={e=>setReason(e.target.value)} className="border border-border rounded-xl px-3 py-3 bg-background focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm w-32" />
+        <button className="px-6 bg-ink text-white rounded-xl font-bold hover:bg-ink-hover transition-colors text-sm">حظر</button>
       </form>
-      <div className="bg-card rounded-2xl border border-border overflow-hidden">
-        <div className="divide-y">
+      <div className="bg-card rounded-[20px] border border-border overflow-hidden shadow-sm">
+        <div className="divide-y divide-border">
           {list.map(e=>(
-            <div key={e.id} className="p-4 flex justify-between items-center">
-              <div><div className="font-mono font-bold" dir="ltr">{e.phone_number}</div><div className="text-sm text-muted-soft">{e.reason} • {new Date(e.created_at).toLocaleDateString("ar-DZ")}</div></div>
-              <button onClick={()=>remove(e.id)} className="text-xs bg-card border border-border rounded-full font-bold hover:bg-border">إزالة</button>
+            <div key={e.id} className="p-4 flex justify-between items-center hover:bg-card-hover/50 transition-colors">
+              <div><div className="font-mono font-bold text-foreground" dir="ltr">{e.phone_number}</div><div className="text-xs text-muted mt-0.5">{e.reason} • {new Date(e.created_at).toLocaleDateString("ar-DZ")}</div></div>
+              <button onClick={()=>remove(e.id)} className="text-xs bg-background border border-border rounded-full px-3 py-1.5 font-bold hover:bg-card-hover transition-colors">إزالة</button>
             </div>
           ))}
-          {list.length===0 && <div className="p-8 text-center text-muted-soft font-medium">لا أرقام محظورة — نظيف ✓</div>}
+          {list.length===0 && <div className="p-10 text-center text-muted text-sm bg-background">لا أرقام محظورة — نظيف ✓</div>}
         </div>
       </div>
     </div>

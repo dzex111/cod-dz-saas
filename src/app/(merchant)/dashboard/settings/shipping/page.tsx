@@ -44,42 +44,44 @@ export default function ShippingPage() {
   }
 
   return (
-    <div className="max-w-xl space-y-6 bg-background">
-      <h1 className="text-xl font-extrabold text-foreground">إعدادات الشحن — مجاني للمنصة</h1>
-      <p className="text-sm font-medium text-muted-soft">اختر شريكك اللوجستي — كل تاجر بحسابه الخاص، المنصة لا تأخذ عمولة شحن.</p>
+    <div className="max-w-xl space-y-6">
+      <div>
+        <h1 className="text-xl font-black tracking-tight text-foreground">إعدادات الشحن</h1>
+        <p className="text-sm text-muted mt-1">اختر شريكك اللوجستي — كل تاجر بحسابه الخاص، لا عمولة للمنصة.</p>
+      </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <button onClick={()=>setProvider("yalidine")} className={`p-4 rounded-2xl border text-right flex flex-col items-end gap-1 ${provider === "yalidine" ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-foreground"}`}>
-          <div className="font-extrabold">Yalidine</div>
-          <div className="text-xs text-muted-soft">تغطية 58 ولاية</div>
-          {existing.yalidine && <div className="text-xs mt-1 font-bold">✓ مربوط</div>}
+        <button onClick={()=>setProvider("yalidine")} className={`p-4 rounded-[16px] border text-right flex flex-col gap-1 transition-colors ${provider === "yalidine" ? "border-ink bg-ink text-white shadow-sm" : "border-border bg-card text-foreground hover:bg-card-hover"}`}>
+          <div className="font-black text-sm">Yalidine</div>
+          <div className={`text-xs ${provider==="yalidine"?"text-white/70":"text-muted"}`}>تغطية 58 ولاية</div>
+          {existing.yalidine && <div className={`text-xs mt-1 font-bold ${provider==="yalidine"?"text-emerald-300":"text-emerald-600"}`}>✓ مربوط</div>}
         </button>
-        <button onClick={()=>setProvider("zr_express")} className={`p-4 rounded-2xl border text-right flex flex-col items-end gap-1 ${provider === "zr_express" ? "border-primary bg-primary/10 text-primary" : "border-border bg-card text-foreground"}`}>
-          <div className="font-extrabold">ZR Express</div>
-          <div className="text-xs text-muted-soft">شريك ثانٍ — نفس المبدأ</div>
-          {existing.zr_express && <div className="text-xs mt-1 font-bold">✓ مربوط</div>}
+        <button onClick={()=>setProvider("zr_express")} className={`p-4 rounded-[16px] border text-right flex flex-col gap-1 transition-colors ${provider === "zr_express" ? "border-ink bg-ink text-white shadow-sm" : "border-border bg-card text-foreground hover:bg-card-hover"}`}>
+          <div className="font-black text-sm">ZR Express</div>
+          <div className={`text-xs ${provider==="zr_express"?"text-white/70":"text-muted"}`}>شريك ثانٍ — نفس المبدأ</div>
+          {existing.zr_express && <div className={`text-xs mt-1 font-bold ${provider==="zr_express"?"text-emerald-300":"text-emerald-600"}`}>✓ مربوط</div>}
         </button>
       </div>
 
-      {existing[provider] && <div className="bg-card/2 border border-primary/20 rounded-xl p-3 text-sm font-bold text-primary">مربوط حالياً — ID: {existing[provider].api_id} ✓</div>}
+      {existing[provider] && <div className="bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl p-3 text-sm font-bold text-emerald-700 dark:text-emerald-300">مربوط حالياً — ID: {existing[provider].api_id} ✓</div>}
 
-      <form onSubmit={save} className="bg-card rounded-2xl border border-card p-6 space-y-4">
-        <h3 className="font-extrabold text-foreground">{provider==="yalidine"?"Yalidine — X-API-ID / X-API-TOKEN":"ZR Express — API ID / API TOKEN"}</h3>
+      <form onSubmit={save} className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
+        <h3 className="font-bold text-foreground">{provider==="yalidine"?"Yalidine — X-API-ID / X-API-TOKEN":"ZR Express — API ID / API TOKEN"}</h3>
         <div>
-          <label className="block text-sm font-bold text-muted-soft mb-1">API ID</label>
-          <input required placeholder="مثال: 123456" value={form.api_id} onChange={(e) => setForm({ ...form, api_id: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground focus:border-primary outline-none" dir="ltr" />
+          <label className="block text-xs font-bold text-foreground mb-1.5">API ID</label>
+          <input required placeholder="مثال: 123456" value={form.api_id} onChange={(e) => setForm({ ...form, api_id: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" dir="ltr" />
         </div>
         <div>
-          <label className="block text-sm font-bold text-muted-soft mb-1">API TOKEN / KEY</label>
-          <input required placeholder="التوكن من لوحة الشحن" value={form.api_token} onChange={(e) => setForm({ ...form, api_token: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground focus:border-primary outline-none" dir="ltr" />
+          <label className="block text-xs font-bold text-foreground mb-1.5">API TOKEN / KEY</label>
+          <input required placeholder="التوكن من لوحة الشحن" value={form.api_token} onChange={(e) => setForm({ ...form, api_token: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" dir="ltr" />
         </div>
-        <p className="text-sm text-muted-soft font-medium leading-5">تجده في لوحة {provider==="yalidine"?"Yalidine":"ZR Express"} → الإعدادات → API. يبقى في حسابك فقط.</p>
-        <button className="w-full bg-card border border-primary rounded-xl py-3.5 font-bold text-primary hover:bg-primary/5 disabled:opacity-40 shadow-sm">حفظ ربط {provider==="yalidine"?"Yalidine":"ZR Express"}</button>
-        {saved && <div className="text-primary text-sm font-bold text-center">تم الحفظ بنجاح ✓</div>}
+        <p className="text-xs text-muted leading-5">تجده في لوحة {provider==="yalidine"?"Yalidine":"ZR Express"} → الإعدادات → API. يبقى في حسابك فقط.</p>
+        <button className="w-full bg-ink text-white rounded-xl py-3.5 font-bold hover:bg-ink-hover transition-colors shadow-sm">حفظ ربط {provider==="yalidine"?"Yalidine":"ZR Express"}</button>
+        {saved && <div className="text-emerald-600 text-sm font-bold text-center">تم الحفظ بنجاح ✓</div>}
       </form>
 
-      <div className="bg-card/2 border border-primary/20 rounded-xl p-4 text-sm leading-6 font-medium text-primary">
-        ⚠️ تغطية 58 ولاية: يمكنك ربط الاثنين معاً — زر الشحن في الطلبات سيجرب Yalidine أولاً ثم ZR تلقائياً إن فشل الأول.
+      <div className="bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 rounded-xl p-4 text-sm leading-6 font-medium text-amber-800 dark:text-amber-300">
+        يمكنك ربط الاثنين معاً — زر الشحن في الطلبات سيجرب Yalidine أولاً ثم ZR تلقائياً إن فشل الأول.
       </div>
     </div>
   );

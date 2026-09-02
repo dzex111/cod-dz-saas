@@ -35,50 +35,50 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-lg">C</div>
-            <span className="font-extrabold text-xl text-foreground">COD DZ</span>
+      <div className="w-full max-w-[420px]">
+        <div className="text-center mb-7">
+          <Link href="/" className="inline-flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-ink flex items-center justify-center text-white font-black">C</div>
+            <span className="font-black text-xl text-foreground tracking-tight">COD DZ</span>
           </Link>
+          <p className="text-sm text-muted mt-2">مرحباً بعودتك — سجل دخولك للمتابعة</p>
         </div>
 
-        <div className="bg-card rounded-2xl shadow-lg border border-border p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-extrabold text-foreground">تسجيل الدخول</h1>
-            <p className="text-sm text-muted-soft mt-1">أدخل بياناتك للوصول للوحة التحكم</p>
-          </div>
+        <div className="bg-card rounded-[24px] shadow-xl border border-border p-7">
+          <h1 className="text-[22px] font-black text-foreground">تسجيل الدخول</h1>
+          <p className="text-sm text-muted mt-1">أدخل بياناتك للوصول للوحة التحكم</p>
 
           {err && (
-            <div className="bg-primary/10 border border-primary/20 text-primary p-3 rounded-xl text-sm font-medium mb-5">
+            <div className="mt-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium">
               {err}
             </div>
           )}
 
-          <form onSubmit={handle} className="space-y-5">
+          <form onSubmit={handle} className="mt-6 space-y-4">
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">البريد الإلكتروني</label>
-              <input dir="ltr" placeholder="name@example.com" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none transition" />
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">البريد الإلكتروني</label>
+              <input dir="ltr" placeholder="name@example.com" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
             </div>
             <div>
-              <label className="block text-sm font-bold text-muted-soft mb-1.5">كلمة المرور</label>
-              <input placeholder="••••••••" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-card text-foreground placeholder:text-muted-soft focus:border-primary outline-none transition" />
+              <label className="block text-[13px] font-bold text-foreground mb-1.5">كلمة المرور</label>
+              <input placeholder="••••••••" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
             </div>
-            <button disabled={loading} className="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primary-dark disabled:opacity-50 transition">
+            <button disabled={loading} className="w-full bg-ink text-white py-3.5 rounded-xl font-bold hover:bg-ink-hover disabled:opacity-50 transition-colors shadow-sm">
               {loading ? "جاري الدخول..." : "دخول"}
             </button>
           </form>
 
-          <div className="mt-6 p-4 bg-background/50 rounded-xl border border-border/20">
-            <div className="text-xs font-bold text-muted-soft">حساب تجريبي:</div>
-            <div className="text-sm text-foreground font-mono" dir="ltr">test10614@coddz.com / kikou@2007</div>
+          <div className="mt-5 rounded-xl border border-border bg-background p-3.5">
+            <div className="text-[11px] font-bold tracking-widest text-muted-soft uppercase">حساب تجريبي</div>
+            <div className="text-sm font-mono font-semibold text-foreground mt-1" dir="ltr">test10614@coddz.com / kikou@2007</div>
           </div>
 
-          <p className="text-center text-sm text-muted-soft mt-4">
-            ليس لديك حساب؟ <Link href="/register" className="color-primary font-bold hover:underline">أنشئ متجرك</Link>
+          <p className="text-center text-sm text-muted mt-5">
+            ليس لديك حساب؟ <Link href="/register" className="font-bold text-primary hover:underline">أنشئ متجرك مجاناً</Link>
           </p>
-          <p className="text-center text-xs text-muted-soft mt-2"><Link href="/" className="hover:text-muted-600">← الرئيسية</Link></p>
         </div>
+
+        <p className="text-center text-xs text-muted-soft mt-4"><Link href="/" className="hover:text-muted">← الرئيسية</Link></p>
       </div>
     </div>
   );

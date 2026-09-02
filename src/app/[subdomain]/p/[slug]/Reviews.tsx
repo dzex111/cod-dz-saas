@@ -27,25 +27,25 @@ export default function Reviews({ productId, merchantId }: { productId: string; 
   const avg = reviews.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : null;
 
   return (
-    <div className="bg-card rounded-2xl border border-card p-6 space-y-4">
+    <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
       <div className="flex justify-between items-center">
-        <h3 className="font-extrabold text-foreground">آراء الزبائن</h3>
-        {avg && <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">★ {avg} ({reviews.length})</span>}
+        <h3 className="font-black text-foreground">آراء الزبائن</h3>
+        {avg && <span className="bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20 px-3 py-1 rounded-full text-xs font-bold">★ {avg} ({reviews.length})</span>}
       </div>
       <div className="space-y-2">
         {reviews.map(r => (
-          <div key={r.id} className="border rounded-xl p-3 border-card">
-            <div className="flex justify-between"><span className="font-bold text-sm">{r.customer_name}</span><span className="text-primary">{"★".repeat(r.rating)}</span></div>
-            {r.comment && <div className="text-sm text-muted-soft mt-1">{r.comment}</div>}
-            <div className="text-sm text-muted-soft">{new Date(r.created_at).toLocaleDateString("ar-DZ")}</div>
+          <div key={r.id} className="border border-border rounded-xl p-3.5 bg-background">
+            <div className="flex justify-between items-center"><span className="font-bold text-sm text-foreground">{r.customer_name}</span><span className="text-amber-500 text-sm">{"★".repeat(r.rating)}<span className="text-muted-soft">{"★".repeat(5-r.rating)}</span></span></div>
+            {r.comment && <div className="text-sm text-muted mt-1.5 leading-6">{r.comment}</div>}
+            <div className="text-xs text-muted-soft mt-1">{new Date(r.created_at).toLocaleDateString("ar-DZ")}</div>
           </div>
         ))}
-        {reviews.length === 0 && <div className="text-center text-muted-soft font-medium py-4">لا تقييمات بعد — كن أول من يقيم</div>}
+        {reviews.length === 0 && <div className="text-center text-muted-soft text-sm py-6 bg-background rounded-xl border border-dashed border-border">لا تقييمات بعد — كن أول من يقيم ★</div>}
       </div>
-      <form onSubmit={submit} className="border-t pt-4 space-y-2">
-        <div className="grid grid-cols-2 gap-2">
-          <input required placeholder="اسمك" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="border border-border rounded-xl px-3 py-3 bg-card text-foreground focus:border-primary outline-none" />
-          <select value={form.rating} onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })} className="border border-border rounded-xl px-3 py-3 bg-card font-bold focus:border-primary outline-none">
+      <form onSubmit={submit} className="border-t border-border pt-4 space-y-3">
+        <div className="grid grid-cols-2 gap-3">
+          <input required placeholder="اسمك" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="border border-border rounded-xl px-3.5 py-3 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" />
+          <select value={form.rating} onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })} className="border border-border rounded-xl px-3 py-3 bg-background font-bold focus:border-primary outline-none text-sm">
             <option value={5}>★★★★★ 5</option>
             <option value={4}>★★★★ 4</option>
             <option value={3}>★★★ 3</option>
@@ -53,9 +53,9 @@ export default function Reviews({ productId, merchantId }: { productId: string; 
             <option value={1}>★ 1</option>
           </select>
         </div>
-        <textarea placeholder="تعليق (اختياري)" value={form.comment} onChange={(e) => setForm({ ...form, comment: e.target.value })} rows={2} className="border border-border rounded-xl px-3 py-3 bg-card focus:border-primary outline-none" />
-        <button className="w-full bg-card border border-primary rounded-xl py-3.5 font-bold text-primary hover:bg-primary/5 shadow-sm">نشر التقييم — مجاني</button>
-        {msg && <div className="text-center text-sm font-bold text-primary">{msg}</div>}
+        <textarea placeholder="تعليق (اختياري)" value={form.comment} onChange={(e) => setForm({ ...form, comment: e.target.value })} rows={2} className="w-full border border-border rounded-xl px-3.5 py-3 bg-background focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" />
+        <button className="w-full bg-ink text-white rounded-xl py-3 font-bold hover:bg-ink-hover transition-colors shadow-sm">نشر التقييم</button>
+        {msg && <div className="text-center text-sm font-bold text-emerald-600">{msg}</div>}
       </form>
     </div>
   );

@@ -8,12 +8,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ar" dir="rtl" className="h-full bg-background font-background">
+    <html lang="ar" dir="rtl" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground antialiased">{children}</body>
+      <body className="min-h-full flex flex-col bg-background text-foreground antialiased selection:bg-primary/15">
+        {children}
+      </body>
     </html>
   );
 }

@@ -81,12 +81,15 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div className="flex flex-wrap gap-3 justify-between items-center">
-        <h1 className="text-xl font-extrabold text-foreground">الطلبات — {total} طلب</h1>
+        <div>
+          <h1 className="text-xl font-black tracking-tight text-foreground">الطلبات — {total} طلب</h1>
+          <p className="text-sm text-muted">إدارة وتأكيد وشحن — كل شيء من هنا.</p>
+        </div>
         <div className="flex gap-2 flex-wrap">
-          <input placeholder="بحث: اسم أو هاتف" value={search} onChange={(e)=>{setSearch(e.target.value); setPage(0);}} className="border border-border rounded-xl px-3 py-2 text-sm w-44 focus:border-primary outline-none bg-card" />
-          <select value={filter} onChange={(e) => {setFilter(e.target.value); setPage(0);}} className="border border-border rounded-xl px-3 py-2 text-sm font-bold bg-card focus:border-primary outline-none">
+          <input placeholder="بحث: اسم أو هاتف" value={search} onChange={(e)=>{setSearch(e.target.value); setPage(0);}} className="border border-border rounded-xl px-3.5 py-2.5 text-sm w-44 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none bg-card placeholder:text-muted-soft" />
+          <select value={filter} onChange={(e) => {setFilter(e.target.value); setPage(0);}} className="border border-border rounded-xl px-3 py-2.5 text-sm font-bold bg-card focus:border-primary outline-none">
             <option value="all">الكل</option>
             <option value="pending">قيد الانتظار</option>
             <option value="confirmed">مؤكد</option>
@@ -94,14 +97,15 @@ export default function OrdersPage() {
             <option value="double">مكرر</option>
             <option value="canceled">ملغى</option>
           </select>
-          <button onClick={exportCSV} className="px-3 py-2 bg-card border border-border rounded-xl text-sm font-bold hover:bg-border">تصدير CSV مجاني</button>
+          <button onClick={exportCSV} className="px-4 py-2.5 bg-card border border-border rounded-xl text-sm font-bold hover:bg-card-hover transition-colors">تصدير CSV</button>
         </div>
       </div>
-      <div className="bg-card rounded-2xl border border-border overflow-hidden">
+
+      <div className="bg-card rounded-[20px] border border-border overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="border-b border-border">
-              <tr>
+            <thead className="bg-card-hover/50 border-b border-border">
+              <tr className="text-xs tracking-widest text-muted-soft uppercase">
                 <th className="px-4 py-3 text-right font-bold">الزبون</th>
                 <th className="px-4 py-3 text-center font-bold">الولاية</th>
                 <th className="px-4 py-3 text-center font-bold">الحالة</th>
@@ -111,37 +115,38 @@ export default function OrdersPage() {
             </thead>
             <tbody className="divide-y divide-border">
               {orders.map((o) => (
-                <tr key={o.id} className="hover:bg-card/20 transition">
-                  <td className="px-4 py-3"><div className="font-medium">{o.customer_name}</div><div className="text-sm text-muted-soft" dir="ltr">{o.customer_phone}</div><div className="text-xs text-muted-soft">{new Date(o.created_at).toLocaleString("ar-DZ")}</div></td>
-                  <td className="px-4 py-3 text-center">{o.wilaya_name} - {o.baladia_name}</td>
+                <tr key={o.id} className="hover:bg-card-hover/50 transition-colors">
+                  <td className="px-4 py-3"><div className="font-bold text-foreground">{o.customer_name}</div><div className="text-xs text-muted font-mono" dir="ltr">{o.customer_phone}</div><div className="text-xs text-muted-soft">{new Date(o.created_at).toLocaleString("ar-DZ")}</div></td>
+                  <td className="px-4 py-3 text-center text-foreground font-medium">{o.wilaya_name} - {o.baladia_name}</td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${o.confirmation_status === "pending" ? "bg-yellow-100 text-yellow-700" : o.confirmation_status === "confirmed" ? "bg-green-100 text-green-700" : o.confirmation_status === "fake" ? "bg-red-100 text-red-700" : o.confirmation_status === "double" ? "bg-orange-100 text-orange-700" : "bg-gray-100 text-gray-600"}`}>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ${o.confirmation_status === "pending" ? "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/20" : o.confirmation_status === "confirmed" ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/20" : o.confirmation_status === "fake" ? "bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/20" : o.confirmation_status === "double" ? "bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-500/20" : "bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700"}`}>
                       {o.confirmation_status === "pending" ? "قيد الانتظار" : o.confirmation_status === "confirmed" ? "مؤكد" : o.confirmation_status === "fake" ? "وهمي" : o.confirmation_status === "double" ? "مكرر" : o.confirmation_status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-center"><span className="text-sm">{o.shipping_status}</span>{o.tracking_number && <div className="text-xs font-mono text-primary" dir="ltr">{o.tracking_number}</div>}</td>
+                  <td className="px-4 py-3 text-center"><span className="text-xs font-bold px-2 py-1 rounded-full bg-background border border-border">{o.shipping_status}</span>{o.tracking_number && <div className="text-xs font-mono text-primary mt-1" dir="ltr">{o.tracking_number}</div>}</td>
                   <td className="px-4 py-3">
-                    <div className="flex flex-wrap gap-2">
-                      <a href={`/dashboard/orders/${o.id}`} className="px-2 py-1 bg-card border border-border rounded-lg text-sm font-bold text-primary hover:bg-border">تفاصيل</a>
-                      <button onClick={() => updateStatus(o.id, "confirmed")} className="px-2 py-1 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-dark">تأكيد</button>
-                      <button onClick={() => updateStatus(o.id, "canceled")} className="px-2 py-1 bg-card border border-border rounded-lg text-sm font-bold">إلغاء</button>
-                      <button onClick={() => addToBlacklist(o.customer_phone)} className="px-2 py-1 bg-red-500/10 text-red-400 rounded-lg text-sm font-bold">حظر</button>
-                      <button onClick={() => ship(o.id, "yalidine")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-2 py-1 bg-primary text-white rounded-lg text-sm font-bold disabled:opacity-40 hover:bg-primary-dark">Yalidine</button>
-                      <button onClick={() => ship(o.id, "zr_express")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-2 py-1 bg-card border border-primary rounded-lg text-sm font-bold text-primary disabled:opacity-40">ZR</button>
+                    <div className="flex flex-wrap gap-1.5 justify-center">
+                      <a href={`/dashboard/orders/${o.id}`} className="px-2.5 py-1.5 bg-background border border-border rounded-full text-xs font-bold hover:bg-card-hover">تفاصيل</a>
+                      <button onClick={() => updateStatus(o.id, "confirmed")} className="px-2.5 py-1.5 bg-emerald-600 text-white rounded-full text-xs font-bold hover:bg-emerald-700">تأكيد</button>
+                      <button onClick={() => updateStatus(o.id, "canceled")} className="px-2.5 py-1.5 bg-background border border-border rounded-full text-xs font-bold hover:bg-card-hover">إلغاء</button>
+                      <button onClick={() => addToBlacklist(o.customer_phone)} className="px-2.5 py-1.5 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-300 border border-red-200 dark:border-red-500/20 rounded-full text-xs font-bold">حظر</button>
+                      <button onClick={() => ship(o.id, "yalidine")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-3 py-1.5 bg-ink text-white rounded-full text-xs font-bold disabled:opacity-40 hover:bg-ink-hover">Yalidine</button>
+                      <button onClick={() => ship(o.id, "zr_express")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-3 py-1.5 bg-card border border-ink text-ink rounded-full text-xs font-bold disabled:opacity-40 hover:bg-card-hover">ZR</button>
                     </div>
                   </td>
                 </tr>
               ))}
-              {orders.length===0 && <tr><td colSpan={5} className="text-center py-10 text-muted-soft font-medium">لا توجد طلبات — pagination يوفّر 500MB</td></tr>}
+              {orders.length===0 && <tr><td colSpan={5} className="text-center py-10 text-muted text-sm">لا توجد طلبات — pagination يوفّر الموارد</td></tr>}
             </tbody>
           </table>
         </div>
       </div>
+
       <div className="flex justify-between items-center text-sm">
-        <span className="text-muted-soft font-bold">صفحة {page+1} / {Math.max(1, Math.ceil(total/pageSize))} — {total} طلب</span>
+        <span className="text-muted font-medium text-xs">صفحة {page+1} / {Math.max(1, Math.ceil(total/pageSize))} — {total} طلب</span>
         <div className="flex gap-2">
-          <button disabled={page===0} onClick={()=>setPage(p=>Math.max(0,p-1))} className="px-4 py-2 border border-border rounded-xl font-bold disabled:opacity-40 bg-card">السابق</button>
-          <button disabled={(page+1)*pageSize >= total} onClick={()=>setPage(p=>p+1)} className="px-4 py-2 border-primary text-primary rounded-xl font-bold disabled:opacity-40">التالي</button>
+          <button disabled={page===0} onClick={()=>setPage(p=>Math.max(0,p-1))} className="px-4 py-2 border border-border rounded-xl font-bold disabled:opacity-40 bg-card hover:bg-card-hover text-sm">السابق</button>
+          <button disabled={(page+1)*pageSize >= total} onClick={()=>setPage(p=>p+1)} className="px-4 py-2 bg-ink text-white rounded-xl font-bold disabled:opacity-40 hover:bg-ink-hover text-sm">التالي</button>
         </div>
       </div>
     </div>
