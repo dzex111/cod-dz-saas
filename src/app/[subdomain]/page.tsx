@@ -35,6 +35,33 @@ export default async function StorefrontHome({ params, searchParams }: { params:
   const heroProduct = products?.[0];
   const heroImage = heroProduct?.image_url || merchant.banner_url || "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=1500&fit=crop";
 
+  if (cfg.template === "tech") {
+    return (
+      <div className="min-h-screen bg-[#0B0B0C] text-[#EDEDED]">
+        <style>{`@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');`}</style>
+        <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
+          {cfg.announcement || "LIVRAISON 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
+        </div>
+        <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.9)] backdrop-blur border-b border-white/10">
+          <div className="font-mono text-xs tracking-[0.14em]">NOVA <span className="opacity-40">TECH</span> — {merchant.business_name}</div>
+          <div className="text-xs font-mono opacity-60">{products?.length || 0} produits</div>
+        </header>
+        <section className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">Collection Tech</h2>
+            <span className="text-xs font-mono opacity-40">{products?.length || 0} produits</span>
+          </div>
+          {products && products.length ? (
+            <StorefrontClient products={products as never} subdomain={subdomain} merchantSubdomain={merchant.subdomain} />
+          ) : (
+            <div className="text-center py-16 border border-dashed border-white/10 bg-white/[0.03] text-sm opacity-60">Aucun produit</div>
+          )}
+        </section>
+        <footer className="border-t border-white/10 py-6 text-center text-xs font-mono opacity-40">© {merchant.business_name} — NOVA TECH</footer>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'); .font-serif{font-family:'Instrument Serif',serif;} .marquee{animation:marquee 28s linear infinite;} @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>

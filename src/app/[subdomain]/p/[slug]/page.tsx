@@ -2,6 +2,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { getStoreConfig } from "@/lib/store-config";
 import TemplateAtelier from "@/components/landing/TemplateAtelier";
+import TemplateTech from "@/components/landing/TemplateTech";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string; slug: string }> }): Promise<Metadata> {
@@ -27,6 +28,10 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
   if (!product) return notFound();
 
   const cfg = await getStoreConfig(merchant.id);
+
+  if (cfg.template === "tech") {
+    return <TemplateTech product={product as never} merchant={merchant as never} config={cfg as never} />;
+  }
 
   return <TemplateAtelier product={product as never} merchant={merchant as never} config={cfg as never} />;
 }

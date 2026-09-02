@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-type Template = "minimal" | "bold" | "warm" | "pro" | "atelier";
+type Template = "atelier" | "tech";
 
 type Config = {
   template: Template;
@@ -23,9 +23,9 @@ type Config = {
 };
 
 const DEFAULT: Config = {
-  template: "pro",
-  primary_color: "#2563EB",
-  accent_color: "#0F172A",
+  template: "atelier",
+  primary_color: "#111111",
+  accent_color: "#111111",
   hero_title: "",
   hero_subtitle: "",
   announcement: "توصيل سريع لـ 58 ولاية • دفع عند الاستلام",
@@ -112,7 +112,8 @@ export default function StoreSettingsPage() {
   }
 
   const templates: { id: Template; name: string; desc: string }[] = [
-    { id: "atelier", name: "Atelier — القالب الاحترافي", desc: "مستوحى من ملفك Sales-Landing-Modern-Dz.html — جاهز وحقيقي" },
+    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من ملفك Sales-Landing — فاخر، serif، مناسب للفاشن" },
+    { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "مستوحى من Electronics-V4-Final.html — داكن، تقني، مناسب للهواتف" },
   ];
 
   return (
@@ -237,7 +238,7 @@ export default function StoreSettingsPage() {
             <label className="text-xs font-bold">وصف الهيرو</label>
             <textarea value={config.hero_subtitle} onChange={e=>setConfig({...config, hero_subtitle: e.target.value})} rows={2} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="جودة عالية..." />
           </div>
-          {config.template === "pro" && (
+          {(config.template === "atelier" || config.template === "tech") && (
             <>
               <div>
                 <label className="text-xs font-bold">نص الشارة (Badge)</label>
@@ -246,10 +247,6 @@ export default function StoreSettingsPage() {
               <div>
                 <label className="text-xs font-bold">نص زر الطلب</label>
                 <input value={config.cta_text || ""} onChange={e=>setConfig({...config, cta_text: e.target.value})} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="اطلب الآن" />
-              </div>
-              <div className="p-3 bg-subtle border border-border rounded-xl">
-                <div className="text-xs font-bold">ملاحظة Pro</div>
-                <div className="text-xs text-muted mt-1">هذا القالب يعرض صور المنتج مع أنيميشن، FAQ تفاعلي، ومميزات تفاعلية. يمكنك أيضاً وضع ملف HTML كامل في Desktop وسأحوله لقالب — أخبرني فقط.</div>
               </div>
             </>
           )}
@@ -269,46 +266,18 @@ export default function StoreSettingsPage() {
             {config.template==="atelier" && (
               <div className="bg-[#FAF9F6] p-6 text-[#111]">
                 <div className="font-serif text-xl">ATELIER / ALG</div>
-                <div className="text-xs tracking-[0.18em] uppercase opacity-60 mt-1">LIVRAISON 58 WILAYAS</div>
+                <div className="text-xs tracking-[0.18em] uppercase opacity-60 mt-1">LIVRAISON 58 WILAYAS — فاشن</div>
                 <h2 className="font-serif text-2xl mt-3">{config.hero_title || "EDIT.04"}</h2>
-                <p className="text-sm opacity-70 mt-1">Instrument Serif + marquee + reveal</p>
+                <p className="text-sm opacity-70 mt-1">مناسب للأزياء والملابس — serif + marquee</p>
                 <div className="mt-3 bg-[#111] text-white text-center py-2 text-xs tracking-[0.14em] uppercase">Commander</div>
               </div>
             )}
-            {config.template==="pro" && (
-              <div className="bg-card p-6">
-                <div className="text-xs bg-primary-light text-primary inline-block px-3 py-1 rounded-full font-medium" style={{ color: config.primary_color }}>{config.badge_text || "الأكثر طلباً"}</div>
-                <h2 className="text-2xl font-bold mt-3">{config.hero_title || form.business_name || "منتجك هنا"}</h2>
-                <p className="text-muted mt-2 text-sm">{config.hero_subtitle || form.description || "وصف احترافي مع صور وأنيميشن"}</p>
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  <div className="aspect-square bg-subtle rounded-xl border border-border" />
-                  <div className="aspect-square bg-subtle rounded-xl border border-border" />
-                  <div className="aspect-square bg-subtle rounded-xl border border-border" />
-                </div>
-                <div className="mt-4 bg-primary text-white text-center py-2 rounded-lg text-sm font-medium" style={{ background: config.primary_color }}>{config.cta_text || "اطلب الآن"}</div>
-                <p className="text-xs text-muted mt-2 text-center">مع أنيميشن وسكرول سلس و hover</p>
-              </div>
-            )}
-            {config.template==="minimal" && (
-              <div className="bg-white p-8 text-center">
-                <div className="text-xs tracking-widest font-bold text-muted-soft uppercase">{config.announcement}</div>
-                <h2 className="text-3xl font-black mt-2" style={{ color: config.primary_color }}>{config.hero_title || form.business_name || "منتجك هنا"}</h2>
-                <p className="text-muted mt-2">{config.hero_subtitle || form.description || "وصف المنتج سيظهر هنا"}</p>
-                <div className="mt-4 inline-flex px-6 py-3 rounded-full text-white font-bold" style={{ background: config.primary_color }}>اطلب الآن</div>
-              </div>
-            )}
-            {config.template==="bold" && (
-              <div className="bg-zinc-900 text-white p-8">
-                <div className="text-xs bg-white/10 inline-block px-3 py-1 rounded-full">{config.announcement}</div>
-                <h2 className="text-4xl font-black mt-3" style={{ color: config.primary_color }}>{config.hero_title || form.business_name}</h2>
-                <p className="text-white/70 mt-2">{config.hero_subtitle || "تصميم جريء وقوي"}</p>
-              </div>
-            )}
-            {config.template==="warm" && (
-              <div className="bg-[#FDF6EE] p-8 text-center border-t-4" style={{ borderColor: config.primary_color }}>
-                <h2 className="text-3xl font-black text-zinc-900">{config.hero_title || form.business_name}</h2>
-                <p className="text-zinc-600 mt-2">{config.hero_subtitle || "دافئ وودود مثل بيتك"}</p>
-                <div className="mt-3 text-xs bg-white border px-3 py-1 rounded-full inline-block">{config.announcement}</div>
+            {config.template==="tech" && (
+              <div className="bg-[#0B0B0C] p-6 text-[#EDEDED]">
+                <div className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">NOVA TECH</div>
+                <h2 className="text-2xl font-bold mt-3 tracking-tight">NOVA PRO</h2>
+                <p className="text-sm opacity-60 mt-1">مثالي للإلكترونيات والهواتف — داكن تقني</p>
+                <div className="mt-3 bg-[#EDEDED] text-[#0B0B0C] text-center py-2 text-xs font-mono uppercase">Commander — Tech</div>
               </div>
             )}
           </div>

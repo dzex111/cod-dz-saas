@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export type StoreTemplate = "atelier";
+export type StoreTemplate = "atelier" | "tech";
 
 export type StoreConfig = {
   template: StoreTemplate;
