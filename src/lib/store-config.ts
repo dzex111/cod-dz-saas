@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export type StoreTemplate = "minimal" | "bold" | "warm" | "pro";
+export type StoreTemplate = "minimal" | "bold" | "warm" | "pro" | "atelier";
 
 export type StoreConfig = {
   template: StoreTemplate;

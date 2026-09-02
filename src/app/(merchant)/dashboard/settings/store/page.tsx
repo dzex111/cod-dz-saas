@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-type Template = "minimal" | "bold" | "warm" | "pro";
+type Template = "minimal" | "bold" | "warm" | "pro" | "atelier";
 
 type Config = {
   template: Template;
@@ -112,7 +112,8 @@ export default function StoreSettingsPage() {
   }
 
   const templates: { id: Template; name: string; desc: string }[] = [
-    { id: "pro", name: "Pro — احترافي", desc: "قالب حقيقي كامل: صور، أنيميشن، FAQ — موصى به" },
+    { id: "atelier", name: "Atelier — من ملفك", desc: "مستوحى من Sales-Landing-Modern-Dz.html — serif + marquee" },
+    { id: "pro", name: "Pro — احترافي", desc: "قالب حقيقي كامل: صور، أنيميشن، FAQ" },
     { id: "minimal", name: "Minimal", desc: "نظيف، أبيض — بسيط" },
     { id: "bold", name: "Bold", desc: "داكن، قوي — هيرو كبير" },
     { id: "warm", name: "Warm", desc: "دافئ، ترابي — ودود" },
@@ -269,6 +270,15 @@ export default function StoreSettingsPage() {
         <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
           <h3 className="font-bold mb-4">معاينة حية — القالب: {config.template}</h3>
           <div className="rounded-xl border border-border overflow-hidden">
+            {config.template==="atelier" && (
+              <div className="bg-[#FAF9F6] p-6 text-[#111]">
+                <div className="font-serif text-xl">ATELIER / ALG</div>
+                <div className="text-xs tracking-[0.18em] uppercase opacity-60 mt-1">LIVRAISON 58 WILAYAS</div>
+                <h2 className="font-serif text-2xl mt-3">{config.hero_title || "EDIT.04"}</h2>
+                <p className="text-sm opacity-70 mt-1">Instrument Serif + marquee + reveal</p>
+                <div className="mt-3 bg-[#111] text-white text-center py-2 text-xs tracking-[0.14em] uppercase">Commander</div>
+              </div>
+            )}
             {config.template==="pro" && (
               <div className="bg-card p-6">
                 <div className="text-xs bg-primary-light text-primary inline-block px-3 py-1 rounded-full font-medium" style={{ color: config.primary_color }}>{config.badge_text || "الأكثر طلباً"}</div>

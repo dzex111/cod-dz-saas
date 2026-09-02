@@ -5,6 +5,7 @@ import Reviews from "./Reviews";
 import { IconPackage, IconShield, IconTruck } from "@/components/icons";
 import { getStoreConfig } from "@/lib/store-config";
 import TemplatePro from "@/components/landing/TemplatePro";
+import TemplateAtelier from "@/components/landing/TemplateAtelier";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -32,6 +33,10 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
 
   const cfg = await getStoreConfig(merchant.id);
   const primary = cfg.primary_color || merchant.primary_color || "#E53535";
+
+  if (cfg.template === "atelier") {
+    return <TemplateAtelier product={product as never} merchant={merchant as never} config={cfg as never} />;
+  }
 
   // Template: BOLD (dark hero)
   if (cfg.template === "bold") {
