@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
-type Template = "atelier" | "tech" | "digital";
+type Template = "atelier" | "tech" | "digital" | "beauty";
 
 type Config = {
   template: Template;
@@ -24,6 +24,9 @@ type Config = {
   show_download_link?: boolean;
   download_text?: string;
   license_text?: string;
+  cta_color?: string;
+  font?: "geist" | "instrument" | "inter" | "cairo" | "tajawal" | "manrope";
+  button_radius?: "pill" | "xl" | "lg" | "none";
 };
 
 const DEFAULT: Config = {
@@ -50,6 +53,9 @@ const DEFAULT: Config = {
     { q: "هل يمكن الإرجاع؟", a: "نعم خلال 14 يوم." },
   ],
   cta_text: "اطلب الآن — الدفع عند الاستلام",
+  cta_color: "#2B2A28",
+  font: "geist",
+  button_radius: "pill",
 };
 
 export default function StoreSettingsPage() {
@@ -116,9 +122,10 @@ export default function StoreSettingsPage() {
   }
 
   const templates: { id: Template; name: string; desc: string }[] = [
-    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من ملفك Sales-Landing — فاخر، serif، مناسب للفاشن" },
+    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من Sales-Landing-Modern-Dz — فاخر، serif، مناسب للفاشن" },
     { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "مستوحى من Electronics-V4-Final.html — داكن، تقني، مناسب للهواتف" },
-    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "مستوحى من Digital-Products-Landing.html — minimal، licenses، suitable للبرمجيات والتطبيقات" },
+    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "مستوحى من Digital-Products-Landing.html — minimal، للبرمجيات والتطبيقات" },
+    { id: "beauty", name: "Beauty — للجمال والعناية", desc: "مستوحى من Consumable-Beauty-General.html — طبيعي، فاخر، للصحة والجمال (كما هو تماماً)" },
   ];
 
   return (
@@ -179,6 +186,52 @@ export default function StoreSettingsPage() {
                 {["#E53535","#111111","#0E9F6E","#2563EB","#7C3AED","#EA580C"].map(c=>(
                   <button key={c} onClick={()=>setConfig({...config, primary_color: c})} className="w-8 h-8 rounded-full border-2 border-white shadow-sm" style={{ background: c }} />
                 ))}
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
+              <h3 className="font-bold">تخصيص الأزرار والخط — كل القوالب</h3>
+              <div>
+                <label className="text-xs font-bold">لون زر الطلب</label>
+                <div className="flex gap-2 mt-1">
+                  <input type="color" value={config.cta_color || "#2B2A28"} onChange={e=>setConfig({...config, cta_color: e.target.value})} className="w-12 h-10 rounded-xl border border-border p-1 bg-background" />
+                  <input value={config.cta_color || "#2B2A28"} onChange={e=>setConfig({...config, cta_color: e.target.value})} className="flex-1 border border-border rounded-xl px-3 py-2 font-mono text-xs bg-background" dir="ltr" />
+                </div>
+                <div className="flex gap-2 mt-2">
+                  {["#2B2A28","#C47A5A","#111111","#0E9F6E","#4F46E5","#E53535"].map(c=>(
+                    <button key={c} onClick={()=>setConfig({...config, cta_color: c})} className={`w-8 h-8 rounded-full border-2 shadow-sm ${config.cta_color===c ? "border-primary scale-110" : "border-white"}`} style={{ background: c }} />
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-bold">نوع الخط</label>
+                <select value={config.font || "geist"} onChange={e=>setConfig({...config, font: e.target.value as any})} className="w-full mt-1 border border-border rounded-xl px-3 py-2.5 bg-background text-sm">
+                  <option value="geist">Geist — عصري متوازن (Tech/Digital)</option>
+                  <option value="instrument">Instrument Serif — فاخر (Atelier)</option>
+                  <option value="inter">Inter — نظيف</option>
+                  <option value="cairo">Cairo — عربي حديث</option>
+                  <option value="tajawal">Tajawal — عربي</option>
+                  <option value="manrope">Manrope — مستدير</option>
+                </select>
+                <div className="mt-2 text-xs px-3 py-2 rounded-lg bg-background border border-border" style={{ fontFamily: config.font==="instrument" ? "'Instrument Serif', serif" : config.font==="cairo" ? "'Cairo', sans-serif" : config.font==="tajawal" ? "'Tajawal', sans-serif" : config.font==="manrope" ? "'Manrope', sans-serif" : "'Geist', sans-serif" }}>
+                  معاينة: {config.font==="instrument" ? "Atelier Typography" : config.font==="cairo" ? "مرحبا بالخط العربي" : "Geist preview — Aa Bb 123"}
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-bold">شكل الزر</label>
+                <div className="grid grid-cols-4 gap-2 mt-1">
+                  {[
+                    { id: "pill", label: "Pill", style: "rounded-full" },
+                    { id: "xl", label: "XL", style: "rounded-xl" },
+                    { id: "lg", label: "LG", style: "rounded-lg" },
+                    { id: "none", label: "حاد", style: "rounded-none" },
+                  ].map(b=>(
+                    <button key={b.id} onClick={()=>setConfig({...config, button_radius: b.id as any})} className={`py-2.5 text-xs font-bold border-2 ${config.button_radius===b.id ? "bg-primary text-white border-primary" : "bg-background border-border"} ${b.style}`}>{b.label}</button>
+                  ))}
+                </div>
+                <div className="mt-3 flex justify-center">
+                  <div className={`px-6 py-2.5 text-xs font-bold text-white ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : "rounded-none"}`} style={{ background: config.cta_color || "#2B2A28" }}>معاينة الزر</div>
+                </div>
               </div>
             </div>
 
@@ -285,23 +338,40 @@ export default function StoreSettingsPage() {
           <div className="rounded-xl border border-border overflow-hidden">
             {config.template==="atelier" && (
               <div className="bg-[#FAF9F6] p-6 text-[#111]">
-                <div className="font-serif text-xl">ATELIER / ALG</div>
+                <div className="font-serif text-xl">{config.font==="instrument" ? "Atelier" : ""} / ALG</div>
                 <div className="text-xs tracking-[0.18em] uppercase opacity-60 mt-1">LIVRAISON 58 WILAYAS — فاشن</div>
-                <h2 className="font-serif text-2xl mt-3">{config.hero_title || "EDIT.04"}</h2>
+                <h2 className="font-serif text-2xl mt-3" style={{ fontFamily: config.font==="instrument" ? "'Instrument Serif', serif" : undefined }}>{config.hero_title || "EDIT.04"}</h2>
                 <p className="text-sm opacity-70 mt-1">مناسب للأزياء والملابس — serif + marquee</p>
-                <div className="mt-3 bg-[#111] text-white text-center py-2 text-xs tracking-[0.14em] uppercase">Commander</div>
+                <div className={`mt-3 text-white text-center py-2 text-xs tracking-[0.14em] uppercase ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : "rounded-none"}`} style={{ background: config.cta_color || "#111" }}>Commander</div>
+              </div>
+            )}
+            {config.template==="tech" && (
+              <div className="bg-[#0B0B0C] p-6 text-[#EDEDED]">
+                <div className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">Tech</div>
+                <h2 className="text-2xl font-bold mt-3 tracking-tight">{config.hero_title || "NOVA PRO"}</h2>
+                <p className="text-sm opacity-60 mt-1">مثالي للإلكترونيات والهواتف — داكن تقني</p>
+                <div className={`mt-3 text-center py-2 text-xs font-mono uppercase ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : "rounded-none"}`} style={{ background: config.cta_color || "#EDEDED", color: config.cta_color ? "#fff" : "#0B0B0C" }}>Commander — Tech</div>
               </div>
             )}
             {config.template==="digital" && (
-              <div className="bg-[#0B0B0C] p-6 text-[#EDEDED] rounded-xl border border-white/20 overflow-hidden">
-                <div className="font-mono text-xs tracking-[0.18em] uppercase opacity-60">NOVA DIGITAL</div>
-                <h2 className="text-xl font-bold mt-3 tracking-tight">NOVA DIGITAL</h2>
-                <p className="text-sm opacity-60 mt-1">برمجيات وحلول رقمية — تراخيص أصلية، دعم فني 24/7</p>
-                <div className="mt-4 bg-[#111] text-white text-center py-3 text-xs font-mono uppercase">تنزيل — licence key</div>
+              <div className="bg-[#F6F7FF] p-6 text-[#111] border border-[#E8EAF6] overflow-hidden">
+                <div className="font-mono text-xs tracking-[0.18em] uppercase opacity-60">Digital</div>
+                <h2 className="text-xl font-bold mt-3 tracking-tight">Digital</h2>
+                <p className="text-sm opacity-60 mt-1">برمجيات وحلول رقمية — تراخيص أصلية</p>
+                <div className={`mt-4 text-white text-center py-3 text-xs font-mono uppercase ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : "rounded-none"}`} style={{ background: config.cta_color || "#111" }}>تنزيل — licence key</div>
+              </div>
+            )}
+            {config.template==="beauty" && (
+              <div className="bg-[#F8F5F0] p-6 text-[#2B2A28] border border-[#E8E0D5] overflow-hidden">
+                <div className="serif text-lg" style={{ fontFamily: "'Fraunces', serif" }}>Maison <em style={{ color: "#C47A5A" }}>Terre</em></div>
+                <div className="text-xs tracking-[0.18em] uppercase opacity-60 mt-1">Naturel — Fabriqué en Algérie</div>
+                <h2 className="serif text-2xl mt-3" style={{ fontFamily: "'Fraunces', serif" }}>Des soins qui sentent la terre</h2>
+                <p className="text-sm opacity-70 mt-1">مستوحى من Consumable-Beauty-General.html — كما هو تماماً</p>
+                <div className="mt-3 bg-[#2B2A28] text-white text-center py-2.5 text-xs rounded-full">Découvrir</div>
               </div>
             )}
           </div>
-          <p className="text-xs text-muted-soft mt-3">المعاينة تقريبية — افتح متجرك الحقيقي لترى التطبيق الكامل على منتج فعلي. يمكنك وضع ملف HTML في Desktop وسأحوله لقالب Pro.</p>
+          <p className="text-xs text-muted-soft mt-3">المعاينة تقريبية — افتح متجرك الحقيقي لترى التطبيق الكامل على منتج فعلي. كل القوالب ترتبط صحيحاً: المتجر الرئيسي <code className="bg-background border px-1 rounded">/{subdomain}</code> وصفحة المنتج <code className="bg-background border px-1 rounded">/{subdomain}/p/{"{slug}"}</code>.</p>
         </div>
       )}
     </div>

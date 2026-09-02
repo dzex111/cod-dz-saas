@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-export type StoreTemplate = "atelier" | "tech" | "digital";
+export type StoreTemplate = "atelier" | "tech" | "digital" | "beauty";
 
 export type StoreConfig = {
   template: StoreTemplate;
@@ -24,6 +24,10 @@ export type StoreConfig = {
   show_download_link?: boolean;
   download_text?: string;
   license_text?: string;
+  // Design customization — all templates
+  cta_color?: string;
+  font?: "geist" | "instrument" | "inter" | "cairo" | "tajawal" | "manrope";
+  button_radius?: "pill" | "xl" | "lg" | "none";
 };
 
 export const DEFAULT_CONFIG: StoreConfig = {

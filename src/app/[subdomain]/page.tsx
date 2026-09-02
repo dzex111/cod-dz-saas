@@ -152,6 +152,126 @@ export default async function StorefrontHome({ params, searchParams }: { params:
     );
   }
 
+  if (cfg.template === "beauty") {
+    const beautyNameParts = merchant.business_name.split(" ");
+    const beautyFirst = beautyNameParts[0] || "Maison";
+    const beautyRest = beautyNameParts.slice(1).join(" ") || "Terre";
+    return (
+      <div className="min-h-screen" style={{ background: "#F8F5F0", color: "#2B2A28" }}>
+        <style>{`@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+.serif{font-family:'Fraunces',serif}
+.beauty-top{height:32px;background:#2B2A28;color:#F8F5F0;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.beauty-head{position:sticky;top:0;z-index:40;height:68px;display:flex;justify-content:space-between;align-items:center;padding:0 20px;background:rgba(248,245,240,.86);backdrop-filter:blur(18px);border-bottom:1px solid #E8E0D5}
+@media(min-width:1024px){.beauty-head{padding:0 36px}}
+.beauty-logo{font-family:'Fraunces',serif;font-size:18px;letter-spacing:-.02em;font-weight:500;display:flex;align-items:center;gap:10px}
+.beauty-logo em{font-style:italic;color:#C47A5A}
+.beauty-hero{display:grid;min-height:88vh;border-bottom:1px solid #E8E0D5;overflow:hidden}
+@media(min-width:1024px){.beauty-hero{grid-template-columns:1fr 1.05fr}}
+.beauty-left{padding:36px 20px 40px;display:flex;flex-direction:column;justify-content:center;background:#F8F5F0}
+@media(min-width:1024px){.beauty-left{padding:64px 48px}}
+.beauty-kicker{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A7F75;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.beauty-kicker span{width:28px;height:1px;background:#C47A5A;display:inline-block}
+.beauty-title{font-family:'Fraunces',serif;font-size:13vw;line-height:.9;letter-spacing:-.04em;font-weight:400}
+@media(min-width:1024px){.beauty-title{font-size:5.2vw}}
+.beauty-title em{font-style:italic;color:#C47A5A}
+.beauty-sub{margin-top:16px;max-width:380px;font-size:14px;line-height:1.65;color:#6B655E}
+.beauty-benefits{margin-top:24px;display:flex;gap:18px;flex-wrap:wrap}
+.beauty-benefit{display:flex;gap:8px;align-items:center;font-size:11px;color:#6B655E}
+.beauty-benefit .ic{width:28px;height:28px;border-radius:50%;background:#EDE8E0;display:flex;align-items:center;justify-content:center;font-size:12px}
+.beauty-cta{margin-top:28px;display:flex;gap:12px}
+.beauty-btnPrimary{height:48px;padding:0 26px;background:#2B2A28;color:#F8F5F0;border:none;border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;cursor:pointer;display:inline-flex;align-items:center}
+.beauty-btnGhost{height:48px;padding:0 22px;background:none;color:#2B2A28;border:1px solid #E8E0D5;border-radius:999px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center}
+.beauty-right{position:relative;background:#EDE8E0;display:flex;align-items:center;justify-content:center;padding:20px;min-height:480px;overflow:hidden}
+@media(min-width:1024px){.beauty-right{min-height:auto;padding:36px}}
+.beauty-right img.beauty-hero-img{width:100%;height:100%;object-fit:cover;border-radius:24px}
+.beauty-float{position:absolute;bottom:28px;left:28px;background:#FEFEFD;border-radius:16px;padding:12px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 12px 32px rgba(43,42,40,.12);border:1px solid #E8E0D5}
+.beauty-label{display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #E8E0D5;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8A7F75;background:#F8F5F0}
+@media(min-width:1024px){.beauty-label{padding:14px 36px}}
+.beauty-grid{display:grid;grid-template-columns:1fr 1fr;background:#E8E0D5;gap:1px;border-bottom:1px solid #E8E0D5}
+@media(min-width:1024px){.beauty-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.beauty-card{background:#FEFEFD;cursor:pointer;display:flex;flex-direction:column;overflow:hidden}
+.beauty-card-img{background:#F6F1E8;display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;padding:20px;overflow:hidden;position:relative}
+.beauty-card-img img{width:100%;height:100%;object-fit:cover;border-radius:18px;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.beauty-card:hover .beauty-card-img img{transform:scale(1.04)}
+.beauty-badge{position:absolute;top:14px;left:14px;background:#2B2A28;color:#FEFEFD;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.beauty-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
+.beauty-name{font-family:'Fraunces',serif;font-size:14px;line-height:1.25}
+.beauty-subname{font-size:11px;color:#8A7F75;margin-top:2px}
+.beauty-ing{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.beauty-ing span{font-size:8.5px;padding:4px 8px;background:#F6F1E8;border:1px solid #EDE8E0;border-radius:999px;color:#6B655E}
+.beauty-priceRow{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.beauty-price{font-size:13px;font-weight:600}
+.beauty-btnBuy{font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:#F6F1E8;border:1px solid #EDE8E0;border-radius:999px;padding:8px 14px;cursor:pointer}
+`}</style>
+        <div className="beauty-top">{cfg.announcement || "Livraison 58 Wilayas — Paiement à la livraison — Naturel & fait main — Retour 14 jours"}</div>
+        <div className="beauty-head">
+          <div className="beauty-logo">
+            {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} style={{ width: 32, height: 32, borderRadius: 8, objectFit: "cover", border: "1px solid #E8E0D5" }} />}
+            <span>{beautyFirst} <em>{beautyRest}</em></span>
+          </div>
+          <span style={{ fontSize: 11, letterSpacing: ".1em", opacity: .6 }}>{products?.length || 0} soins</span>
+        </div>
+
+        {/* Hero exact as Consumable-Beauty-General.html */}
+        <section className="beauty-hero">
+          <div className="beauty-left">
+            <div className="beauty-kicker"><span></span> 100% Naturel — Fabriqué en Algérie — Depuis 2019</div>
+            <div className="beauty-title">Des soins qui <em>sentent</em> la terre d&apos;Algérie.</div>
+            <div className="beauty-sub">{merchant.description || "Formulés à Alger, avec huile d'olive de Kabylie, miel de montagne, argan. Sans sulfate, sans parfum ajouté."}</div>
+            <div className="beauty-benefits">
+              <div className="beauty-benefit"><div className="ic">♡</div> Naturel 98%</div>
+              <div className="beauty-benefit"><div className="ic">◆</div> Fabriqué à Alger</div>
+              <div className="beauty-benefit"><div className="ic">✿</div> Cruelty free</div>
+            </div>
+            <div className="beauty-cta">
+              <a href="#shop" className="beauty-btnPrimary">Découvrir la collection</a>
+              <a href="#shop" className="beauty-btnGhost">Notre histoire</a>
+            </div>
+          </div>
+          <div className="beauty-right">
+            <img className="beauty-hero-img" src={heroImage} alt={merchant.business_name} />
+            {products && products[0] && (
+              <div className="beauty-float">
+                <img src={products[0].image_url || heroImage} alt={products[0].name} style={{ width: 48, height: 48, borderRadius: 10, objectFit: "cover" }} />
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 600, fontFamily: "Fraunces, serif" }}>{products[0].name}</div>
+                  <div style={{ fontSize: 10, color: "#8A7F75" }}>{Number(products[0].price).toLocaleString("fr-DZ")} DA</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <div className="beauty-label"><span>Collection / 04 — En stock</span><span>Livraison 24/48H — 58 Wilayas</span></div>
+
+        {/* Grid exact — uses StorefrontClient for drawer but also renders beauty cards fallback if needed */}
+        <section id="shop" className="beauty-grid">
+          {products && products.length ? (
+            products.slice(0,8).map((p:any)=>(
+              <div key={p.id} className="beauty-card" onClick={()=>{ window.location.href=`/${merchant.subdomain}/p/${p.slug}`; }}>
+                <div className="beauty-card-img">
+                  <span className="beauty-badge">Naturel</span>
+                  <img src={p.image_url || heroImage} alt={p.name} loading="lazy" />
+                </div>
+                <div className="beauty-body">
+                  <div className="beauty-name">{p.name}</div>
+                  <div className="beauty-subname">{p.description?.slice(0,40) || "Soin naturel"}</div>
+                  <div className="beauty-ing">{(p.name.split(" ").slice(0,3) as string[]).map((t:string)=><span key={t}>{t}</span>)}</div>
+                  <div className="beauty-priceRow"><div className="beauty-price">{Number(p.price).toLocaleString("fr-DZ")} DA</div><button className="beauty-btnBuy" onClick={(e)=>{ e.stopPropagation(); window.location.href=`/${merchant.subdomain}/p/${p.slug}`; }}>Ajouter</button></div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, background: "#FEFEFD", fontSize: 12, color: "#8A7F75" }}>Aucun soin — ajoutez votre premier produit</div>
+          )}
+        </section>
+
+        <div className="beauty-label"><span>© 2026 {merchant.business_name} — Alger</span><span>Paiement à la livraison — Retour 14 jours</span></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'); .font-serif{font-family:'Instrument Serif',serif;} .marquee{animation:marquee 28s linear infinite;} @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>

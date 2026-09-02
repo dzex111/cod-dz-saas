@@ -38,13 +38,12 @@ export default function TemplateDigital({ product, merchant, config }: { product
         {config.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
       </div>
 
-      {/* Header — brand customizable */}
-      <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-white/90 backdrop-blur border-b border-[#E8EAF6]">
+      {/* Header — brand customizable, no top CTA (order at bottom) */}
+      <header className="sticky top-0 z-40 h-[64px] flex items-center px-5 lg:px-8 bg-white/90 backdrop-blur border-b border-[#E8EAF6]">
         <div className="flex items-center gap-3">
           {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-8 h-8 rounded-lg object-cover border border-[#E8EAF6] bg-white" />}
           <span className="font-mono text-sm font-bold tracking-[0.02em]">{merchant.business_name}</span>
         </div>
-        <a href="#order" className="font-mono text-xs tracking-[0.12em] border border-[#E8EAF6] bg-[#111] text-white px-4 py-2 rounded-full hover:bg-black transition-colors">Commander</a>
       </header>
 
       {/* Hero — light, high contrast */}

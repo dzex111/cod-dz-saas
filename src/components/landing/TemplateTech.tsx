@@ -4,7 +4,7 @@ import CheckoutForm from "@/app/[subdomain]/p/[slug]/CheckoutForm";
 
 type Product = { id: string; name: string; slug: string; description: string | null; price: number; compare_at_price: number | null; image_url: string | null; };
 type Merchant = { id: string; business_name: string; subdomain: string; phone: string | null; logo_url?: string | null; banner_url?: string | null; description?: string | null; };
-type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; };
+type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; cta_color?: string; font?: string; button_radius?: string; };
 
 export default function TemplateTech({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
   const [active, setActive] = useState(0);
@@ -20,18 +20,12 @@ export default function TemplateTech({ product, merchant, config }: { product: P
       <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
         {config.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
       </div>
-      <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
+      <header className="sticky top-0 z-40 h-[64px] flex items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
         <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-white">
           {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20 bg-white" />}
           <span className="font-bold tracking-[0.14em]">{merchant.business_name}</span>
         </div>
-        <a href="#order" className="font-mono text-xs tracking-[0.12em] border border-white/30 px-4 py-2 hover:bg-white hover:text-black transition-colors">PANIER (1)</a>
       </header>
-      {merchant.banner_url && (
-        <div className="w-full h-[180px] overflow-hidden border-b border-white/20">
-          <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
-        </div>
-      )}
 
       <section className="grid lg:grid-cols-[1.05fr_0.95fr] min-h-[82vh] border-b border-white/20">
         <div className="px-5 lg:px-12 py-10 lg:py-16 flex flex-col justify-center">
@@ -44,7 +38,7 @@ export default function TemplateTech({ product, merchant, config }: { product: P
           </h1>
           <p className="mt-6 max-w-[380px] text-sm leading-relaxed text-white/75">{config.hero_subtitle || merchant.description || product.description || "Performance pure, design minimal — conçu pour durer."}</p>
           <div className="mt-8 flex gap-3">
-            <a href="#order" className="h-[46px] px-7 bg-[#EDEDED] text-[#0B0B0C] font-mono text-xs tracking-[0.14em] uppercase font-bold flex items-center hover:bg-white">Commander — {product.price.toLocaleString("fr-DZ")} DZD</a>
+            <a href="#order" className={`h-[46px] px-7 font-mono text-xs tracking-[0.14em] uppercase font-bold flex items-center text-white ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : ""}`} style={{ background: config.cta_color || "#EDEDED", color: config.cta_color ? "#fff" : "#0B0B0C", fontFamily: config.font==="cairo" ? "'Cairo', sans-serif" : config.font==="tajawal" ? "'Tajawal', sans-serif" : undefined }}>Commander — {product.price.toLocaleString("fr-DZ")} DZD</a>
             {product.compare_at_price && <span className="self-center text-sm line-through opacity-30">{Number(product.compare_at_price).toLocaleString("fr-DZ")} DZD</span>}
           </div>
         </div>

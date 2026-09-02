@@ -26,6 +26,9 @@ type Config = {
   hero_subtitle?: string;
   announcement?: string;
   footer_text?: string;
+  cta_color?: string;
+  font?: string;
+  button_radius?: string;
 };
 
 export default function TemplateAtelier({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
@@ -60,25 +63,15 @@ export default function TemplateAtelier({ product, merchant, config }: { product
         </div>
       </div>
 
-      {/* Header */}
+      {/* Header — minimal, no top CTA (order in bottom) */}
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur-[12px] border-b border-[#E8E6E1] h-[56px] flex items-center">
-        <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center justify-between">
+        <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center">
           <div className="flex items-center gap-3">
             {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-8 h-8 rounded object-cover border border-[#E8E6E1] bg-white" />}
             <div className="font-serif text-[17px] tracking-[-0.02em]">{merchant.business_name}</div>
           </div>
-          <div className="flex items-center gap-6 text-[11px] tracking-[0.12em] uppercase">
-            <a href="#order" className="hover:opacity-60 transition-opacity">Panier (1)</a>
-            <span className="hidden sm:inline opacity-30">—</span>
-            <span className="hidden sm:inline font-medium">{merchant.business_name}</span>
-          </div>
         </div>
       </header>
-      {merchant.banner_url && (
-        <div className="w-full h-[180px] overflow-hidden border-b border-[#E8E6E1]">
-          <img src={merchant.banner_url} alt="banner" className="w-full h-full object-cover" />
-        </div>
-      )}
 
       {/* Hero */}
       <section ref={heroRef} className="relative w-full border-b border-[#E8E6E1] overflow-hidden">
@@ -94,7 +87,7 @@ export default function TemplateAtelier({ product, merchant, config }: { product
                 <span className="font-serif text-3xl">{product.price.toLocaleString("fr-DZ")} DZD</span>
                 {product.compare_at_price && <span className="text-sm line-through opacity-40">{Number(product.compare_at_price).toLocaleString("fr-DZ")} DZD</span>}
               </div>
-              <a href="#order" className="mt-8 inline-flex bg-[#111] text-white px-8 py-3 text-xs tracking-[0.14em] uppercase hover:bg-black transition-colors">Commander — Paiement à la livraison</a>
+              <a href="#order" className={`mt-8 inline-flex text-white px-8 py-3 text-xs tracking-[0.14em] uppercase font-bold ${config.button_radius==="pill" ? "rounded-full" : config.button_radius==="xl" ? "rounded-xl" : config.button_radius==="lg" ? "rounded-lg" : "rounded-none"}`} style={{ background: config.cta_color || "#111", fontFamily: config.font==="instrument" ? "'Instrument Serif', serif" : config.font==="cairo" ? "'Cairo', sans-serif" : config.font==="tajawal" ? "'Tajawal', sans-serif" : undefined }}>Commander — Paiement à la livraison</a>
             </div>
             <div className="mt-10 flex gap-8 text-xs">
               <div><div className="font-medium">58 Wilayas</div><div className="opacity-50">Livraison 24-48h</div></div>

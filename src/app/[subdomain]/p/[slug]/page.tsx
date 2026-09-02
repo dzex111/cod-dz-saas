@@ -4,6 +4,7 @@ import { getStoreConfig } from "@/lib/store-config";
 import TemplateAtelier from "@/components/landing/TemplateAtelier";
 import TemplateTech from "@/components/landing/TemplateTech";
 import TemplateDigital from "@/components/landing/TemplateDigital";
+import TemplateBeauty from "@/components/landing/TemplateBeauty";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +39,9 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
   }
   if (cfg.template === "digital") {
     return <TemplateDigital product={product as never} merchant={merchant as never} config={cfg as never} />;
+  }
+  if (cfg.template === "beauty") {
+    return <TemplateBeauty product={product as never} merchant={merchant as never} config={cfg as never} />;
   }
 
   return <TemplateAtelier product={product as never} merchant={merchant as never} config={cfg as never} />;
