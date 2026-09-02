@@ -1,9 +1,9 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { IconPackage } from "@/components/icons";
 import { getStoreConfig } from "@/lib/store-config";
+import StorefrontClient from "@/components/StorefrontClient";
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
   const { subdomain } = await params;
@@ -82,26 +82,14 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         </div>
       </section>
 
-      {/* Products — below hero, not before */}
+      {/* Products — below hero, click opens side drawer */}
       <section className="max-w-[1600px] mx-auto px-5 lg:px-8 py-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-serif text-2xl">Collection</h2>
           <span className="text-xs tracking-[0.12em] uppercase opacity-50">{products?.length || 0} produits</span>
         </div>
         {products && products.length ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((p) => (
-              <Link key={p.id} href={`/${subdomain}/p/${p.slug}`} className="group">
-                <div className="bg-white border border-[#E8E6E1] overflow-hidden">
-                  {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-[380px] object-cover group-hover:scale-[1.01] transition duration-500" /> : <div className="h-[380px] bg-[#FAF9F6] flex items-center justify-center"><IconPackage className="w-8 h-8 opacity-20" /></div>}
-                  <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center">
-                    <span className="text-xs font-medium truncate">{p.name}</span>
-                    <span className="text-xs font-serif">{p.price.toLocaleString("fr-DZ")} DZD</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <StorefrontClient products={products as never} subdomain={subdomain} merchantSubdomain={merchant.subdomain} />
         ) : (
           <div className="text-center py-16 border border-dashed border-[#E8E6E1] bg-white">
             <p className="text-sm opacity-60">Aucun produit — ajoutez votre premier produit</p>
