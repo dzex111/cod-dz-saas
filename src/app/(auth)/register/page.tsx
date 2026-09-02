@@ -46,15 +46,16 @@ export default function RegisterPage() {
       <div className="w-full max-w-[440px]">
         <div className="text-center mb-7">
           <Link href="/" className="inline-flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-ink flex items-center justify-center text-white font-black">C</div>
-            <span className="font-black text-xl text-foreground tracking-tight">COD DZ</span>
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold">O</div>
+            <span className="font-bold text-xl tracking-tight text-ink">ORDELY</span>
+            <span className="text-[10px] font-semibold tracking-widest border border-border px-2 py-1 rounded">COD Operations</span>
           </Link>
-          <div className="inline-flex mt-3 bg-emerald-500 text-white text-xs font-black px-3 py-1 rounded-full">✓ مجاني 100% — بدون بطاقة</div>
+          <p className="text-xs text-muted mt-2">Every order, under control.</p>
         </div>
 
-        <div className="bg-card rounded-[24px] shadow-xl border border-border p-7">
-          <h1 className="text-[22px] font-black text-foreground text-center">أنشئ متجرك الآن</h1>
-          <p className="text-sm text-muted text-center mt-1">جاهز في أقل من دقيقة — رابط احترافي فوري</p>
+        <div className="bg-card rounded-xl shadow-sm border border-border p-7">
+          <h1 className="text-xl font-bold text-center">Create your store</h1>
+          <p className="text-sm text-muted text-center mt-1">Free onboarding for selected stores</p>
 
           {err && <div className="mt-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium">{err}</div>}
 
@@ -83,10 +84,10 @@ export default function RegisterPage() {
               <label className="block text-[13px] font-bold text-foreground mb-1.5">كلمة المرور</label>
               <input placeholder="8 أحرف على الأقل" type="password" required value={form.password} onChange={(e) => upd("password", e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
             </div>
-            <button disabled={loading} className="w-full bg-ink text-white py-3.5 rounded-xl font-bold hover:bg-ink-hover disabled:opacity-50 transition-colors shadow-sm">
-              {loading ? "جاري الإنشاء..." : "أنشئ متجري — مجاناً"}
+            <button disabled={loading} className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary-hover disabled:opacity-50 transition-colors">
+              {loading ? "Creating..." : "Create store — Start free"}
             </button>
-            <p className="text-center text-xs text-muted-soft">بالتسجيل توافق على الشروط — 14 يوم تجربة كاملة</p>
+            <p className="text-center text-xs text-muted-soft">No card required • 14-day trial</p>
           </form>
         </div>
 

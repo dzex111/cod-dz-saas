@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { createAdminClient } from "@/lib/supabase/server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = `https://${process.env.NEXT_PUBLIC_BASE_DOMAIN || "coddz.com"}`;
+  const base = `https://${process.env.NEXT_PUBLIC_BASE_DOMAIN || "ordely.com"}`;
   const urls: MetadataRoute.Sitemap = [
     { url: `${base}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
     { url: `${base}/pricing`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },

@@ -20,13 +20,13 @@ export async function POST(req: NextRequest) {
   const amountMap: Record<number, number> = { 1: 500, 3: 1200, 6: 2000, 12: 3500 };
   const amount = amountMap[months] ?? 500;
 
-  const origin = req.headers.get("origin") || req.headers.get("host") ? `https://${req.headers.get("host")}` : `https://${process.env.NEXT_PUBLIC_BASE_DOMAIN || "coddz.com"}`;
+  const origin = req.headers.get("origin") || req.headers.get("host") ? `https://${req.headers.get("host")}` : `https://${process.env.NEXT_PUBLIC_BASE_DOMAIN || "ordely.com"}`;
 
   try {
     const checkout = await createChargilyCheckout({
       merchant_id: membership.merchant_id,
       amount,
-      description: `اشتراك COD DZ - ${months} شهر`,
+      description: `اشتراك ORDELY - ${months} شهر`,
       success_url: `${origin}/dashboard/settings/billing?chargily=success`,
       failure_url: `${origin}/dashboard/settings/billing?chargily=cancel`,
       webhook_endpoint: `${origin}/api/webhooks/chargily`,

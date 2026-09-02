@@ -38,15 +38,16 @@ export default function LoginPage() {
       <div className="w-full max-w-[420px]">
         <div className="text-center mb-7">
           <Link href="/" className="inline-flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-ink flex items-center justify-center text-white font-black">C</div>
-            <span className="font-black text-xl text-foreground tracking-tight">COD DZ</span>
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold">O</div>
+            <span className="font-bold text-xl tracking-tight text-ink">ORDELY</span>
+            <span className="text-[10px] font-semibold tracking-widest border border-border px-2 py-1 rounded">COD Operations</span>
           </Link>
-          <p className="text-sm text-muted mt-2">مرحباً بعودتك — سجل دخولك للمتابعة</p>
+          <p className="text-sm text-muted mt-2">Welcome back — sign in to continue</p>
         </div>
 
-        <div className="bg-card rounded-[24px] shadow-xl border border-border p-7">
-          <h1 className="text-[22px] font-black text-foreground">تسجيل الدخول</h1>
-          <p className="text-sm text-muted mt-1">أدخل بياناتك للوصول للوحة التحكم</p>
+        <div className="bg-card rounded-xl shadow-sm border border-border p-7">
+          <h1 className="text-xl font-bold">Sign in</h1>
+          <p className="text-sm text-muted mt-1">Access your Ordely workspace</p>
 
           {err && (
             <div className="mt-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium">
@@ -68,17 +69,17 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-5 rounded-xl border border-border bg-background p-3.5">
-            <div className="text-[11px] font-bold tracking-widest text-muted-soft uppercase">حساب تجريبي</div>
-            <div className="text-sm font-mono font-semibold text-foreground mt-1" dir="ltr">test10614@coddz.com / kikou@2007</div>
+          <div className="mt-5 rounded-lg border border-border bg-background p-3.5">
+            <div className="text-[11px] font-semibold tracking-widest text-muted-soft uppercase">Demo account</div>
+            <div className="text-sm font-mono font-semibold mt-1" dir="ltr">test10614@coddz.com / kikou@2007</div>
           </div>
 
           <p className="text-center text-sm text-muted mt-5">
-            ليس لديك حساب؟ <Link href="/register" className="font-bold text-primary hover:underline">أنشئ متجرك مجاناً</Link>
+            No account? <Link href="/register" className="font-medium text-primary hover:underline">Create your store</Link>
           </p>
         </div>
 
-        <p className="text-center text-xs text-muted-soft mt-4"><Link href="/" className="hover:text-muted">← الرئيسية</Link></p>
+        <p className="text-center text-xs text-muted-soft mt-4"><Link href="/" className="hover:text-muted">← Home</Link></p>
       </div>
     </div>
   );

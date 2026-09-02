@@ -25,6 +25,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     { href: "/dashboard/products", label: "المنتجات", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
     { href: "/dashboard/blacklists", label: "القائمة السوداء", icon: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" },
     { href: "/dashboard/coupons", label: "الكوبونات", icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" },
+    { href: "/dashboard/settings/store", label: "تخصيص المتجر ✨", icon: "M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" },
     { href: "/dashboard/settings/shipping", label: "الشحن", icon: "M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" },
     { href: "/dashboard/settings/billing", label: "الفوترة", icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" },
   ];
@@ -35,32 +36,32 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <aside className="w-[280px] bg-card border-e border-border hidden lg:flex flex-col shrink-0 sticky top-0 h-screen">
         <div className="px-6 py-5">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-ink text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center font-black text-sm shadow-sm">C</div>
+            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">O</div>
             <div>
-              <div className="font-black text-[15px] leading-none tracking-tight">COD DZ</div>
-              <div className="text-[11px] font-bold tracking-widest text-muted-soft uppercase">Merchant OS</div>
+              <div className="font-bold text-[15px] leading-none tracking-tight text-ink">ORDELY</div>
+              <div className="text-[11px] font-semibold tracking-widest text-muted-soft uppercase">COD Operations</div>
             </div>
           </Link>
         </div>
 
-        <div className="mx-4 p-3 rounded-2xl bg-background border border-border">
+        <div className="mx-4 p-3 rounded-xl bg-background border border-border">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white font-black text-sm">{merchant.business_name[0]}</div>
+            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">{merchant.business_name[0]}</div>
             <div className="min-w-0 flex-1">
-              <div className="font-bold text-sm truncate leading-none">{merchant.business_name}</div>
-              <div className="text-xs text-muted font-mono truncate" dir="ltr">{merchant.subdomain}.coddz</div>
+              <div className="font-semibold text-sm truncate leading-none">{merchant.business_name}</div>
+              <div className="text-xs text-muted font-mono truncate" dir="ltr">{merchant.subdomain}.{BASE}</div>
             </div>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
           </div>
-          <a href={`https://${BASE}/${merchant.subdomain}`} target="_blank" className="mt-3 flex items-center justify-center gap-1.5 w-full bg-ink text-white dark:bg-white dark:text-zinc-900 rounded-xl py-2 text-xs font-bold hover:opacity-90 transition-opacity">
-            عرض المتجر ↗
+          <a href={`https://${BASE}/${merchant.subdomain}`} target="_blank" className="mt-3 flex items-center justify-center gap-1.5 w-full bg-primary text-white rounded-lg py-2 text-xs font-medium hover:bg-primary-hover transition-colors">
+            View store ↗
           </a>
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           <div className="text-[11px] font-bold tracking-widest text-muted-soft uppercase px-3 mb-2">القائمة</div>
           {nav.map((item) => (
-            <Link key={item.href} href={item.href} className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${item.active ? "bg-ink text-white dark:bg-white dark:text-zinc-900 shadow-sm" : "text-muted hover:text-foreground hover:bg-card-hover"}`}>
+            <Link key={item.href} href={item.href} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${item.active ? "bg-primary text-white shadow-sm" : "text-muted hover:text-foreground hover:bg-card-hover"}`}>
               <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
@@ -95,15 +96,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <div className="lg:hidden fixed top-0 inset-x-0 z-30 bg-card border-b border-border">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-ink text-white flex items-center justify-center font-black text-sm">C</div>
-            <span className="font-black text-sm">{merchant.business_name}</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-sm">O</div>
+            <span className="font-bold text-sm">ORDELY</span>
+            <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
           </div>
           <ThemeToggle />
         </div>
         <div className="flex gap-1.5 px-3 pb-3 overflow-x-auto">
           {nav.map(i=>(
-            <Link key={i.href} href={i.href} className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap border ${i.active ? "bg-ink text-white border-ink" : "bg-background border-border text-muted"}`}>{i.label}</Link>
+            <Link key={i.href} href={i.href} className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border ${i.active ? "bg-primary text-white border-primary" : "bg-background border-border text-muted"}`}>{i.label}</Link>
           ))}
         </div>
       </div>

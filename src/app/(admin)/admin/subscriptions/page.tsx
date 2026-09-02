@@ -57,7 +57,7 @@ export default async function AdminSubsPage() {
                 <span className="text-white font-bold text-lg">C</span>
               </div>
               <div>
-                <span className="font-bold text-gray-900 text-lg">COD DZ</span>
+                <span className="font-bold text-gray-900 text-lg">ORDELY</span>
                 <span className="text-xs text-gray-400 block -mt-0.5">Admin Panel</span>
               </div>
             </Link>
@@ -162,7 +162,7 @@ export default async function AdminSubsPage() {
                         <div className="font-semibold text-gray-900">{m.business_name}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-gray-600 font-mono text-xs" dir="ltr">{m.subdomain}.coddz.com</span>
+                        <span className="text-gray-600 font-mono text-xs" dir="ltr">{m.subdomain}.ordely.com</span>
                       </td>
                       <td className="px-6 py-4 text-center">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${

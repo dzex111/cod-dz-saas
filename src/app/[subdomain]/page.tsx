@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ subdomain
   const admin = createAdminClient();
   const { data: m } = await admin.from("merchants").select("business_name").eq("subdomain", subdomain).single();
   return {
-    title: m ? `${m.business_name} | COD DZ` : "متجر | COD DZ",
+    title: m ? `${m.business_name} | ORDELY` : "متجر | ORDELY",
     description: m ? `تسوق من ${m.business_name} — دفع عند الاستلام، توصيل 58 ولاية` : "متجر دفع عند الاستلام",
     openGraph: { title: m?.business_name, description: "دفع عند الاستلام — 58 ولاية", locale: "ar_DZ" },
   };
@@ -70,7 +70,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         {cfg.announcement && <div className="bg-white text-zinc-900 text-center text-xs font-black py-2">{cfg.announcement}</div>}
         <header className="border-b border-white/10 bg-zinc-900">
           <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-            <Link href="/" className="text-xs font-bold text-white/60 hover:text-white">← COD DZ</Link>
+            <Link href="/" className="text-xs font-bold text-white/60 hover:text-white">← ORDELY</Link>
             <ThemeToggle />
           </div>
           <div className="max-w-7xl mx-auto px-6 pb-10 text-center">
@@ -91,7 +91,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         {cfg.announcement && <div className="bg-[#111111] text-[#FDF6EE] text-center text-xs font-bold py-2">{cfg.announcement}</div>}
         <header className="bg-white border-b border-[#E8D9C5]">
           <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-            <Link href="/" className="text-xs font-bold text-zinc-600">← COD DZ</Link>
+            <Link href="/" className="text-xs font-bold text-zinc-600">← ORDELY</Link>
             <ThemeToggle />
           </div>
           <div className="max-w-7xl mx-auto px-6 pb-10 text-center">
@@ -112,7 +112,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
       {cfg.announcement && <div className="bg-ink text-white dark:bg-white dark:text-zinc-900 text-center text-xs font-bold py-2">{cfg.announcement}</div>}
       <header className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-          <Link href="/" className="text-xs font-bold text-muted hover:text-foreground">← COD DZ</Link>
+          <Link href="/" className="text-xs font-bold text-muted hover:text-foreground">← ORDELY</Link>
           <ThemeToggle />
         </div>
         <div className="max-w-7xl mx-auto px-6 pb-10 text-center">
@@ -136,7 +136,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         </div>
       </header>
       {grid}
-      <footer className="border-t border-border bg-card py-6 text-center text-sm text-muted">{cfg.footer_text || `مدعوم من COD DZ — ${merchant.business_name}`}</footer>
+      <footer className="border-t border-border bg-card py-6 text-center text-sm text-muted">{cfg.footer_text || `مدعوم من ORDELY — ${merchant.business_name}`}</footer>
     </div>
   );
 }

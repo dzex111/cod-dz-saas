@@ -75,7 +75,7 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
           </div>
         </div>
         {cfg.show_reviews && <div className="max-w-7xl mx-auto px-6 pb-10"><Reviews productId={product.id} merchantId={merchant.id} /></div>}
-        <footer className="border-t border-white/10 py-8 text-center text-white/60 text-sm">{cfg.footer_text || `© ${merchant.business_name} — مدعوم من COD DZ`}</footer>
+        <footer className="border-t border-white/10 py-8 text-center text-white/60 text-sm">{cfg.footer_text || `© ${merchant.business_name} — مدعوم من ORDELY`}</footer>
       </div>
     );
   }
@@ -177,7 +177,7 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
       {cfg.show_reviews && <div className="max-w-7xl mx-auto px-6 pb-10"><Reviews productId={product.id} merchantId={merchant.id} /></div>}
       <footer className="border-t border-border bg-card py-8 text-center">
         <div className="text-sm font-bold">{cfg.footer_text || `© ${merchant.business_name}`}</div>
-        <div className="text-sm text-muted mt-1">مدعوم من <span className="font-bold" style={{ color: primary }}>COD DZ</span> — منصة جزائرية</div>
+        <div className="text-sm text-muted mt-1">مدعوم من <span className="font-bold" style={{ color: primary }}>ORDELY</span> — منصة جزائرية</div>
       </footer>
     </div>
   );
