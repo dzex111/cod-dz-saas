@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { IconPackage, IconStore } from "@/components/icons";
-import ThemeToggle from "@/components/ThemeToggle";
 import { getStoreConfig } from "@/lib/store-config";
 
 export async function generateMetadata({ params }: { params: Promise<{ subdomain: string }> }): Promise<Metadata> {
@@ -42,7 +41,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
       {products && products.length ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {products.map((p) => (
-            <Link key={p.id} href={`/${subdomain}/p/${p.slug}`} className="group bg-card rounded-[20px] border border-border overflow-hidden hover:shadow-lg hover:border-border-strong transition-all flex flex-col">
+            <Link key={p.id} href={`/${subdomain}/p/${p.slug}`} className="group bg-card rounded-xl border border-border overflow-hidden hover:shadow-sm hover:border-border-strong transition-all flex flex-col">
               {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-56 object-cover group-hover:scale-[1.02] transition duration-300" /> : <div className="h-56 bg-card-hover flex items-center justify-center border-b border-border"><IconPackage className="w-10 h-10 text-muted-soft" /></div>}
               <div className="p-4 flex-1 flex flex-col">
                 <div className="font-bold text-sm line-clamp-1">{p.name}</div>
@@ -54,8 +53,8 @@ export default async function StorefrontHome({ params, searchParams }: { params:
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-card rounded-[24px] border border-dashed border-border">
-          <div className="w-16 h-16 rounded-2xl bg-background border border-border flex items-center justify-center mx-auto mb-4"><IconStore className="w-8 h-8 text-muted-soft" /></div>
+        <div className="text-center py-20 bg-card rounded-xl border border-dashed border-border">
+          <div className="w-16 h-16 rounded-xl bg-background border border-border flex items-center justify-center mx-auto mb-4"><IconStore className="w-8 h-8 text-muted-soft" /></div>
           <p className="font-bold">لا توجد منتجات حالياً</p>
           <p className="text-sm text-muted mt-1">سيظهر هنا كل منتجات هذا المتجر</p>
         </div>
@@ -71,10 +70,10 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         <header className="border-b border-white/10 bg-zinc-900">
           <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <Link href="/" className="text-xs font-bold text-white/60 hover:text-white">← ORDELY</Link>
-            <ThemeToggle />
+            
           </div>
           <div className="max-w-7xl mx-auto px-6 pb-10 text-center">
-            {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-20 h-20 rounded-2xl object-cover mx-auto mb-4 border border-white/10" /> : <div className="w-20 h-20 rounded-2xl bg-white text-zinc-900 flex items-center justify-center mx-auto mb-4 font-black text-xl">{merchant.business_name[0]}</div>}
+            {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 border border-white/10" /> : <div className="w-20 h-20 rounded-xl bg-white text-zinc-900 flex items-center justify-center mx-auto mb-4 font-black text-xl">{merchant.business_name[0]}</div>}
             <h1 className="text-4xl font-black">{merchant.business_name}</h1>
             <p className="text-white/60 mt-2 max-w-2xl mx-auto">{cfg.hero_subtitle || merchant.description}</p>
           </div>
@@ -92,7 +91,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
         <header className="bg-white border-b border-[#E8D9C5]">
           <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <Link href="/" className="text-xs font-bold text-zinc-600">← ORDELY</Link>
-            <ThemeToggle />
+            
           </div>
           <div className="max-w-7xl mx-auto px-6 pb-10 text-center">
             {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-4 border-[#E8D9C5]" /> : <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-black text-xl" style={{ background: primary }}>{merchant.business_name[0]}</div>}
@@ -109,14 +108,14 @@ export default async function StorefrontHome({ params, searchParams }: { params:
   // minimal
   return (
     <div className="min-h-screen bg-background">
-      {cfg.announcement && <div className="bg-ink text-white dark:bg-white dark:text-zinc-900 text-center text-xs font-bold py-2">{cfg.announcement}</div>}
+      {cfg.announcement && <div className="bg-primary text-white text-center text-xs font-bold py-2">{cfg.announcement}</div>}
       <header className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
           <Link href="/" className="text-xs font-bold text-muted hover:text-foreground">← ORDELY</Link>
-          <ThemeToggle />
+          
         </div>
         <div className="max-w-7xl mx-auto px-6 pb-10 text-center">
-          {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-20 h-20 rounded-2xl object-cover mx-auto mb-4 border border-border shadow-sm" /> : <div className="w-20 h-20 rounded-2xl bg-ink text-white flex items-center justify-center mx-auto mb-4 shadow-sm"><IconStore className="w-8 h-8" /></div>}
+          {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-20 h-20 rounded-xl object-cover mx-auto mb-4 border border-border shadow-sm" /> : <div className="w-20 h-20 rounded-xl bg-primary text-white flex items-center justify-center mx-auto mb-4 shadow-sm"><IconStore className="w-8 h-8" /></div>}
           <h1 className="text-4xl font-black tracking-tight">{merchant.business_name}</h1>
           <p className="text-muted mt-3 text-[15px] max-w-2xl mx-auto">{cfg.hero_subtitle || merchant.description}</p>
           <p className="text-muted-soft mt-3 text-xs font-mono" dir="ltr">{process.env.NEXT_PUBLIC_BASE_DOMAIN}/{merchant.subdomain}</p>

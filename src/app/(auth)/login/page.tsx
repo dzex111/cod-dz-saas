@@ -50,7 +50,7 @@ export default function LoginPage() {
           <p className="text-sm text-muted mt-1">Access your Ordely workspace</p>
 
           {err && (
-            <div className="mt-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium">
+            <div className="mt-5 bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-sm font-medium">
               {err}
             </div>
           )}
@@ -64,7 +64,7 @@ export default function LoginPage() {
               <label className="block text-[13px] font-bold text-foreground mb-1.5">كلمة المرور</label>
               <input placeholder="••••••••" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
             </div>
-            <button disabled={loading} className="w-full bg-ink text-white py-3.5 rounded-xl font-bold hover:bg-ink-hover disabled:opacity-50 transition-colors shadow-sm">
+            <button disabled={loading} className="w-full bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-primary-hover disabled:opacity-50 transition-colors shadow-sm">
               {loading ? "جاري الدخول..." : "دخول"}
             </button>
           </form>

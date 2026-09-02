@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_DOMAIN || "cod-dz-saas.vercel.app";
 
@@ -70,7 +69,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           ))}
 
           {isAdmin && (
-            <Link href="/admin/subscriptions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-300 text-sm font-bold mt-4">
+            <Link href="/admin/subscriptions" className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-sm font-bold mt-4">
               <span className="w-2 h-2 rounded-full bg-amber-500" /> لوحة الأدمن
             </Link>
           )}
@@ -78,7 +77,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
         <div className="p-4 border-t border-border">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-ink text-white dark:bg-white dark:text-zinc-900 flex items-center justify-center text-xs font-bold">{user.email?.[0]?.toUpperCase()}</div>
+            <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">{user.email?.[0]?.toUpperCase()}</div>
             <div className="min-w-0 flex-1">
               <div className="text-xs font-bold truncate">{user.email}</div>
               <div className="text-[11px] text-emerald-600 font-bold">● متصل</div>
@@ -100,7 +99,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <span className="font-bold text-sm">ORDELY</span>
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
           </div>
-          <ThemeToggle />
+          
         </div>
         <div className="flex gap-1.5 px-3 pb-3 overflow-x-auto">
           {nav.map(i=>(
@@ -122,7 +121,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
               <input placeholder="بحث في الطلبات..." className="bg-transparent outline-none text-sm w-32 placeholder:text-muted-soft" />
               <span className="text-[10px] bg-background border border-border px-1.5 py-0.5 rounded font-mono">⌘K</span>
             </div>
-            <ThemeToggle />
+            
             <button className="w-9 h-9 rounded-full bg-card border border-border flex items-center justify-center hover:bg-card-hover transition-colors relative">
               <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.8}><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-card" />

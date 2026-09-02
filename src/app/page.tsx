@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
@@ -16,7 +15,7 @@ export default function Home() {
             <a href="#features" className="hover:text-foreground">Features</a>
           </nav>
           <div className="flex items-center gap-2">
-            <ThemeToggle />
+            
             <Link href="/login" className="px-4 py-2 rounded-lg border border-border text-sm font-medium hover:bg-card-hover">Sign in</Link>
             <Link href="/register" className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary-hover">Start free</Link>
           </div>
@@ -94,7 +93,7 @@ export default function Home() {
       </section>
 
       <section className="max-w-6xl mx-auto px-6 pb-16">
-        <div className="rounded-xl bg-ink text-white p-8 flex flex-col md:flex-row justify-between gap-6">
+        <div className="rounded-xl bg-primary text-white p-8 flex flex-col md:flex-row justify-between gap-6">
           <div>
             <h3 className="text-xl font-bold">Ready to put your orders under control?</h3>
             <p className="text-white/70 text-sm mt-1">Start your free Ordely trial.</p>

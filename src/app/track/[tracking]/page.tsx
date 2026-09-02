@@ -9,7 +9,7 @@ export default async function TrackPage({ params }: { params: Promise<{ tracking
   if (!order) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
-        <div className="bg-card rounded-2xl border border-border p-8 text-center max-w-md">
+        <div className="bg-card rounded-xl border border-border p-8 text-center max-w-md">
           <div className="text-4xl mb-2">🔍</div>
           <h1 className="font-extrabold text-foreground">رقم التتبع غير موجود</h1>
           <p className="text-muted-soft mt-2">تأكد من الرقم أو تواصل مع المتجر</p>
@@ -27,7 +27,7 @@ export default async function TrackPage({ params }: { params: Promise<{ tracking
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="max-w-lg mx-auto bg-card rounded-2xl border border-border p-7 space-y-5">
+      <div className="max-w-lg mx-auto bg-card rounded-xl border border-border p-7 space-y-5">
         <h1 className="text-xl font-extrabold text-foreground text-center">تتبع طلبك</h1>
         <div className="bg-card/20 rounded-xl p-4 text-center">
           <div className="text-xs text-muted-soft">رقم التتبع</div>

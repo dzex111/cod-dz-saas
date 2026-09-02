@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import CheckoutForm from "./CheckoutForm";
 import Reviews from "./Reviews";
 import { IconPackage, IconShield, IconTruck } from "@/components/icons";
-import ThemeToggle from "@/components/ThemeToggle";
 import { getStoreConfig } from "@/lib/store-config";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -44,11 +43,11 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
               {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-9 h-9 rounded-xl object-cover border border-white/10" /> : <div className="w-9 h-9 rounded-xl bg-white text-zinc-900 flex items-center justify-center font-black">{merchant.business_name[0]}</div>}
               <span className="font-black">{merchant.business_name}</span>
             </Link>
-            <ThemeToggle />
+            
           </div>
         </header>
         <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-2 gap-10 items-start">
-          <div className="relative overflow-hidden rounded-[24px] bg-zinc-900 border border-white/10">
+          <div className="relative overflow-hidden rounded-xl bg-zinc-900 border border-white/10">
             {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-[520px] object-cover" /> : <div className="h-[520px] flex items-center justify-center"><IconPackage className="w-12 h-12 text-white/20" /></div>}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
           </div>
@@ -62,12 +61,12 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
             </div>
             {cfg.show_features && (
               <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3"><IconShield className="w-6 h-6 mx-auto" /><div className="text-xs font-bold mt-1">دفع آمن</div></div>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3"><IconTruck className="w-6 h-6 mx-auto" /><div className="text-xs font-bold mt-1">توصيل سريع</div></div>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-3"><IconPackage className="w-6 h-6 mx-auto" /><div className="text-xs font-bold mt-1">جودة مضمونة</div></div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3"><IconShield className="w-6 h-6 mx-auto" /><div className="text-xs font-bold mt-1">دفع آمن</div></div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3"><IconTruck className="w-6 h-6 mx-auto" /><div className="text-xs font-bold mt-1">توصيل سريع</div></div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3"><IconPackage className="w-6 h-6 mx-auto" /><div className="text-xs font-bold mt-1">جودة مضمونة</div></div>
               </div>
             )}
-            <div className="mt-8 bg-white text-zinc-900 rounded-[20px] p-6">
+            <div className="mt-8 bg-white text-zinc-900 rounded-xl p-6">
               <h2 className="font-black text-lg">اطلب الآن</h2>
               <p className="text-sm text-zinc-600 mt-1">الدفع عند الاستلام — سيتصل بك فريق التأكيد</p>
               <div className="mt-4"><CheckoutForm merchantSubdomain={merchant.subdomain} productSlug={product.slug} price={product.price} /></div>
@@ -91,11 +90,11 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
               {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-9 h-9 rounded-full object-cover border-2 border-[#E8D9C5]" /> : <div className="w-9 h-9 rounded-full flex items-center justify-center font-black text-white" style={{ background: primary }}>{merchant.business_name[0]}</div>}
               <span className="font-black text-zinc-900">{merchant.business_name}</span>
             </Link>
-            <ThemeToggle />
+            
           </div>
         </header>
         <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-[24px] border border-[#E8D9C5] overflow-hidden shadow-sm">
+          <div className="bg-white rounded-xl border border-[#E8D9C5] overflow-hidden shadow-sm">
             {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-[480px] object-cover" /> : <div className="h-[480px] bg-[#FDF6EE] flex items-center justify-center"><IconPackage className="w-10 h-10 text-zinc-400" /></div>}
             <div className="p-7">
               <h1 className="text-3xl font-black text-zinc-900">{cfg.hero_title || product.name}</h1>
@@ -106,7 +105,7 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-[24px] border border-[#E8D9C5] p-6 shadow-sm h-fit lg:sticky lg:top-20">
+          <div className="bg-white rounded-xl border border-[#E8D9C5] p-6 shadow-sm h-fit lg:sticky lg:top-20">
             <h2 className="font-black text-xl">اطلب الآن بكل ود</h2>
             <p className="text-sm text-zinc-600 mt-1">نحن نهتم بك — الدفع عند الاستلام</p>
             <div className="mt-5"><CheckoutForm merchantSubdomain={merchant.subdomain} productSlug={product.slug} price={product.price} /></div>
@@ -121,11 +120,11 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
   // DEFAULT: MINIMAL (professional)
   return (
     <div className="min-h-screen bg-background">
-      {cfg.announcement && <div className="bg-ink text-white dark:bg-white dark:text-zinc-900 text-center text-xs font-bold py-2 px-4 tracking-wide">{cfg.announcement}</div>}
+      {cfg.announcement && <div className="bg-primary text-white text-center text-xs font-bold py-2 px-4 tracking-wide">{cfg.announcement}</div>}
       <header className="border-b border-border bg-card/80 backdrop-blur-xl sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link href={`/${subdomain}`} className="flex items-center gap-3">
-            {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-9 h-9 rounded-xl object-cover border border-border shadow-sm" /> : <div className="w-9 h-9 rounded-xl bg-ink text-white flex items-center justify-center font-black text-sm">{merchant.business_name[0]}</div>}
+            {merchant.logo_url ? <img src={merchant.logo_url} alt={merchant.business_name} className="w-9 h-9 rounded-xl object-cover border border-border shadow-sm" /> : <div className="w-9 h-9 rounded-xl bg-primary text-white flex items-center justify-center font-black text-sm">{merchant.business_name[0]}</div>}
             <div>
               <div className="font-black leading-none" style={{ color: primary }}>{merchant.business_name}</div>
               <div className="text-xs text-muted">دفع عند الاستلام • 58 ولاية</div>
@@ -133,13 +132,13 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
           </Link>
           <div className="flex items-center gap-2">
             {merchant.phone && <div className="hidden md:flex text-xs font-mono bg-background border border-border rounded-full px-3 py-1.5" dir="ltr">{merchant.phone}</div>}
-            <ThemeToggle />
+            
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8 grid lg:grid-cols-2 gap-8 items-start">
-        <div className="bg-card rounded-[24px] border border-border overflow-hidden shadow-sm">
+        <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
           {product.image_url ? <img src={product.image_url} alt={product.name} className="w-full h-[500px] object-cover" /> : <div className="h-[500px] bg-card-hover flex items-center justify-center"><IconPackage className="w-10 h-10 text-muted-soft" /></div>}
           <div className="p-7">
             <h1 className="text-[28px] font-black leading-tight">{cfg.hero_title || product.name}</h1>
@@ -160,13 +159,13 @@ export default async function ProductLandingPage({ params }: { params: Promise<{
         </div>
 
         <div className="lg:sticky lg:top-[88px] space-y-4">
-          <div className="bg-card rounded-[24px] border border-border p-6 shadow-sm">
+          <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
             <h2 className="text-xl font-black">اطلب الآن</h2>
             <p className="text-sm text-muted mt-1">املأ بياناتك وسيتصل بك فريق التأكيد — الدفع عند الاستلام</p>
             <div className="mt-5"><CheckoutForm merchantSubdomain={merchant.subdomain} productSlug={product.slug} price={product.price} /></div>
           </div>
           {cfg.show_shipping && (
-            <div className="bg-background border border-border rounded-2xl p-4 text-xs leading-6">
+            <div className="bg-background border border-border rounded-xl p-4 text-xs leading-6">
               <div className="font-bold">🚚 توصيل سريع</div>
               <div className="text-muted">48 ولاية شمالية خلال 24-48 ساعة، الجنوب خلال 3 أيام. الدفع عند الاستلام.</div>
             </div>

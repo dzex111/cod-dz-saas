@@ -12,8 +12,8 @@ export default async function AdminSubsPage() {
   if (!adminEmails.includes(user.email?.toLowerCase() || "")) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-10 text-center max-w-md">
-          <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-4">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-10 text-center max-w-md">
+          <div className="w-16 h-16 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-4">
             <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -80,7 +80,7 @@ export default async function AdminSubsPage() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">إجمالي التجار</p>
@@ -94,7 +94,7 @@ export default async function AdminSubsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">إجمالي الطلبات</p>
@@ -108,7 +108,7 @@ export default async function AdminSubsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">دفعات معلقة</p>
@@ -122,7 +122,7 @@ export default async function AdminSubsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">إجمالي المنتجات</p>
@@ -139,7 +139,7 @@ export default async function AdminSubsPage() {
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Merchants Table - 2 columns */}
-          <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <h2 className="font-bold text-gray-900">آخر التجار المسجلين</h2>
               <span className="text-sm text-gray-500">{totalMerchants ?? 0} تاجر</span>
@@ -201,7 +201,7 @@ export default async function AdminSubsPage() {
           </div>
 
           {/* Pending Payments - 1 column */}
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100">
               <h2 className="font-bold text-gray-900">دفعات BaridiMob المعلقة</h2>
             </div>
@@ -245,7 +245,7 @@ export default async function AdminSubsPage() {
 
         {/* Quick Actions */}
         <div className="mt-8 grid md:grid-cols-3 gap-4">
-          <Link href="/dashboard/orders" className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md transition-shadow group">
+          <Link href="/dashboard/orders" className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow group">
             <div className="flex items-center gap-4">
               <div className="w-11 h-11 rounded-xl bg-gray-900 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -259,7 +259,7 @@ export default async function AdminSubsPage() {
             </div>
           </Link>
 
-          <Link href="/dashboard/products" className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md transition-shadow group">
+          <Link href="/dashboard/products" className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow group">
             <div className="flex items-center gap-4">
               <div className="w-11 h-11 rounded-xl bg-gray-900 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -273,7 +273,7 @@ export default async function AdminSubsPage() {
             </div>
           </Link>
 
-          <Link href="/dashboard/blacklists" className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-md transition-shadow group">
+          <Link href="/dashboard/blacklists" className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md transition-shadow group">
             <div className="flex items-center gap-4">
               <div className="w-11 h-11 rounded-xl bg-gray-900 text-white flex items-center justify-center group-hover:scale-105 transition-transform">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2}>

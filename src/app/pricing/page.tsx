@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const plans = [
   { name: "Starter", price: "0 DZD", period: "Free to start", features: ["Unlimited orders", "Unlimited products", "Verification workflow", "Duplicate signals"], cta: "Start free", href: "/register", highlight: true },
@@ -12,7 +11,7 @@ export default function PricingPage() {
       <header className="border-b border-border bg-card">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link href="/" className="font-bold">ORDELY</Link>
-          <ThemeToggle />
+          
         </div>
       </header>
       <div className="max-w-5xl mx-auto px-6 py-12 text-center">

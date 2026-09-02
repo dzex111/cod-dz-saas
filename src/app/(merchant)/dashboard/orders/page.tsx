@@ -101,7 +101,7 @@ export default function OrdersPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-[20px] border border-border overflow-hidden shadow-sm">
+      <div className="bg-card rounded-xl border border-border overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-card-hover/50 border-b border-border">
@@ -119,7 +119,7 @@ export default function OrdersPage() {
                   <td className="px-4 py-3"><div className="font-bold text-foreground">{o.customer_name}</div><div className="text-xs text-muted font-mono" dir="ltr">{o.customer_phone}</div><div className="text-xs text-muted-soft">{new Date(o.created_at).toLocaleString("ar-DZ")}</div></td>
                   <td className="px-4 py-3 text-center text-foreground font-medium">{o.wilaya_name} - {o.baladia_name}</td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ${o.confirmation_status === "pending" ? "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/20" : o.confirmation_status === "confirmed" ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/20" : o.confirmation_status === "fake" ? "bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/20" : o.confirmation_status === "double" ? "bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-500/20" : "bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700"}`}>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ${o.confirmation_status === "pending" ? "bg-amber-50 text-amber-700 border-amber-200" : o.confirmation_status === "confirmed" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : o.confirmation_status === "fake" ? "bg-red-50 text-red-700 border-red-200" : o.confirmation_status === "double" ? "bg-orange-50 text-orange-700 border-orange-200" : "bg-zinc-50 text-zinc-600 border-zinc-200"}`}>
                       {o.confirmation_status === "pending" ? "قيد الانتظار" : o.confirmation_status === "confirmed" ? "مؤكد" : o.confirmation_status === "fake" ? "وهمي" : o.confirmation_status === "double" ? "مكرر" : o.confirmation_status}
                     </span>
                   </td>
@@ -129,9 +129,9 @@ export default function OrdersPage() {
                       <a href={`/dashboard/orders/${o.id}`} className="px-2.5 py-1.5 bg-background border border-border rounded-full text-xs font-bold hover:bg-card-hover">تفاصيل</a>
                       <button onClick={() => updateStatus(o.id, "confirmed")} className="px-2.5 py-1.5 bg-emerald-600 text-white rounded-full text-xs font-bold hover:bg-emerald-700">تأكيد</button>
                       <button onClick={() => updateStatus(o.id, "canceled")} className="px-2.5 py-1.5 bg-background border border-border rounded-full text-xs font-bold hover:bg-card-hover">إلغاء</button>
-                      <button onClick={() => addToBlacklist(o.customer_phone)} className="px-2.5 py-1.5 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-300 border border-red-200 dark:border-red-500/20 rounded-full text-xs font-bold">حظر</button>
-                      <button onClick={() => ship(o.id, "yalidine")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-3 py-1.5 bg-ink text-white rounded-full text-xs font-bold disabled:opacity-40 hover:bg-ink-hover">Yalidine</button>
-                      <button onClick={() => ship(o.id, "zr_express")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-3 py-1.5 bg-card border border-ink text-ink rounded-full text-xs font-bold disabled:opacity-40 hover:bg-card-hover">ZR</button>
+                      <button onClick={() => addToBlacklist(o.customer_phone)} className="px-2.5 py-1.5 bg-red-50 text-red-600 border border-red-200 rounded-full text-xs font-bold">حظر</button>
+                      <button onClick={() => ship(o.id, "yalidine")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-3 py-1.5 bg-primary text-white rounded-full text-xs font-bold disabled:opacity-40 hover:bg-primary-hover">Yalidine</button>
+                      <button onClick={() => ship(o.id, "zr_express")} disabled={loadingId===o.id || o.shipping_status==="shipped"} className="px-3 py-1.5 bg-card border border-primary text-ink rounded-full text-xs font-bold disabled:opacity-40 hover:bg-card-hover">ZR</button>
                     </div>
                   </td>
                 </tr>
@@ -146,7 +146,7 @@ export default function OrdersPage() {
         <span className="text-muted font-medium text-xs">صفحة {page+1} / {Math.max(1, Math.ceil(total/pageSize))} — {total} طلب</span>
         <div className="flex gap-2">
           <button disabled={page===0} onClick={()=>setPage(p=>Math.max(0,p-1))} className="px-4 py-2 border border-border rounded-xl font-bold disabled:opacity-40 bg-card hover:bg-card-hover text-sm">السابق</button>
-          <button disabled={(page+1)*pageSize >= total} onClick={()=>setPage(p=>p+1)} className="px-4 py-2 bg-ink text-white rounded-xl font-bold disabled:opacity-40 hover:bg-ink-hover text-sm">التالي</button>
+          <button disabled={(page+1)*pageSize >= total} onClick={()=>setPage(p=>p+1)} className="px-4 py-2 bg-primary text-white rounded-xl font-bold disabled:opacity-40 hover:bg-primary-hover text-sm">التالي</button>
         </div>
       </div>
     </div>

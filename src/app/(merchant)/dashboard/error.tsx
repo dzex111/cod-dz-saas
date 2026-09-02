@@ -15,8 +15,8 @@ export default function DashboardError({
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6">
-      <div className="bg-white rounded-2xl border-2 border-zinc-200 p-8 text-center max-w-md">
-        <div className="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
+      <div className="bg-white rounded-xl border-2 border-zinc-200 p-8 text-center max-w-md">
+        <div className="w-14 h-14 rounded-xl bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
           <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={2}>
             <path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

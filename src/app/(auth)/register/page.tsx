@@ -57,7 +57,7 @@ export default function RegisterPage() {
           <h1 className="text-xl font-bold text-center">Create your store</h1>
           <p className="text-sm text-muted text-center mt-1">Free onboarding for selected stores</p>
 
-          {err && <div className="mt-5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300 p-3 rounded-xl text-sm font-medium">{err}</div>}
+          {err && <div className="mt-5 bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl text-sm font-medium">{err}</div>}
 
           <form onSubmit={handle} className="mt-6 space-y-4">
             <div>

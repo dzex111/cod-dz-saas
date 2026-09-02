@@ -106,28 +106,28 @@ export default function StoreSettingsPage() {
           <h1 className="text-xl font-black tracking-tight">تخصيص المتجر — مثل شوبيفاي</h1>
           <p className="text-sm text-muted mt-1">اختر قالباً، غيّر الألوان، وتحكم في كل سكشن. التغيير يظهر فوراً في متجرك.</p>
         </div>
-        {subdomain && <a href={`https://${process.env.NEXT_PUBLIC_BASE_DOMAIN}/${subdomain}`} target="_blank" className="hidden sm:inline-flex px-4 py-2 rounded-full bg-ink text-white text-xs font-bold hover:opacity-90">معاينة المتجر ↗</a>}
+        {subdomain && <a href={`https://${process.env.NEXT_PUBLIC_BASE_DOMAIN}/${subdomain}`} target="_blank" className="hidden sm:inline-flex px-4 py-2 rounded-full bg-primary text-white text-xs font-bold hover:opacity-90">معاينة المتجر ↗</a>}
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 bg-card border border-border p-1.5 rounded-2xl w-fit">
+      <div className="flex gap-2 bg-card border border-border p-1.5 rounded-xl w-fit">
         {[
           { id: "design", label: "التصميم" },
           { id: "content", label: "المحتوى" },
           { id: "preview", label: "معاينة حية" },
         ].map(t => (
-          <button key={t.id} onClick={()=>setTab(t.id as never)} className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${tab===t.id ? "bg-ink text-white shadow-sm" : "text-muted hover:text-foreground"}`}>{t.label}</button>
+          <button key={t.id} onClick={()=>setTab(t.id as never)} className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${tab===t.id ? "bg-primary text-white shadow-sm" : "text-muted hover:text-foreground"}`}>{t.label}</button>
         ))}
       </div>
 
       {tab==="design" && (
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="space-y-4">
-            <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
               <h3 className="font-bold">اختر القالب</h3>
               <div className="grid gap-3">
                 {templates.map(t=>(
-                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`text-right p-4 rounded-2xl border-2 text-sm transition-all ${config.template===t.id ? "border-ink bg-ink text-white" : "border-border bg-background hover:border-border-strong"}`}>
+                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`text-right p-4 rounded-xl border-2 text-sm transition-all ${config.template===t.id ? "border-primary bg-primary text-white" : "border-border bg-background hover:border-border-strong"}`}>
                     <div className="font-black">{t.name} {config.template===t.id && "✓"}</div>
                     <div className={`text-xs mt-1 ${config.template===t.id ? "text-white/70" : "text-muted"}`}>{t.desc}</div>
                   </button>
@@ -135,7 +135,7 @@ export default function StoreSettingsPage() {
               </div>
             </div>
 
-            <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
               <h3 className="font-bold">الألوان</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -160,7 +160,7 @@ export default function StoreSettingsPage() {
               </div>
             </div>
 
-            <div className="bg-card rounded-[20px] border border-border p-6 space-y-3 shadow-sm">
+            <div className="bg-card rounded-xl border border-border p-6 space-y-3 shadow-sm">
               <h3 className="font-bold">الأقسام</h3>
               {[
                 { k: "show_features", label: "مميزات المنتج (3 نقاط)" },
@@ -176,7 +176,7 @@ export default function StoreSettingsPage() {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
               <h3 className="font-bold">الشعار والبانر</h3>
               <div>
                 <label className="text-xs font-bold">اسم المتجر</label>
@@ -188,17 +188,17 @@ export default function StoreSettingsPage() {
               </div>
               <div>
                 <label className="text-xs font-bold">شعار</label>
-                <input type="file" accept="image/*" onChange={e=>{ const f=e.target.files?.[0]; if(f) uploadFile(f,"logo").then(url=>url&&setForm({...form, logo_url: url}))}} className="w-full mt-1 border border-border rounded-xl px-3 py-2 bg-background text-sm file:bg-ink file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1 file:text-xs file:font-bold" />
+                <input type="file" accept="image/*" onChange={e=>{ const f=e.target.files?.[0]; if(f) uploadFile(f,"logo").then(url=>url&&setForm({...form, logo_url: url}))}} className="w-full mt-1 border border-border rounded-xl px-3 py-2 bg-background text-sm file:bg-primary file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1 file:text-xs file:font-bold" />
                 {form.logo_url && <img src={form.logo_url} className="w-16 h-16 rounded-xl object-cover border border-border mt-2" alt="logo" />}
               </div>
               <div>
                 <label className="text-xs font-bold">بانر علوي (اختياري)</label>
-                <input type="file" accept="image/*" onChange={e=>{ const f=e.target.files?.[0]; if(f) uploadFile(f,"banner").then(url=>url&&setForm({...form, banner_url: url}))}} className="w-full mt-1 border border-border rounded-xl px-3 py-2 bg-background text-sm file:bg-ink file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1 file:text-xs file:font-bold" />
+                <input type="file" accept="image/*" onChange={e=>{ const f=e.target.files?.[0]; if(f) uploadFile(f,"banner").then(url=>url&&setForm({...form, banner_url: url}))}} className="w-full mt-1 border border-border rounded-xl px-3 py-2 bg-background text-sm file:bg-primary file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1 file:text-xs file:font-bold" />
                 {form.banner_url && <img src={form.banner_url} className="w-full h-24 object-cover rounded-xl border border-border mt-2" alt="banner" />}
               </div>
             </div>
 
-            <button onClick={save} disabled={saving} className="w-full bg-ink text-white rounded-2xl py-4 font-black hover:opacity-90 disabled:opacity-40 transition-opacity shadow-lg">
+            <button onClick={save} disabled={saving} className="w-full bg-primary text-white rounded-xl py-4 font-black hover:opacity-90 disabled:opacity-40 transition-opacity shadow-sm">
               {saving ? "جاري الحفظ..." : "حفظ كل التخصيصات ✓"}
             </button>
             {msg && <div className="text-center text-sm font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-xl p-3">{msg}</div>}
@@ -207,7 +207,7 @@ export default function StoreSettingsPage() {
       )}
 
       {tab==="content" && (
-        <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm max-w-2xl">
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm max-w-2xl">
           <h3 className="font-bold">محتوى الهبوط</h3>
           <div>
             <label className="text-xs font-bold">شريط الإعلان العلوي</label>
@@ -225,15 +225,15 @@ export default function StoreSettingsPage() {
             <label className="text-xs font-bold">نص الفوتر</label>
             <input value={config.footer_text} onChange={e=>setConfig({...config, footer_text: e.target.value})} className="w-full mt-1 border border-border rounded-xl px-4 py-2.5 bg-background text-sm" placeholder="© متجري — جميع الحقوق" />
           </div>
-          <button onClick={save} disabled={saving} className="w-full bg-ink text-white rounded-xl py-3.5 font-bold hover:opacity-90 disabled:opacity-40">{saving ? "جاري..." : "حفظ المحتوى"}</button>
+          <button onClick={save} disabled={saving} className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:opacity-90 disabled:opacity-40">{saving ? "جاري..." : "حفظ المحتوى"}</button>
           {msg && <div className="text-center text-sm font-bold text-emerald-600">{msg}</div>}
         </div>
       )}
 
       {tab==="preview" && (
-        <div className="bg-card rounded-[20px] border border-border p-6 shadow-sm">
+        <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
           <h3 className="font-bold mb-4">معاينة حية — القالب: {config.template}</h3>
-          <div className="rounded-2xl border border-border overflow-hidden">
+          <div className="rounded-xl border border-border overflow-hidden">
             {config.template==="minimal" && (
               <div className="bg-white p-8 text-center">
                 <div className="text-xs tracking-widest font-bold text-muted-soft uppercase">{config.announcement}</div>

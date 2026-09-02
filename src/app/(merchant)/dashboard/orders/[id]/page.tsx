@@ -17,7 +17,7 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
   return (
     <div className="max-w-2xl space-y-6">
       <Link href="/dashboard/orders" className="text-sm font-bold text-zinc-700 hover:text-zinc-900">← العودة للطلبات</Link>
-      <div className="bg-white rounded-2xl border-2 border-zinc-200 p-6 space-y-4">
+      <div className="bg-white rounded-xl border-2 border-zinc-200 p-6 space-y-4">
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-xl font-black text-zinc-900">طلب #{order.id.slice(0,8)}</h1>
@@ -60,7 +60,7 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
           <Link href={`/track/${order.tracking_number || order.id}`} className="flex-1 text-center py-3 bg-white border-2 border-zinc-300 rounded-xl font-bold hover:bg-zinc-50">صفحة تتبع الزبون</Link>
         </div>
 
-        <div className="bg-white rounded-2xl border-2 border-zinc-200 p-5">
+        <div className="bg-white rounded-xl border-2 border-zinc-200 p-5">
           <h3 className="font-black text-zinc-900 mb-3">سجل النشاط — مجاني</h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between bg-zinc-50 p-3 rounded-xl border">

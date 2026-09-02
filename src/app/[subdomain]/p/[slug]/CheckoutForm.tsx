@@ -60,12 +60,12 @@ export default function CheckoutForm({ merchantSubdomain, productSlug, price }: 
 
   if (result?.success) {
     return (
-      <div className="bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-2xl p-7 text-center">
-        <div className="w-14 h-14 rounded-2xl bg-emerald-500 text-white flex items-center justify-center mx-auto mb-3 shadow-sm">
+      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-7 text-center">
+        <div className="w-14 h-14 rounded-xl bg-emerald-500 text-white flex items-center justify-center mx-auto mb-3 shadow-sm">
           <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </div>
-        <h3 className="font-black text-emerald-700 dark:text-emerald-300 text-lg">تم استلام طلبك بنجاح</h3>
-        <p className="text-sm text-emerald-800/80 dark:text-emerald-300/80 mt-2 font-medium">سيتصل بك فريقنا قريباً لتأكيد الطلب. المجموع: {price.toLocaleString("fr-DZ")} دج + توصيل</p>
+        <h3 className="font-black text-emerald-700 text-lg">تم استلام طلبك بنجاح</h3>
+        <p className="text-sm text-emerald-800/80 mt-2 font-medium">سيتصل بك فريقنا قريباً لتأكيد الطلب. المجموع: {price.toLocaleString("fr-DZ")} دج + توصيل</p>
         <button onClick={() => setResult(null)} className="mt-5 px-6 py-2.5 bg-card border border-border rounded-xl text-sm font-bold text-foreground hover:bg-card-hover transition">طلب جديد</button>
       </div>
     );
@@ -73,7 +73,7 @@ export default function CheckoutForm({ merchantSubdomain, productSlug, price }: 
 
   return (
     <form onSubmit={submit} className="space-y-4">
-      {result?.error && <div className="bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl p-3 text-sm font-bold text-red-700 dark:text-red-300">{result.error}</div>}
+      {result?.error && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm font-bold text-red-700">{result.error}</div>}
       <div>
         <label className="block text-[13px] font-bold text-foreground mb-1.5">الاسم الكامل</label>
         <input required placeholder="مثال: أحمد بن علي" value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground placeholder:text-muted-soft focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition" />
@@ -105,7 +105,7 @@ export default function CheckoutForm({ merchantSubdomain, productSlug, price }: 
       <div className="bg-background border border-border rounded-xl p-4 flex justify-between items-center">
         <span className="font-bold text-foreground text-sm">المجموع (دفع عند الاستلام)</span><span className="font-black text-xl text-foreground" dir="ltr">{price.toLocaleString("fr-DZ")} دج</span>
       </div>
-      <button disabled={loading} className="w-full bg-ink text-white rounded-xl py-3.5 font-bold hover:bg-ink-hover disabled:opacity-40 transition-colors shadow-sm">{loading ? "جاري الإرسال..." : "تأكيد الطلب — دفع عند الاستلام"}</button>
+      <button disabled={loading} className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:bg-primary-hover disabled:opacity-40 transition-colors shadow-sm">{loading ? "جاري الإرسال..." : "تأكيد الطلب — دفع عند الاستلام"}</button>
       <p className="text-xs text-muted text-center flex items-center justify-center gap-1.5"><svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.8}><path d="M12 1l7 4v6c0 5-3.5 7.5-7 8-3.5-.5-7-3-7-8V6l7-4z" /></svg> بياناتك محمية — للتواصل حول الطلب فقط</p>
     </form>
   );

@@ -60,7 +60,7 @@ export default function BillingPage() {
       </div>
 
       {merchant && (
-        <div className="bg-card rounded-[20px] border border-border p-6 shadow-sm">
+        <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
           <div className="flex justify-between items-center">
             <div>
               <div className="text-xs font-bold tracking-widest text-muted-soft uppercase">حالة الاشتراك</div>
@@ -78,10 +78,10 @@ export default function BillingPage() {
       {msg && <div className="bg-primary-light border border-primary/20 text-primary p-3 rounded-xl text-sm font-bold text-center">{msg}</div>}
 
       <div className="grid md:grid-cols-2 gap-5">
-        <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
+        <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
           <div className="flex items-center gap-2">
             <h3 className="font-bold text-foreground">دفع تلقائي — Chargily Pay</h3>
-            <span className="bg-ink text-white text-[10px] px-2 py-0.5 rounded-full font-bold">تلقائي</span>
+            <span className="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full font-bold">تلقائي</span>
           </div>
           <p className="text-sm text-muted leading-6">بطاقة الذهبية / CIB — يُفعل اشتراكك فوراً عبر Webhook.</p>
           <label className="block text-xs font-bold text-foreground">المدة</label>
@@ -91,11 +91,11 @@ export default function BillingPage() {
             <option value={6}>6 أشهر — 2000 دج</option>
             <option value={12}>سنة — 3500 دج</option>
           </select>
-          <button onClick={payChargily} disabled={chargilyLoading} className="w-full bg-ink text-white rounded-xl py-3.5 font-bold hover:bg-ink-hover disabled:opacity-40 transition-colors shadow-sm">{chargilyLoading?"جاري التحويل...":"ادفع عبر Chargily →"}</button>
+          <button onClick={payChargily} disabled={chargilyLoading} className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:bg-primary-hover disabled:opacity-40 transition-colors shadow-sm">{chargilyLoading?"جاري التحويل...":"ادفع عبر Chargily →"}</button>
           <p className="text-xs text-muted-soft">اختياري — BaridiMob مجاني 0% للتجار الجدد.</p>
         </div>
 
-        <form onSubmit={submitBaridi} className="bg-card rounded-[20px] border border-border p-6 space-y-3 shadow-sm">
+        <form onSubmit={submitBaridi} className="bg-card rounded-xl border border-border p-6 space-y-3 shadow-sm">
           <div className="flex items-center gap-2">
             <h3 className="font-bold text-foreground">تحويل يدوي — BaridiMob</h3>
             <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">مجاني 0%</span>
@@ -103,7 +103,7 @@ export default function BillingPage() {
           <p className="text-sm text-muted">مفضل للتجار الجدد — بدون عمولة، مراجعة يدوية.</p>
           <input required placeholder="مرجع التحويل (RIP)" value={form.reference} onChange={(e) => setForm({ ...form, reference: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" />
           <input required placeholder="المبلغ (دج)" type="number" min={1} value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} className="w-full border border-border rounded-xl px-4 py-3 bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" />
-          <input required type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} className="w-full border border-border rounded-xl px-4 py-2 bg-background text-sm file:bg-ink file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1.5 file:text-xs file:font-bold" />
+          <input required type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} className="w-full border border-border rounded-xl px-4 py-2 bg-background text-sm file:bg-primary file:text-white file:border-0 file:rounded-lg file:px-3 file:py-1.5 file:text-xs file:font-bold" />
           <p className="text-xs text-muted-soft">الحد 5MB</p>
           <button className="w-full bg-primary text-white rounded-xl py-3.5 font-bold hover:bg-primary-hover transition-colors shadow-sm">رفع الإيصال للمراجعة</button>
         </form>

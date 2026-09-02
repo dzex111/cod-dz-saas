@@ -27,10 +27,10 @@ export default function Reviews({ productId, merchantId }: { productId: string; 
   const avg = reviews.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : null;
 
   return (
-    <div className="bg-card rounded-[20px] border border-border p-6 space-y-4 shadow-sm">
+    <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
       <div className="flex justify-between items-center">
         <h3 className="font-black text-foreground">آراء الزبائن</h3>
-        {avg && <span className="bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20 px-3 py-1 rounded-full text-xs font-bold">★ {avg} ({reviews.length})</span>}
+        {avg && <span className="bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold">★ {avg} ({reviews.length})</span>}
       </div>
       <div className="space-y-2">
         {reviews.map(r => (
@@ -54,7 +54,7 @@ export default function Reviews({ productId, merchantId }: { productId: string; 
           </select>
         </div>
         <textarea placeholder="تعليق (اختياري)" value={form.comment} onChange={(e) => setForm({ ...form, comment: e.target.value })} rows={2} className="w-full border border-border rounded-xl px-3.5 py-3 bg-background focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition text-sm" />
-        <button className="w-full bg-ink text-white rounded-xl py-3 font-bold hover:bg-ink-hover transition-colors shadow-sm">نشر التقييم</button>
+        <button className="w-full bg-primary text-white rounded-xl py-3 font-bold hover:bg-primary-hover transition-colors shadow-sm">نشر التقييم</button>
         {msg && <div className="text-center text-sm font-bold text-emerald-600">{msg}</div>}
       </form>
     </div>
