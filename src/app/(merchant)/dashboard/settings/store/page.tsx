@@ -129,10 +129,10 @@ export default function StoreSettingsPage() {
   }
 
   const templates: { id: Template; name: string; desc: string; img: string }[] = [
-    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من Sales-Landing-Modern-Dz — فاخر، serif، مناسب للفاشن", img: "/templates/atelier.png" },
-    { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "مستوحى من Electronics-V4-Final.html — داكن، تقني، مناسب للهواتف", img: "/templates/tech.png" },
-    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "مستوحى من Digital-Products-Landing.html — minimal، للبرمجيات والتطبيقات", img: "/templates/digital.png" },
-    { id: "beauty", name: "Beauty — للجمال والعناية", desc: "مستوحى من Consumable-Beauty-General.html — طبيعي، فاخر، للصحة والجمال (كما هو تماماً)", img: "/templates/beauty.png" },
+    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "أنيق وفاخر — مثالي للموضة والأزياء", img: "/templates/atelier.png" },
+    { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "داكن وتقني — للهواتف والأجهزة", img: "/templates/tech.png" },
+    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "نظيف وعصري — للبرمجيات والتطبيقات", img: "/templates/digital.png" },
+    { id: "beauty", name: "Beauty — للجمال والعناية", desc: "طبيعي وفاخر — للصحة والجمال", img: "/templates/beauty.png" },
   ];
 
   return (
@@ -161,8 +161,8 @@ export default function StoreSettingsPage() {
           <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
             <div className="flex justify-between items-start gap-3">
               <div>
-                <h3 className="font-bold">اختر القالب — مستطيلات كبيرة بعرض كامل</h3>
-                <p className="text-xs text-muted mt-1">4 قوالب معروضة 2×2 بشكل كبير وواضح — بدون قص من الجوانب • بعرض الشاشة الكامل</p>
+                <h3 className="font-bold">اختر القالب</h3>
+                <p className="text-xs text-muted mt-1">اختر ما يناسب متجرك — معاينة فورية</p>
               </div>
               <span className="text-[11px] font-mono bg-primary text-white px-2.5 py-1 rounded-full">{templates.find(t=>t.id===config.template)?.name.split(" —")[0]} ✓</span>
             </div>
@@ -195,7 +195,6 @@ export default function StoreSettingsPage() {
                 عرض أقل ↑
               </button>
             )}
-            <p className="text-[11px] text-muted text-center">الصور معاينة كاملة بدون قص — object-contain داخل مستطيل كبير 260px • الشبكة 2×2 بعرض كامل</p>
           </div>
 
           <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-[#FFF7ED] p-4 flex items-center justify-between gap-4 shadow-sm">
@@ -203,16 +202,11 @@ export default function StoreSettingsPage() {
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-sm shadow shrink-0">✦</div>
               <div>
                 <div className="text-sm font-black leading-tight">هل تريد قالب مخصص لعلامتك؟</div>
-                <div className="text-xs text-muted leading-relaxed mt-1">نصمم لك قالب 1:1 من أي تصميم تريده — HTML/Figma/صورة — ويرتبط تلقائياً بمتجرك ومنتجاتك. تواصل وخلال 48 ساعة يكون جاهز.</div>
-                <div className="flex gap-1.5 mt-2 flex-wrap">
-                  <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">Figma → قالب</span>
-                  <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">متجاوب 100%</span>
-                  <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">COD جاهز</span>
-                </div>
+                <div className="text-xs text-muted leading-relaxed mt-1">نصمم لك قالب حسب طلبك — تواصل معنا وسيكون جاهزاً قريباً.</div>
               </div>
             </div>
-            <button onClick={()=>{ const email="kinezedge@gmail.com"; const subject=encodeURIComponent(`طلب قالب مخصص - ${subdomain || "متجري"}`); const body=encodeURIComponent(`مرحبا ORDELY،\nأريد قالب مخصص:\n- المتجر: ${subdomain || ""}\n- نوع المنتجات: \n- رابط التصميم/صورة: \n`); window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank"); }} className="shrink-0 bg-primary text-white hover:bg-primary/90 px-5 py-2.5 rounded-full text-xs font-black shadow transition-colors">
-              تواصل للحصول على قالب مخصص ↗
+            <button onClick={()=>{ const email="kinezedge@gmail.com"; const subject=encodeURIComponent(`طلب قالب مخصص - ${subdomain || "متجري"}`); const body=encodeURIComponent(`مرحبا ORDELY،\nأريد قالب مخصص:\n- المتجر: ${subdomain || ""}\n- نوع المنتجات: \n`); window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank"); }} className="shrink-0 bg-primary text-white hover:bg-primary/90 px-5 py-2.5 rounded-full text-xs font-black shadow transition-colors">
+              تواصل معنا ↗
             </button>
           </div>
 
@@ -464,7 +458,7 @@ export default function StoreSettingsPage() {
               </div>
             )}
           </div>
-          <p className="text-xs text-muted-soft mt-3">المعاينة تقريبية — افتح متجرك الحقيقي لترى التطبيق الكامل على منتج فعلي. كل القوالب ترتبط صحيحاً: المتجر الرئيسي <code className="bg-background border px-1 rounded">/{subdomain}</code> وصفحة المنتج <code className="bg-background border px-1 rounded">/{subdomain}/p/{"{slug}"}</code>.</p>
+          <p className="text-xs text-muted-soft mt-3">افتح معاينة متجرك لمشاهدة القالب على الطبيعة.</p>
         </div>
       )}
     </div>

@@ -31,7 +31,7 @@ export default function TemplateBeauty({ product, merchant, config }: { product:
   return (
     <div style={{ background: "#F8F5F0", color: "#2B2A28" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
+.beauty-root *{box-sizing:border-box}
 .beauty-root{background:#F8F5F0;color:#2B2A28;font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .serif{font-family:'Fraunces',serif}
 a{color:inherit;text-decoration:none}
@@ -71,6 +71,8 @@ a{color:inherit;text-decoration:none}
 .faq-q{font-size:12px;font-weight:600;display:flex;justify-content:space-between;cursor:pointer}
 .faq-a{font-size:12px;color:#6B655E;line-height:1.5;margin-top:8px;display:none}
 .faq-item.open .faq-a{display:block}
+.beauty-root form input,.beauty-root form select,.beauty-root form textarea{border-radius:12px !important; border-color:#E8E0D5 !important; background:#FEFEFD !important;}
+.beauty-root form button[type="submit"],.beauty-root form button:last-of-type{background:#2B2A28 !important; border-radius:999px !important; height:52px !important;}
 `}</style>
       <div className="beauty-root min-h-screen">
         {config.show_shipping !== false && <div className="beauty-top">{config.announcement || "Livraison 58 Wilayas — Paiement à la livraison — Naturel & fait main — Retour 14 jours"}</div>}
