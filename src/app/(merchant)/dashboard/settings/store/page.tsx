@@ -153,23 +153,53 @@ export default function StoreSettingsPage() {
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
-              <h3 className="font-bold">اختر القالب — معاينة بصرية</h3>
-              <p className="text-xs text-muted">شاهد شكل القالب قبل الاختيار — الصور من مجلد picturs مطابقة للأصل 1:1</p>
-              <div className="grid gap-3">
-                {templates.map(t=>(
-                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`text-right rounded-xl border-2 overflow-hidden text-sm transition-all text-left ${config.template===t.id ? "border-primary ring-2 ring-primary/20" : "border-border hover:border-border-strong bg-background"}`}>
-                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                      <img src={t.img} alt={t.name} className="w-full h-full object-cover object-top" loading="lazy" />
-                      {config.template===t.id && <span className="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow">مُختار ✓</span>}
-                      <span className="absolute bottom-1 left-2 text-[9px] font-mono bg-black/60 text-white px-1.5 py-0.5 rounded">{t.id}</span>
+              <div className="flex justify-between items-start gap-3">
+                <div>
+                  <h3 className="font-bold">اختر القالب</h3>
+                  <p className="text-xs text-muted mt-1">معاينة كاملة بدون قص — تمرير أفقي يتسع لأي عدد من القوالب</p>
+                </div>
+                <span className="text-[11px] font-mono bg-primary text-white px-2 py-1 rounded-full">{templates.find(t=>t.id===config.template)?.name.split(" —")[0]}</span>
+              </div>
+
+              {/* معاينة كبيرة — بدون قص، عرض كامل */}
+              {(() => { const sel = templates.find(t=>t.id===config.template) || templates[0]; return (
+                <div className="rounded-xl border border-border overflow-hidden bg-white shadow-sm">
+                  <div className="bg-[#F8F8F8] p-2">
+                    <img src={sel.img} alt={sel.name} className="w-full h-auto max-h-[360px] object-contain object-top mx-auto block" loading="lazy" />
+                  </div>
+                  <div className="p-3 border-t border-border bg-card flex justify-between items-center gap-3">
+                    <div className="min-w-0">
+                      <div className="font-black text-sm leading-tight">{sel.name}</div>
+                      <div className="text-xs text-muted leading-relaxed mt-0.5 line-clamp-2">{sel.desc}</div>
                     </div>
-                    <div className={`p-3 ${config.template===t.id ? "bg-primary text-white" : ""}`}>
-                      <div className="font-black leading-tight">{t.name}</div>
-                      <div className={`text-xs mt-1 leading-relaxed ${config.template===t.id ? "text-white/80" : "text-muted"}`}>{t.desc}</div>
+                    <span className="shrink-0 bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">مُختار</span>
+                  </div>
+                </div>
+              ); })()}
+
+              {/* شريط مصغرات أفقي — حل احترافي للقائمة الضخمة */}
+              <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-thin -mx-1 px-1" style={{ scrollbarWidth: "thin" }}>
+                {templates.map(t=>(
+                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`shrink-0 w-[148px] snap-start rounded-xl border-2 overflow-hidden text-right transition-all ${config.template===t.id ? "border-primary ring-2 ring-primary/20 bg-primary/5" : "border-border bg-background hover:border-border-strong"}`}>
+                    <div className="relative h-[96px] overflow-hidden bg-white">
+                      <img src={t.img} alt={t.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                      {config.template===t.id && <span className="absolute inset-0 border-2 border-primary rounded-xl pointer-events-none" />}
+                      {config.template===t.id && <span className="absolute top-1.5 right-1.5 w-5 h-5 bg-primary text-white rounded-full flex items-center justify-center text-[10px]">✓</span>}
+                    </div>
+                    <div className="p-2">
+                      <div className={`text-xs font-black leading-tight truncate ${config.template===t.id ? "text-primary" : ""}`}>{t.name.split(" —")[0]}</div>
+                      <div className="text-[10px] text-muted leading-tight truncate">{t.id}</div>
                     </div>
                   </button>
                 ))}
+                {/* placeholder for future templates */}
+                <div className="shrink-0 w-[148px] rounded-xl border-2 border-dashed border-border bg-background flex flex-col items-center justify-center p-4 text-center">
+                  <span className="text-lg opacity-20">+</span>
+                  <span className="text-[11px] text-muted font-bold">قوالب جديدة</span>
+                  <span className="text-[10px] text-muted">تُضاف تلقائياً هنا</span>
+                </div>
               </div>
+              <p className="text-[11px] text-muted">اسحب يمين/يسار لرؤية كل القوالب — المعاينة الكبيرة تعرض القالب كاملاً بدون قص من الجوانب (object-contain).</p>
             </div>
 
             <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
