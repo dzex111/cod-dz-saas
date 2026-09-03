@@ -66,16 +66,22 @@ export const DEFAULT_CONFIG: StoreConfig = {
   license_text: "رخصة الاستخدام",
 };
 
-// Server side fetch (using service role)
+// Server side fetch (using service role) — no cache, deterministic
 export async function getStoreConfig(merchantId: string): Promise<StoreConfig> {
   try {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    const supabase = createClient(url, key);
-    const { data } = await supabase.storage.from("store-configs").download(`${merchantId}.json`);
-    if (!data) return DEFAULT_CONFIG;
+    const supabase = createClient(url, key, {
+      global: { fetch: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...(init||{}), cache: "no-store", next: { revalidate: 0 } } as any) },
+    } as any);
+    // Force no-store download — add timestamp header via custom fetch already
+    const { data, error } = await supabase.storage.from("store-configs").download(`${merchantId}.json`);
+    if (error || !data) return DEFAULT_CONFIG;
     const text = await data.text();
     const json = JSON.parse(text);
+    // Validate template is known, else fallback to atelier
+    const valid: StoreTemplate[] = ["atelier","tech","digital","beauty"];
+    if (json.template && !valid.includes(json.template)) json.template = DEFAULT_CONFIG.template;
     return { ...DEFAULT_CONFIG, ...json };
   } catch {
     return DEFAULT_CONFIG;

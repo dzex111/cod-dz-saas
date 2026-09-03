@@ -10,15 +10,19 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const merchantId = searchParams.get("merchantId");
   if (!merchantId) return NextResponse.json({ error: "merchantId required" }, { status: 400 });
-  const admin = getAdmin();
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
+    global: { fetch: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...(init||{}), cache: "no-store" } as any) },
+  } as any);
   const { data, error } = await admin.storage.from("store-configs").download(`${merchantId}.json`);
-  if (error || !data) return NextResponse.json({ config: null });
+  if (error || !data) {
+    return NextResponse.json({ config: null }, { headers: { "Cache-Control": "no-store, max-age=0", "CDN-Cache-Control": "no-store" } });
+  }
   const text = await data.text();
   try {
     const json = JSON.parse(text);
-    return NextResponse.json({ config: json });
+    return NextResponse.json({ config: json }, { headers: { "Cache-Control": "no-store, max-age=0", "CDN-Cache-Control": "no-store" } });
   } catch {
-    return NextResponse.json({ config: null });
+    return NextResponse.json({ config: null }, { headers: { "Cache-Control": "no-store, max-age=0" } });
   }
 }
 
