@@ -36,7 +36,8 @@ export default async function StorefrontHome({ params, searchParams }: { params:
   else query = query.order("created_at", { ascending: false });
   const { data: products } = await query.limit(24);
   const heroProduct = products?.[0];
-  const heroImage = heroProduct?.image_url || merchant.banner_url || "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=1500&fit=crop";
+  // banner from dashboard has priority — never overridden by product image
+  const heroImage = merchant.banner_url || heroProduct?.image_url || "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=1500&fit=crop";
 
   if (cfg.template === "tech") {
     return (
@@ -198,7 +199,8 @@ export default async function StorefrontHome({ params, searchParams }: { params:
 .beauty-card-img{background:#F6F1E8;display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;padding:20px;overflow:hidden;position:relative}
 .beauty-card-img img{width:100%;height:100%;object-fit:cover;border-radius:18px;transition:transform .7s cubic-bezier(.16,1,.3,1)}
 .beauty-card:hover .beauty-card-img img{transform:scale(1.04)}
-.beauty-badge{position:absolute;top:14px;left:14px;background:#2B2A28;color:#FEFEFD;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.beauty-badge{position:absolute;top:14px;left:14px;background:#2B2A28;color:#FEFEFD;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:999px;z-index:2}
+.beauty-card-img img{position:relative;z-index:1}
 .beauty-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
 .beauty-name{font-family:'Fraunces',serif;font-size:14px;line-height:1.25}
 .beauty-subname{font-size:11px;color:#8A7F75;margin-top:2px}

@@ -32,9 +32,12 @@ export default function StorefrontClient({ products, subdomain, merchantSubdomai
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((p) => (
           <div key={p.id} className="group bg-white border border-[#E8E6E1] overflow-hidden hover:border-[#111] transition-colors flex flex-col">
-            <Link href={`/${subdomain}/p/${p.slug}`} className="block">
-              {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-[380px] object-cover group-hover:scale-[1.01] transition duration-500" /> : <div className="h-[380px] bg-[#FAF9F6] flex items-center justify-center text-xs opacity-40">Sans image</div>}
-              <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center">
+            <Link href={`/${subdomain}/p/${p.slug}`} className="block relative overflow-hidden">
+              <div className="relative h-[380px] overflow-hidden bg-[#FAF9F6]">
+                <span className="absolute top-3 left-3 z-10 bg-[#111] text-white text-[10px] tracking-[0.08em] uppercase px-2.5 py-1 rounded-full">Nouveau</span>
+                {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500 relative z-0" /> : <div className="h-full flex items-center justify-center text-xs opacity-40">Sans image</div>}
+              </div>
+              <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center bg-white relative z-10">
                 <span className="text-xs font-medium truncate">{p.name}</span>
                 <span className="text-xs font-serif">{p.price.toLocaleString("fr-DZ")} DZD</span>
               </div>
