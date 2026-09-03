@@ -10,16 +10,20 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const merchantId = searchParams.get("merchantId");
   if (!merchantId) return NextResponse.json({ error: "merchantId required" }, { status: 400 });
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
-    global: { fetch: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...(init||{}), cache: "no-store" } as any) },
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  // Direct fetch with no-store + timestamp bust
+  const res = await fetch(`${url}/storage/v1/object/store-configs/${merchantId}.json?t=${Date.now()}`, {
+    headers: { apikey: key, Authorization: `Bearer ${key}` },
+    cache: "no-store",
+    // @ts-ignore
+    next: { revalidate: 0 },
   } as any);
-  const { data, error } = await admin.storage.from("store-configs").download(`${merchantId}.json`);
-  if (error || !data) {
+  if (!res.ok) {
     return NextResponse.json({ config: null }, { headers: { "Cache-Control": "no-store, max-age=0", "CDN-Cache-Control": "no-store" } });
   }
-  const text = await data.text();
   try {
-    const json = JSON.parse(text);
+    const json = await res.json();
     return NextResponse.json({ config: json }, { headers: { "Cache-Control": "no-store, max-age=0", "CDN-Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ config: null }, { headers: { "Cache-Control": "no-store, max-age=0" } });
