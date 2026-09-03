@@ -192,14 +192,33 @@ export default function StoreSettingsPage() {
                     </div>
                   </button>
                 ))}
-                {/* placeholder for future templates */}
-                <div className="shrink-0 w-[148px] rounded-xl border-2 border-dashed border-border bg-background flex flex-col items-center justify-center p-4 text-center">
-                  <span className="text-lg opacity-20">+</span>
-                  <span className="text-[11px] text-muted font-bold">قوالب جديدة</span>
-                  <span className="text-[10px] text-muted">تُضاف تلقائياً هنا</span>
-                </div>
+                {/* خيار القالب المخصص — بالتواصل */}
+                <button onClick={()=>{ const email="kinezedge@gmail.com"; const subject=encodeURIComponent(`طلب قالب مخصص - ${subdomain || "متجري"}`); const body=encodeURIComponent(`مرحبا، أريد قالب مخصص لمتجري ${subdomain || ""}\nنوع المنتجات: \nالستايل المطلوب: \n`); window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank"); }} className="shrink-0 w-[148px] snap-start rounded-xl border-2 border-dashed border-primary/40 bg-gradient-to-br from-primary/10 to-primary/5 hover:from-primary hover:to-primary hover:text-white hover:border-primary group flex flex-col items-center justify-center p-3 text-center transition-all">
+                  <span className="w-8 h-8 rounded-full bg-primary text-white group-hover:bg-white group-hover:text-primary flex items-center justify-center text-sm transition-colors">✦</span>
+                  <span className="text-xs font-black mt-2 leading-tight">قالب مخصص لك؟</span>
+                  <span className="text-[10px] opacity-70 leading-tight mt-1">نصممه حسب علامتك</span>
+                  <span className="mt-2 text-[10px] font-bold bg-primary text-white group-hover:bg-white group-hover:text-primary px-2.5 py-1 rounded-full transition-colors">تواصل →</span>
+                </button>
               </div>
               <p className="text-[11px] text-muted">اسحب يمين/يسار لرؤية كل القوالب — المعاينة الكبيرة تعرض القالب كاملاً بدون قص من الجوانب (object-contain).</p>
+            </div>
+
+            <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-[#FFF7ED] p-4 flex items-center justify-between gap-4 shadow-sm">
+              <div className="flex gap-3 items-start">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-sm shadow shrink-0">✦</div>
+                <div>
+                  <div className="text-sm font-black leading-tight">هل تريد قالب مخصص لعلامتك؟</div>
+                  <div className="text-xs text-muted leading-relaxed mt-1">نصمم لك قالب 1:1 من أي تصميم تريده — HTML/Figma/صورة — ويرتبط تلقائياً بمتجرك ومنتجاتك. تواصل وخلال 48 ساعة يكون جاهز.</div>
+                  <div className="flex gap-1.5 mt-2 flex-wrap">
+                    <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">Figma → قالب</span>
+                    <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">متجاوب 100%</span>
+                    <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">COD جاهز</span>
+                  </div>
+                </div>
+              </div>
+              <button onClick={()=>{ const email="kinezedge@gmail.com"; const subject=encodeURIComponent(`طلب قالب مخصص - ${subdomain || "متجري"}`); const body=encodeURIComponent(`مرحبا ORDELY،\nأريد قالب مخصص:\n- المتجر: ${subdomain || ""}\n- نوع المنتجات: \n- رابط التصميم/صورة: \n`); window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank"); }} className="shrink-0 bg-primary text-white hover:bg-primary/90 px-5 py-2.5 rounded-full text-xs font-black shadow transition-colors">
+                تواصل للحصول على قالب مخصص ↗
+              </button>
             </div>
 
             <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
