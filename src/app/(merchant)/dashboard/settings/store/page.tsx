@@ -121,11 +121,11 @@ export default function StoreSettingsPage() {
     setTimeout(()=>setMsg(""), 4000);
   }
 
-  const templates: { id: Template; name: string; desc: string }[] = [
-    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من Sales-Landing-Modern-Dz — فاخر، serif، مناسب للفاشن" },
-    { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "مستوحى من Electronics-V4-Final.html — داكن، تقني، مناسب للهواتف" },
-    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "مستوحى من Digital-Products-Landing.html — minimal، للبرمجيات والتطبيقات" },
-    { id: "beauty", name: "Beauty — للجمال والعناية", desc: "مستوحى من Consumable-Beauty-General.html — طبيعي، فاخر، للصحة والجمال (كما هو تماماً)" },
+  const templates: { id: Template; name: string; desc: string; img: string }[] = [
+    { id: "atelier", name: "Atelier — للأزياء والملابس", desc: "مستوحى من Sales-Landing-Modern-Dz — فاخر، serif، مناسب للفاشن", img: "/templates/atelier.png" },
+    { id: "tech", name: "Tech — للإلكترونيات والهواتف", desc: "مستوحى من Electronics-V4-Final.html — داكن، تقني، مناسب للهواتف", img: "/templates/tech.png" },
+    { id: "digital", name: "Digital — للمنتجات الرقمية", desc: "مستوحى من Digital-Products-Landing.html — minimal، للبرمجيات والتطبيقات", img: "/templates/digital.png" },
+    { id: "beauty", name: "Beauty — للجمال والعناية", desc: "مستوحى من Consumable-Beauty-General.html — طبيعي، فاخر، للصحة والجمال (كما هو تماماً)", img: "/templates/beauty.png" },
   ];
 
   return (
@@ -153,12 +153,20 @@ export default function StoreSettingsPage() {
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
-              <h3 className="font-bold">اختر القالب</h3>
+              <h3 className="font-bold">اختر القالب — معاينة بصرية</h3>
+              <p className="text-xs text-muted">شاهد شكل القالب قبل الاختيار — الصور من مجلد picturs مطابقة للأصل 1:1</p>
               <div className="grid gap-3">
                 {templates.map(t=>(
-                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`text-right p-4 rounded-xl border-2 text-sm transition-all ${config.template===t.id ? "border-primary bg-primary text-white" : "border-border bg-background hover:border-border-strong"}`}>
-                    <div className="font-black">{t.name} {config.template===t.id && ""}</div>
-                    <div className={`text-xs mt-1 ${config.template===t.id ? "text-white/70" : "text-muted"}`}>{t.desc}</div>
+                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`text-right rounded-xl border-2 overflow-hidden text-sm transition-all text-left ${config.template===t.id ? "border-primary ring-2 ring-primary/20" : "border-border hover:border-border-strong bg-background"}`}>
+                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                      <img src={t.img} alt={t.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                      {config.template===t.id && <span className="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full shadow">مُختار ✓</span>}
+                      <span className="absolute bottom-1 left-2 text-[9px] font-mono bg-black/60 text-white px-1.5 py-0.5 rounded">{t.id}</span>
+                    </div>
+                    <div className={`p-3 ${config.template===t.id ? "bg-primary text-white" : ""}`}>
+                      <div className="font-black leading-tight">{t.name}</div>
+                      <div className={`text-xs mt-1 leading-relaxed ${config.template===t.id ? "text-white/80" : "text-muted"}`}>{t.desc}</div>
+                    </div>
                   </button>
                 ))}
               </div>
