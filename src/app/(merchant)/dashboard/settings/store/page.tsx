@@ -157,68 +157,69 @@ export default function StoreSettingsPage() {
       </div>
 
       {tab==="design" && (
-        <div className="grid lg:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
-              <div className="flex justify-between items-start gap-3">
-                <div>
-                  <h3 className="font-bold">اختر القالب — مستطيلات كبيرة</h3>
-                  <p className="text-xs text-muted mt-1">4 قوالب معروضة 2×2 بشكل كبير وواضح — بدون قص من الجوانب</p>
-                </div>
-                <span className="text-[11px] font-mono bg-primary text-white px-2.5 py-1 rounded-full">{templates.find(t=>t.id===config.template)?.name.split(" —")[0]} ✓</span>
+        <div className="space-y-6">
+          <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
+            <div className="flex justify-between items-start gap-3">
+              <div>
+                <h3 className="font-bold">اختر القالب — مستطيلات كبيرة بعرض كامل</h3>
+                <p className="text-xs text-muted mt-1">4 قوالب معروضة 2×2 بشكل كبير وواضح — بدون قص من الجوانب • بعرض الشاشة الكامل</p>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {(showAllTemplates ? templates : templates.slice(0,4)).map(t=>(
-                  <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`group relative rounded-2xl border-2 overflow-hidden text-right transition-all ${config.template===t.id ? "border-primary ring-2 ring-primary/20 shadow-md" : "border-border bg-background hover:border-primary/40 hover:shadow-sm"}`}>
-                    <div className="relative bg-white p-2">
-                      <div className="relative h-[220px] rounded-xl overflow-hidden bg-[#F8F8F8] border border-border">
-                        <img src={t.img} alt={t.name} className="w-full h-full object-contain object-top p-1" loading="lazy" />
-                      </div>
-                      {config.template===t.id && <span className="absolute top-3 right-3 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow">مُختار ✓</span>}
-                      <span className="absolute top-3 left-3 text-[10px] font-mono bg-black/70 text-white px-2 py-0.5 rounded-full">{t.id}</span>
-                    </div>
-                    <div className={`p-3.5 ${config.template===t.id ? "bg-primary text-white" : "bg-card"}`}>
-                      <div className="font-black text-sm leading-tight">{t.name}</div>
-                      <div className={`text-xs mt-1 leading-relaxed line-clamp-2 ${config.template===t.id ? "text-white/80" : "text-muted"}`}>{t.desc}</div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-
-              {templates.length > 4 && !showAllTemplates && (
-                <button onClick={()=>setShowAllTemplates(true)} className="w-full py-3.5 rounded-xl border-2 border-dashed border-border bg-background font-bold text-sm hover:bg-muted hover:border-primary/30 transition-colors">
-                  عرض المزيد ({templates.length - 4} قوالب إضافية) ↓
-                </button>
-              )}
-              {showAllTemplates && templates.length > 4 && (
-                <button onClick={()=>setShowAllTemplates(false)} className="w-full py-3 rounded-xl border border-border bg-background font-bold text-sm hover:bg-muted">
-                  عرض أقل ↑
-                </button>
-              )}
-              <p className="text-[11px] text-muted text-center">الصور معاينة كاملة بدون قص — object-contain داخل مستطيل كبير 220px • الشبكة 2×2 تتوسع تلقائياً</p>
+              <span className="text-[11px] font-mono bg-primary text-white px-2.5 py-1 rounded-full">{templates.find(t=>t.id===config.template)?.name.split(" —")[0]} ✓</span>
             </div>
 
-            <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-[#FFF7ED] p-4 flex items-center justify-between gap-4 shadow-sm">
-              <div className="flex gap-3 items-start">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-sm shadow shrink-0">✦</div>
-                <div>
-                  <div className="text-sm font-black leading-tight">هل تريد قالب مخصص لعلامتك؟</div>
-                  <div className="text-xs text-muted leading-relaxed mt-1">نصمم لك قالب 1:1 من أي تصميم تريده — HTML/Figma/صورة — ويرتبط تلقائياً بمتجرك ومنتجاتك. تواصل وخلال 48 ساعة يكون جاهز.</div>
-                  <div className="flex gap-1.5 mt-2 flex-wrap">
-                    <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">Figma → قالب</span>
-                    <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">متجاوب 100%</span>
-                    <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">COD جاهز</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {(showAllTemplates ? templates : templates.slice(0,4)).map(t=>(
+                <button key={t.id} onClick={()=>setConfig({...config, template: t.id})} className={`group relative rounded-2xl border-2 overflow-hidden text-right transition-all ${config.template===t.id ? "border-primary ring-2 ring-primary/20 shadow-md" : "border-border bg-background hover:border-primary/40 hover:shadow-sm"}`}>
+                  <div className="relative bg-white p-2">
+                    <div className="relative h-[260px] rounded-xl overflow-hidden bg-[#F8F8F8] border border-border">
+                      <img src={t.img} alt={t.name} className="w-full h-full object-contain object-top p-1" loading="lazy" />
+                    </div>
+                    {config.template===t.id && <span className="absolute top-3 right-3 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow">مُختار ✓</span>}
+                    <span className="absolute top-3 left-3 text-[10px] font-mono bg-black/70 text-white px-2 py-0.5 rounded-full">{t.id}</span>
                   </div>
-                </div>
-              </div>
-              <button onClick={()=>{ const email="kinezedge@gmail.com"; const subject=encodeURIComponent(`طلب قالب مخصص - ${subdomain || "متجري"}`); const body=encodeURIComponent(`مرحبا ORDELY،\nأريد قالب مخصص:\n- المتجر: ${subdomain || ""}\n- نوع المنتجات: \n- رابط التصميم/صورة: \n`); window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank"); }} className="shrink-0 bg-primary text-white hover:bg-primary/90 px-5 py-2.5 rounded-full text-xs font-black shadow transition-colors">
-                تواصل للحصول على قالب مخصص ↗
-              </button>
+                  <div className={`p-3.5 ${config.template===t.id ? "bg-primary text-white" : "bg-card"}`}>
+                    <div className="font-black text-sm leading-tight">{t.name}</div>
+                    <div className={`text-xs mt-1 leading-relaxed line-clamp-2 ${config.template===t.id ? "text-white/80" : "text-muted"}`}>{t.desc}</div>
+                  </div>
+                </button>
+              ))}
             </div>
 
-            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
-              <h3 className="font-bold">الألوان</h3>
+            {templates.length > 4 && !showAllTemplates && (
+              <button onClick={()=>setShowAllTemplates(true)} className="w-full py-3.5 rounded-xl border-2 border-dashed border-border bg-background font-bold text-sm hover:bg-muted hover:border-primary/30 transition-colors">
+                عرض المزيد ({templates.length - 4} قوالب إضافية) ↓
+              </button>
+            )}
+            {showAllTemplates && templates.length > 4 && (
+              <button onClick={()=>setShowAllTemplates(false)} className="w-full py-3 rounded-xl border border-border bg-background font-bold text-sm hover:bg-muted">
+                عرض أقل ↑
+              </button>
+            )}
+            <p className="text-[11px] text-muted text-center">الصور معاينة كاملة بدون قص — object-contain داخل مستطيل كبير 260px • الشبكة 2×2 بعرض كامل</p>
+          </div>
+
+          <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-[#FFF7ED] p-4 flex items-center justify-between gap-4 shadow-sm">
+            <div className="flex gap-3 items-start">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-sm shadow shrink-0">✦</div>
+              <div>
+                <div className="text-sm font-black leading-tight">هل تريد قالب مخصص لعلامتك؟</div>
+                <div className="text-xs text-muted leading-relaxed mt-1">نصمم لك قالب 1:1 من أي تصميم تريده — HTML/Figma/صورة — ويرتبط تلقائياً بمتجرك ومنتجاتك. تواصل وخلال 48 ساعة يكون جاهز.</div>
+                <div className="flex gap-1.5 mt-2 flex-wrap">
+                  <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">Figma → قالب</span>
+                  <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">متجاوب 100%</span>
+                  <span className="text-[10px] bg-white border border-amber-200 px-2 py-1 rounded-full">COD جاهز</span>
+                </div>
+              </div>
+            </div>
+            <button onClick={()=>{ const email="kinezedge@gmail.com"; const subject=encodeURIComponent(`طلب قالب مخصص - ${subdomain || "متجري"}`); const body=encodeURIComponent(`مرحبا ORDELY،\nأريد قالب مخصص:\n- المتجر: ${subdomain || ""}\n- نوع المنتجات: \n- رابط التصميم/صورة: \n`); window.open(`mailto:${email}?subject=${subject}&body=${body}`, "_blank"); }} className="shrink-0 bg-primary text-white hover:bg-primary/90 px-5 py-2.5 rounded-full text-xs font-black shadow transition-colors">
+              تواصل للحصول على قالب مخصص ↗
+            </button>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
+                <h3 className="font-bold">الألوان</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-bold">اللون الأساسي</label>
@@ -369,6 +370,7 @@ export default function StoreSettingsPage() {
             </button>
             {msg && <div className="text-center text-sm font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-xl p-3">{msg}</div>}
           </div>
+        </div>
         </div>
       )}
 
