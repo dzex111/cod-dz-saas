@@ -29,6 +29,10 @@ type Config = {
   cta_color?: string;
   font?: string;
   button_radius?: string;
+  show_shipping?: boolean;
+  show_features?: boolean;
+  show_faq?: boolean;
+  show_specs?: boolean;
 };
 
 export default function TemplateAtelier({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
@@ -52,16 +56,18 @@ export default function TemplateAtelier({ product, merchant, config }: { product
       {/* Cursor dot */}
       <div className="hidden lg:block fixed top-0 left-0 w-[6px] h-[6px] rounded-full bg-[#111] pointer-events-none z-[9999]" style={{ transform: `translate3d(0,0,0)` }} />
 
-      {/* Marquee */}
-      <div className="h-[36px] w-full border-b border-[#E8E6E1] bg-[#FAF9F6] flex items-center overflow-hidden">
-        <div className="flex w-[200%] marquee will-change-transform">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span key={i} className="whitespace-nowrap text-[10px] tracking-[0.18em] uppercase font-medium px-8">
-              {config.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — RETOURS 14 JOURS — ATELIER ALG NO.04"}
-            </span>
-          ))}
+      {/* Marquee — controlled by show_shipping */}
+      {config.show_shipping !== false && (
+        <div className="h-[36px] w-full border-b border-[#E8E6E1] bg-[#FAF9F6] flex items-center overflow-hidden">
+          <div className="flex w-[200%] marquee will-change-transform">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <span key={i} className="whitespace-nowrap text-[10px] tracking-[0.18em] uppercase font-medium px-8">
+                {config.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — RETOURS 14 JOURS — ATELIER ALG NO.04"}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Header — minimal, no top CTA (order in bottom) */}
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur-[12px] border-b border-[#E8E6E1] h-[56px] flex items-center">
@@ -89,11 +95,13 @@ export default function TemplateAtelier({ product, merchant, config }: { product
               </div>
               {/* CTA hero removed — order only at bottom #order to avoid duplicate */}
             </div>
-            <div className="mt-10 flex gap-8 text-xs">
-              <div><div className="font-medium">58 Wilayas</div><div className="opacity-50">Livraison 24-48h</div></div>
-              <div><div className="font-medium">Paiement à la livraison</div><div className="opacity-50">Sans carte</div></div>
-              <div><div className="font-medium">Retours 14j</div><div className="opacity-50">Garantie</div></div>
-            </div>
+            {config.show_features !== false && (
+              <div className="mt-10 flex gap-8 text-xs">
+                <div><div className="font-medium">58 Wilayas</div><div className="opacity-50">Livraison 24-48h</div></div>
+                <div><div className="font-medium">Paiement à la livraison</div><div className="opacity-50">Sans carte</div></div>
+                <div><div className="font-medium">Retours 14j</div><div className="opacity-50">Garantie</div></div>
+              </div>
+            )}
           </div>
           <div className="w-full lg:w-[50%] bg-[#EDEBE6] border-t lg:border-t-0 lg:border-s border-[#E8E6E1] p-6 lg:p-8 flex items-center justify-center">
             {images[0] ? (
@@ -121,20 +129,22 @@ export default function TemplateAtelier({ product, merchant, config }: { product
         <div className="space-y-6">
           <h2 className="font-serif text-2xl">Détails</h2>
           <p className="text-sm leading-6 opacity-70">{product.description || "Conçu et assemblé avec exigence. Matières sélectionnées, finitions soignées."}</p>
-          <div className="border border-[#E8E6E1] rounded-[4px] divide-y divide-[#E8E6E1]">
-            {[
-              { q: "Livraison", a: "Nord 24-48h, Sud 2-3 jours. Paiement à la réception." },
-              { q: "Retours", a: "14 jours, sans question." },
-              { q: "Support", a: merchant.phone ? `Tel: ${merchant.phone}` : "Support via Ordely." },
-            ].map((f, i) => (
-              <div key={f.q} className="p-4">
-                <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex justify-between text-sm font-medium">
-                  <span>{f.q}</span><span className="opacity-40">{open === i ? "−" : "+"}</span>
-                </button>
-                {open === i && <div className="text-sm opacity-60 mt-2">{f.a}</div>}
-              </div>
-            ))}
-          </div>
+          {config.show_faq !== false && (
+            <div className="border border-[#E8E6E1] rounded-[4px] divide-y divide-[#E8E6E1]">
+              {[
+                { q: "Livraison", a: "Nord 24-48h, Sud 2-3 jours. Paiement à la réception." },
+                { q: "Retours", a: "14 jours, sans question." },
+                { q: "Support", a: merchant.phone ? `Tel: ${merchant.phone}` : "Support via Ordely." },
+              ].map((f, i) => (
+                <div key={f.q} className="p-4">
+                  <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex justify-between text-sm font-medium">
+                    <span>{f.q}</span><span className="opacity-40">{open === i ? "−" : "+"}</span>
+                  </button>
+                  {open === i && <div className="text-sm opacity-60 mt-2">{f.a}</div>}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="bg-white border border-[#E8E6E1] rounded-[4px] p-6 h-fit lg:sticky lg:top-[72px]">
           <h3 className="font-medium">Commander</h3>

@@ -4,7 +4,7 @@ import CheckoutForm from "@/app/[subdomain]/p/[slug]/CheckoutForm";
 
 type Product = { id: string; name: string; slug: string; description: string | null; price: number; compare_at_price: number | null; image_url: string | null; };
 type Merchant = { id: string; business_name: string; subdomain: string; phone: string | null; logo_url: string | null; banner_url?: string | null; description?: string | null; };
-type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; badge_text?: string; cta_text?: string; };
+type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; badge_text?: string; cta_text?: string; show_shipping?: boolean; show_ingredients?: boolean; show_specs?: boolean; show_faq?: boolean; };
 
 export default function TemplateBeauty({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
   const [active, setActive] = useState(0);
@@ -73,7 +73,7 @@ a{color:inherit;text-decoration:none}
 .faq-item.open .faq-a{display:block}
 `}</style>
       <div className="beauty-root min-h-screen">
-        <div className="beauty-top">{config.announcement || "Livraison 58 Wilayas — Paiement à la livraison — Naturel & fait main — Retour 14 jours"}</div>
+        {config.show_shipping !== false && <div className="beauty-top">{config.announcement || "Livraison 58 Wilayas — Paiement à la livraison — Naturel & fait main — Retour 14 jours"}</div>}
         <div className="beauty-head">
           <div className="beauty-logo">
             {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} style={{ width: 32, height: 32, borderRadius: 8, objectFit: "cover", border: "1px solid #E8E0D5", background: "#fff" }} />}
@@ -107,17 +107,21 @@ a{color:inherit;text-decoration:none}
               <div style={{ fontSize: 11, color: "#8A7F75", marginTop: 4 }}>{merchant.description || "100% naturel — Fabriqué en Algérie"}</div>
               <div className="p-price">{product.price.toLocaleString("fr-DZ")} DA {product.compare_at_price && <small>{Number(product.compare_at_price).toLocaleString("fr-DZ")} DA</small>}</div>
               <div className="p-desc">{config.hero_subtitle || product.description || "Formulé avec huile d'olive de Kabylie, miel de montagne. Sans sulfate, sans parfum ajouté. Doux pour toute la famille."}</div>
-              <div className="p-ing">
-                <div className="h">Ingrédients clés</div>
-                <div className="tags">{ingFallback.map(t=> <span key={t}>{t}</span>)}</div>
-              </div>
-              <div style={{ marginTop: 16, border: "1px solid #E8E0D5", borderRadius: 12, overflow: "hidden" }}>
-                {details.map(([k,v])=>(
-                  <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "10px 14px", borderBottom: "1px solid #F0EBE3", fontSize: 12 }}>
-                    <span style={{ color: "#8A7F75" }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span>
-                  </div>
-                ))}
-              </div>
+              {config.show_ingredients !== false && (
+                <div className="p-ing">
+                  <div className="h">Ingrédients clés</div>
+                  <div className="tags">{ingFallback.map(t=> <span key={t}>{t}</span>)}</div>
+                </div>
+              )}
+              {config.show_specs !== false && (
+                <div style={{ marginTop: 16, border: "1px solid #E8E0D5", borderRadius: 12, overflow: "hidden" }}>
+                  {details.map(([k,v])=>(
+                    <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "10px 14px", borderBottom: "1px solid #F0EBE3", fontSize: 12 }}>
+                      <span style={{ color: "#8A7F75" }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Checkout — paiement à la livraison */}
               <div style={{ marginTop: 20, background: "#fff", border: "1px solid #E8E0D5", borderRadius: 16, padding: 16 }}>
@@ -128,14 +132,16 @@ a{color:inherit;text-decoration:none}
                 </div>
               </div>
 
-              <div className="faq">
-                {faq.map((f,i)=>(
-                  <div key={f.q} className={`faq-item ${openFaq===i?'open':''}`} onClick={()=>setOpenFaq(openFaq===i?null:i)}>
-                    <div className="faq-q"><span>{f.q}</span><span>{openFaq===i?'−':'+'}</span></div>
-                    <div className="faq-a">{f.a}</div>
-                  </div>
-                ))}
-              </div>
+              {config.show_faq !== false && (
+                <div className="faq">
+                  {faq.map((f,i)=>(
+                    <div key={f.q} className={`faq-item ${openFaq===i?'open':''}`} onClick={()=>setOpenFaq(openFaq===i?null:i)}>
+                      <div className="faq-q"><span>{f.q}</span><span>{openFaq===i?'−':'+'}</span></div>
+                      <div className="faq-a">{f.a}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -12,6 +12,9 @@ export type StoreConfig = {
   show_reviews: boolean;
   show_features: boolean;
   show_shipping: boolean;
+  show_faq: boolean;
+  show_specs: boolean;
+  show_ingredients: boolean;
   footer_text?: string;
   // Pro template extensions
   badge_text?: string;
@@ -40,6 +43,9 @@ export const DEFAULT_CONFIG: StoreConfig = {
   show_reviews: true,
   show_features: true,
   show_shipping: true,
+  show_faq: true,
+  show_specs: true,
+  show_ingredients: true,
   footer_text: "© ATELIER ALG — ORDELY",
   badge_text: "NOUVEAUTÉ",
   features: [

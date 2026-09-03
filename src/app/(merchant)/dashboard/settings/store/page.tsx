@@ -14,6 +14,9 @@ type Config = {
   show_reviews: boolean;
   show_features: boolean;
   show_shipping: boolean;
+  show_faq: boolean;
+  show_specs: boolean;
+  show_ingredients: boolean;
   footer_text: string;
   badge_text?: string;
   features?: { title: string; desc: string }[];
@@ -39,6 +42,9 @@ const DEFAULT: Config = {
   show_reviews: true,
   show_features: true,
   show_shipping: true,
+  show_faq: true,
+  show_specs: true,
+  show_ingredients: true,
   footer_text: "",
   badge_text: "جديد • الأكثر طلباً",
   features: [
@@ -292,18 +298,56 @@ export default function StoreSettingsPage() {
               </div>
             </div>
 
-            <div className="bg-card rounded-xl border border-border p-6 space-y-3 shadow-sm">
-              <h3 className="font-bold">الأقسام</h3>
-              {[
-                { k: "show_features", label: "مميزات المنتج (3 نقاط)" },
-                { k: "show_reviews", label: "تقييمات الزبائن" },
-                { k: "show_shipping", label: "شريط الشحن والتوصيل" },
-              ].map(s=>(
-                <label key={s.k} className="flex justify-between items-center p-3 rounded-xl bg-background border border-border cursor-pointer">
-                  <span className="text-sm font-bold">{s.label}</span>
-                  <input type="checkbox" checked={(config as never)[s.k]} onChange={e=>setConfig({...config, [s.k]: e.target.checked})} className="w-5 h-5 accent-ink" />
-                </label>
-              ))}
+            <div className="bg-card rounded-xl border border-border p-6 space-y-4 shadow-sm">
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold">الأقسام — {templates.find(t=>t.id===config.template)?.name.split(" —")[0]}</h3>
+                <span className="text-[10px] font-mono bg-muted px-2 py-1 rounded-full">{config.template}</span>
+              </div>
+              <p className="text-xs text-muted leading-relaxed">تحكم بما يظهر في قالبك الحالي — كل مفتاح يخفي/يُظهر سكشن حقيقي في المتجر وصفحة المنتج فوراً.</p>
+              <div className="space-y-2.5">
+                {(() => {
+                  const S = [
+                    // مشترك لكل القوالب
+                    { k: "show_shipping", label: "شريط الإعلان العلوي", desc: "الشريط المتحرك أعلى المتجر — يظهر الإعلان والشحن", icon: "◈", templates: ["atelier","tech","digital","beauty"] },
+                    // خاص بكل قالب
+                    ...(config.template==="atelier" ? [
+                      { k: "show_features", label: "مميزات الهيرو", desc: "58 Wilayas • الدفع عند الاستلام • 14 يوم — أسفل الهيرو", icon: "✦", templates: ["atelier"] },
+                      { k: "show_faq", label: "الأسئلة الشائعة", desc: "Livraison / Retours / Support في صفحة المنتج", icon: "?", templates: ["atelier"] },
+                      { k: "show_specs", label: "تفاصيل إضافية", desc: "قسم التفاصيل تحت الوصف", icon: "≡", templates: ["atelier"] },
+                    ] : config.template==="tech" ? [
+                      { k: "show_specs", label: "المواصفات التقنية", desc: "Batterie • Garantie • Livraison — جدول المواصفات", icon: "⚡", templates: ["tech"] },
+                      { k: "show_faq", label: "الأسئلة الشائعة", desc: "Livraison / Retours", icon: "?", templates: ["tech"] },
+                    ] : config.template==="digital" ? [
+                      { k: "show_specs", label: "المواصفات", desc: "Version • Compatibilité • Support", icon: "◆", templates: ["digital"] },
+                      { k: "show_faq", label: "الأسئلة الشائعة", desc: "Comment recevoir / Garantie", icon: "?", templates: ["digital"] },
+                    ] : [
+                      { k: "show_ingredients", label: "المكونات", desc: "Ingrédients clés — شارات المكونات الطبيعية", icon: "🌿", templates: ["beauty"] },
+                      { k: "show_specs", label: "التفاصيل", desc: "Origine • Texture • Pour qui", icon: "≡", templates: ["beauty"] },
+                      { k: "show_faq", label: "الأسئلة الشائعة", desc: "Livraison / Peau sensible / Retours", icon: "?", templates: ["beauty"] },
+                    ]),
+                  ] as const;
+                  return S.filter(s=> s.templates.includes(config.template as any)).map(s=>{
+                    const checked = (config as any)[s.k] !== false;
+                    return (
+                      <label key={s.k} className={`flex gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${checked ? "bg-primary/5 border-primary/20" : "bg-background border-border opacity-70"}`}>
+                        <span className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm shrink-0 ${checked ? "bg-primary text-white" : "bg-muted text-muted"}`}>{s.icon}</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-black leading-tight">{s.label}</div>
+                          <div className="text-xs text-muted leading-relaxed mt-0.5">{s.desc}</div>
+                        </div>
+                        <span className={`relative w-11 h-6 rounded-full shrink-0 transition-colors ${checked ? "bg-primary" : "bg-muted"}`}>
+                          <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${checked ? "translate-x-5" : "translate-x-0.5"}`} />
+                          <input type="checkbox" checked={checked} onChange={e=>setConfig({...config, [s.k]: e.target.checked})} className="sr-only" />
+                        </span>
+                      </label>
+                    );
+                  });
+                })()}
+              </div>
+              <div className="flex gap-2 text-[11px]">
+                <button onClick={()=>setConfig({...config, show_shipping:true, show_features:true, show_faq:true, show_specs:true, show_ingredients:true })} className="flex-1 py-2 rounded-full border border-border bg-background font-bold hover:bg-muted">تفعيل الكل</button>
+                <button onClick={()=>setConfig({...config, show_shipping:false, show_features:false, show_faq:false, show_specs:false, show_ingredients:false })} className="flex-1 py-2 rounded-full border border-border bg-background font-bold hover:bg-muted">إخفاء الكل</button>
+              </div>
             </div>
           </div>
 

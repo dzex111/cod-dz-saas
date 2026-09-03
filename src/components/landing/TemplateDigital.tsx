@@ -15,6 +15,9 @@ type Config = {
   show_reviews: boolean;
   show_features: boolean;
   show_shipping: boolean;
+  show_faq: boolean;
+  show_specs: boolean;
+  show_ingredients: boolean;
   footer_text?: string;
   badge_text?: string;
   features?: { title: string; desc: string }[];
@@ -33,10 +36,12 @@ export default function TemplateDigital({ product, merchant, config }: { product
     <div className="min-h-screen bg-[#F6F7FF] text-[#111]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');`}</style>
 
-      {/* Announcement */}
-      <div className="h-[28px] bg-[#111] text-white flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold px-4">
-        {config.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
-      </div>
+      {/* Announcement — controlled by show_shipping */}
+      {config.show_shipping !== false && (
+        <div className="h-[28px] bg-[#111] text-white flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold px-4">
+          {config.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
+        </div>
+      )}
 
       {/* Header — brand customizable, no top CTA (order at bottom) */}
       <header className="sticky top-0 z-40 h-[64px] flex items-center px-5 lg:px-8 bg-white/90 backdrop-blur border-b border-[#E8EAF6]">
@@ -108,24 +113,28 @@ export default function TemplateDigital({ product, merchant, config }: { product
         <div className="p-6 lg:p-8 bg-white border-b lg:border-b-0 lg:border-e border-[#E8EAF6]">
           <h2 className="font-mono text-xs tracking-[0.18em] uppercase text-[#888]">Détails</h2>
           <p className="text-sm leading-6 text-[#333] mt-3">{merchant.description || product.description || "Software premium avec licence officielle, installation guidée, support 24/7."}</p>
-          <div className="mt-5 rounded-xl overflow-hidden border border-[#E8EAF6] divide-y divide-[#E8EAF6] bg-[#FAFAFF]">
-            <div className="flex justify-between p-3.5 bg-white font-mono text-xs"><span className="text-[#666]">Version</span><span className="font-bold">2.5.0</span></div>
-            <div className="flex justify-between p-3.5 bg-white font-mono text-xs"><span className="text-[#666]">Compatibilité</span><span>Windows • macOS</span></div>
-            <div className="flex justify-between p-3.5 bg-white font-mono text-xs"><span className="text-[#666]">Support</span><span>24/7 chat</span></div>
-          </div>
-          <div className="mt-5 space-y-2">
-            {[
-              { q: "Comment recevoir la licence ?", a: "Clé envoyée par email instantanément après confirmation du paiement." },
-              { q: "Garantie ?", a: "12 mois, remboursement si dysfonctionnement." },
-            ].map((f, i) => (
-              <div key={f.q} className="border border-[#E8EAF6] rounded-xl bg-white">
-                <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex justify-between p-3.5 text-sm font-medium">
-                  <span>{f.q}</span><span className="w-6 h-6 rounded-full bg-[#F6F7FF] border border-[#E8EAF6] flex items-center justify-center text-xs">{open === i ? "−" : "+"}</span>
-                </button>
-                {open === i && <div className="px-3.5 pb-3.5 text-sm text-[#555] leading-5">{f.a}</div>}
-              </div>
-            ))}
-          </div>
+          {config.show_specs !== false && (
+            <div className="mt-5 rounded-xl overflow-hidden border border-[#E8EAF6] divide-y divide-[#E8EAF6] bg-[#FAFAFF]">
+              <div className="flex justify-between p-3.5 bg-white font-mono text-xs"><span className="text-[#666]">Version</span><span className="font-bold">2.5.0</span></div>
+              <div className="flex justify-between p-3.5 bg-white font-mono text-xs"><span className="text-[#666]">Compatibilité</span><span>Windows • macOS</span></div>
+              <div className="flex justify-between p-3.5 bg-white font-mono text-xs"><span className="text-[#666]">Support</span><span>24/7 chat</span></div>
+            </div>
+          )}
+          {config.show_faq !== false && (
+            <div className="mt-5 space-y-2">
+              {[
+                { q: "Comment recevoir la licence ?", a: "Clé envoyée par email instantanément après confirmation du paiement." },
+                { q: "Garantie ?", a: "12 mois, remboursement si dysfonctionnement." },
+              ].map((f, i) => (
+                <div key={f.q} className="border border-[#E8EAF6] rounded-xl bg-white">
+                  <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex justify-between p-3.5 text-sm font-medium">
+                    <span>{f.q}</span><span className="w-6 h-6 rounded-full bg-[#F6F7FF] border border-[#E8EAF6] flex items-center justify-center text-xs">{open === i ? "−" : "+"}</span>
+                  </button>
+                  {open === i && <div className="px-3.5 pb-3.5 text-sm text-[#555] leading-5">{f.a}</div>}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="p-6 lg:p-8 bg-[#F6F7FF]">
           <div className="bg-white rounded-2xl border border-[#E8EAF6] p-6 shadow-sm">

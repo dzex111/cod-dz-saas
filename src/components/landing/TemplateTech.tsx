@@ -4,7 +4,7 @@ import CheckoutForm from "@/app/[subdomain]/p/[slug]/CheckoutForm";
 
 type Product = { id: string; name: string; slug: string; description: string | null; price: number; compare_at_price: number | null; image_url: string | null; };
 type Merchant = { id: string; business_name: string; subdomain: string; phone: string | null; logo_url?: string | null; banner_url?: string | null; description?: string | null; };
-type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; cta_color?: string; font?: string; button_radius?: string; };
+type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; cta_color?: string; font?: string; button_radius?: string; show_shipping?: boolean; show_features?: boolean; show_faq?: boolean; show_specs?: boolean; };
 
 export default function TemplateTech({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
   const [active, setActive] = useState(0);
@@ -17,9 +17,11 @@ export default function TemplateTech({ product, merchant, config }: { product: P
   return (
     <div className="min-h-screen bg-[#0B0B0C] text-[#EDEDED]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');`}</style>
-      <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
-        {config.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
-      </div>
+      {config.show_shipping !== false && (
+        <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
+          {config.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
+        </div>
+      )}
       <header className="sticky top-0 z-40 h-[64px] flex items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
         <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-white">
           {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20 bg-white" />}
@@ -65,24 +67,28 @@ export default function TemplateTech({ product, merchant, config }: { product: P
         <div className="p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-white/10">
           <h2 className="font-mono text-xs tracking-[0.18em] uppercase opacity-40">Détails techniques</h2>
           <p className="text-sm leading-relaxed opacity-60 mt-4">{product.description || "Conçu pour la performance et la durabilité. Batterie longue durée, charge rapide, finition premium."}</p>
-          <div className="mt-6 grid gap-px bg-white/10 border border-white/10">
-            <div className="flex justify-between p-3 bg-[#0B0B0C] font-mono text-xs"><span className="opacity-40">Batterie</span><span>5000mAh • 33W</span></div>
-            <div className="flex justify-between p-3 bg-[#0B0B0C] font-mono text-xs"><span className="opacity-40">Garantie</span><span>12 mois</span></div>
-            <div className="flex justify-between p-3 bg-[#0B0B0C] font-mono text-xs"><span className="opacity-40">Livraison</span><span>58 Wilayas • 24-48h</span></div>
-          </div>
-          <div className="mt-6 space-y-2">
-            {[
-              { q: "Livraison", a: "Nord 24-48h, Sud 2-3 jours. Paiement à la réception." },
-              { q: "Retours", a: "14 jours, sans question." },
-            ].map((f, i) => (
-              <div key={f.q} className="border border-white/10 rounded-lg">
-                <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex justify-between p-3 text-sm">
-                  <span>{f.q}</span><span className="opacity-40">{open === i ? "−" : "+"}</span>
-                </button>
-                {open === i && <div className="px-3 pb-3 text-sm opacity-60">{f.a}</div>}
-              </div>
-            ))}
-          </div>
+          {config.show_specs !== false && (
+            <div className="mt-6 grid gap-px bg-white/10 border border-white/10">
+              <div className="flex justify-between p-3 bg-[#0B0B0C] font-mono text-xs"><span className="opacity-40">Batterie</span><span>5000mAh • 33W</span></div>
+              <div className="flex justify-between p-3 bg-[#0B0B0C] font-mono text-xs"><span className="opacity-40">Garantie</span><span>12 mois</span></div>
+              <div className="flex justify-between p-3 bg-[#0B0B0C] font-mono text-xs"><span className="opacity-40">Livraison</span><span>58 Wilayas • 24-48h</span></div>
+            </div>
+          )}
+          {config.show_faq !== false && (
+            <div className="mt-6 space-y-2">
+              {[
+                { q: "Livraison", a: "Nord 24-48h, Sud 2-3 jours. Paiement à la réception." },
+                { q: "Retours", a: "14 jours, sans question." },
+              ].map((f, i) => (
+                <div key={f.q} className="border border-white/10 rounded-lg">
+                  <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex justify-between p-3 text-sm">
+                    <span>{f.q}</span><span className="opacity-40">{open === i ? "−" : "+"}</span>
+                  </button>
+                  {open === i && <div className="px-3 pb-3 text-sm opacity-60">{f.a}</div>}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="bg-white text-[#111] p-6 lg:p-8">
           <h3 className="font-bold">Commander</h3>

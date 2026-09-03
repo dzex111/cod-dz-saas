@@ -42,9 +42,11 @@ export default async function StorefrontHome({ params, searchParams }: { params:
     return (
       <div className="min-h-screen bg-[#0B0B0C] text-[#EDEDED]">
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');`}</style>
-        <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
-          {cfg.announcement || "LIVRAISON 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
-        </div>
+        {cfg.show_shipping !== false && (
+          <div className="h-[28px] bg-[#EDEDED] text-[#0B0B0C] flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
+            {cfg.announcement || "LIVRAISON 58 WILAYAS — PAIEMENT À LA LIVRAISON — GARANTIE 12 MOIS"}
+          </div>
+        )}
         <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-[rgba(11,11,12,0.95)] backdrop-blur border-b border-white/20">
           <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] text-white">
             {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-white/20 bg-white" />}
@@ -92,9 +94,11 @@ export default async function StorefrontHome({ params, searchParams }: { params:
     return (
       <div className="min-h-screen bg-[#F6F7FF] text-[#111]">
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Geist+Mono:wght@400;500&display=swap');`}</style>
-        <div className="h-[28px] bg-[#111] text-white flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
-          {cfg.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
-        </div>
+        {cfg.show_shipping !== false && (
+          <div className="h-[28px] bg-[#111] text-white flex items-center justify-center text-[10px] tracking-[0.18em] uppercase font-bold">
+            {cfg.announcement || "LICENCES OFFICIELLES — LIVRAISON INSTANTANÉE — SUPPORT 24/7"}
+          </div>
+        )}
         <header className="sticky top-0 z-40 h-[64px] flex justify-between items-center px-5 lg:px-8 bg-white/90 backdrop-blur border-b border-[#E8EAF6]">
           <div className="flex items-center gap-3 font-mono text-xs tracking-[0.14em] font-bold">
             {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} className="w-7 h-7 rounded object-cover border border-[#E8EAF6] bg-white" />}
@@ -204,7 +208,7 @@ export default async function StorefrontHome({ params, searchParams }: { params:
 .beauty-price{font-size:13px;font-weight:600}
 .beauty-btnBuy{font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:#F6F1E8;border:1px solid #EDE8E0;border-radius:999px;padding:8px 14px;cursor:pointer}
 `}</style>
-        <div className="beauty-top">{cfg.announcement || "Livraison 58 Wilayas — Paiement à la livraison — Naturel & fait main — Retour 14 jours"}</div>
+        {cfg.show_shipping !== false && <div className="beauty-top">{cfg.announcement || "Livraison 58 Wilayas — Paiement à la livraison — Naturel & fait main — Retour 14 jours"}</div>}
         <div className="beauty-head">
           <div className="beauty-logo">
             {merchant.logo_url && <img src={merchant.logo_url} alt={merchant.business_name} style={{ width: 32, height: 32, borderRadius: 8, objectFit: "cover", border: "1px solid #E8E0D5" }} />}
@@ -275,15 +279,17 @@ export default async function StorefrontHome({ params, searchParams }: { params:
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap'); .font-serif{font-family:'Instrument Serif',serif;} .marquee{animation:marquee 28s linear infinite;} @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
-      <div className="h-[36px] w-full border-b border-[#E8E6E1] bg-[#FAF9F6] flex items-center overflow-hidden">
-        <div className="flex w-[200%] marquee">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span key={i} className="whitespace-nowrap text-[10px] tracking-[0.18em] uppercase font-medium px-8">
-              {cfg.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — RETOURS 14 JOURS — ATELIER ALG NO.04"}
-            </span>
-          ))}
+      {cfg.show_shipping !== false && (
+        <div className="h-[36px] w-full border-b border-[#E8E6E1] bg-[#FAF9F6] flex items-center overflow-hidden">
+          <div className="flex w-[200%] marquee">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <span key={i} className="whitespace-nowrap text-[10px] tracking-[0.18em] uppercase font-medium px-8">
+                {cfg.announcement || "LIVRAISON GRATUITE 58 WILAYAS — PAIEMENT À LA LIVRAISON — RETOURS 14 JOURS — ATELIER ALG NO.04"}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <header className="sticky top-0 z-40 bg-[#FAF9F6]/80 backdrop-blur border-b border-[#E8E6E1] h-[56px] flex items-center">
         <div className="w-full max-w-[1600px] mx-auto px-5 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
