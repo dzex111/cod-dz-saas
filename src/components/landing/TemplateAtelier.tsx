@@ -35,10 +35,15 @@ type Config = {
   show_specs?: boolean;
 };
 
+function getImages(p: Product): string[] {
+  if (!p.image_url) return [];
+  try { const a = JSON.parse(p.image_url); if (Array.isArray(a)) return a.filter(Boolean); } catch {}
+  return [p.image_url];
+}
 export default function TemplateAtelier({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState<number | null>(0);
-  const images = [product.image_url, product.image_url, product.image_url].filter(Boolean) as string[];
+  const images = getImages(product);
   const heroRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {

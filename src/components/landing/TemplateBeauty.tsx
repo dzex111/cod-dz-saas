@@ -6,10 +6,15 @@ type Product = { id: string; name: string; slug: string; description: string | n
 type Merchant = { id: string; business_name: string; subdomain: string; phone: string | null; logo_url: string | null; banner_url?: string | null; description?: string | null; };
 type Config = { announcement?: string; hero_title?: string; hero_subtitle?: string; footer_text?: string; badge_text?: string; cta_text?: string; show_shipping?: boolean; show_ingredients?: boolean; show_specs?: boolean; show_faq?: boolean; };
 
+function getImages(p: Product): string[] {
+  if (!p.image_url) return [];
+  try { const a = JSON.parse(p.image_url); if (Array.isArray(a)) return a.filter(Boolean); } catch {}
+  return [p.image_url];
+}
 export default function TemplateBeauty({ product, merchant, config }: { product: Product; merchant: Merchant; config: Config }) {
   const [active, setActive] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const images = [product.image_url, product.image_url, product.image_url].filter(Boolean) as string[];
+  const images = getImages(product);
   const hasImages = images.length > 0;
   const nameParts = merchant.business_name.split(" ");
   const firstWord = nameParts[0] || "Maison";

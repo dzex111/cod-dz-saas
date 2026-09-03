@@ -237,28 +237,21 @@ export default async function StorefrontHome({ params, searchParams }: { params:
           </div>
           <div className="beauty-right">
             <img className="beauty-hero-img" src={heroImage} alt={merchant.business_name} />
-            {products && products[0] && (
-              <div className="beauty-float">
-                <img src={products[0].image_url || heroImage} alt={products[0].name} style={{ width: 48, height: 48, borderRadius: 10, objectFit: "cover" }} />
-                <div>
-                  <div style={{ fontSize: 12, fontWeight: 600, fontFamily: "Fraunces, serif" }}>{products[0].name}</div>
-                  <div style={{ fontSize: 10, color: "#8A7F75" }}>{Number(products[0].price).toLocaleString("fr-DZ")} DA</div>
-                </div>
-              </div>
-            )}
           </div>
         </section>
 
         <div className="beauty-label"><span>Collection / 04 — En stock</span><span>Livraison 24/48H — 58 Wilayas</span></div>
 
-        {/* Grid exact — beauty cards with proper links (no window in server component) */}
+        {/* Grid exact — beauty cards with proper multi-image handling */}
         <section id="shop" className="beauty-grid">
           {products && products.length ? (
-            products.slice(0,8).map((p:any)=>(
+            products.slice(0,8).map((p:any)=>{
+              let cover: string | null = null; try{ const a=JSON.parse(p.image_url); if(Array.isArray(a)) cover=a[0]; else cover=p.image_url; }catch{ cover=p.image_url; }
+              return (
               <a key={p.id} href={`/${merchant.subdomain}/p/${p.slug}`} className="beauty-card" style={{ textDecoration: "none", color: "inherit" }}>
                 <div className="beauty-card-img">
                   <span className="beauty-badge">Naturel</span>
-                  <img src={p.image_url || heroImage} alt={p.name} loading="lazy" />
+                  <img src={cover || heroImage} alt={p.name} loading="lazy" />
                 </div>
                 <div className="beauty-body">
                   <div className="beauty-name">{p.name}</div>
@@ -267,7 +260,8 @@ export default async function StorefrontHome({ params, searchParams }: { params:
                   <div className="beauty-priceRow"><div className="beauty-price">{Number(p.price).toLocaleString("fr-DZ")} DA</div><span className="beauty-btnBuy">Ajouter</span></div>
                 </div>
               </a>
-            ))
+              );
+            })
           ) : (
             <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, background: "#FEFEFD", fontSize: 12, color: "#8A7F75" }}>Aucun soin — ajoutez votre premier produit</div>
           )}

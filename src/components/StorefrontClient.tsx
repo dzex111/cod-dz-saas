@@ -13,6 +13,16 @@ type Product = {
   description: string | null;
 };
 
+function firstImage(p: Product): string | null {
+  if (!p.image_url) return null;
+  try { const a = JSON.parse(p.image_url); if (Array.isArray(a)) return a[0] || null; } catch {}
+  return p.image_url;
+}
+function allImages(p: Product): string[] {
+  if (!p.image_url) return [];
+  try { const a = JSON.parse(p.image_url); if (Array.isArray(a)) return a.filter(Boolean); } catch {}
+  return [p.image_url];
+}
 export default function StorefrontClient({ products, subdomain, merchantSubdomain }: { products: Product[]; subdomain: string; merchantSubdomain: string }) {
   const [selected, setSelected] = useState<Product | null>(null);
   const [cartCount, setCartCount] = useState(0);
@@ -35,7 +45,7 @@ export default function StorefrontClient({ products, subdomain, merchantSubdomai
             <Link href={`/${subdomain}/p/${p.slug}`} className="block relative overflow-hidden">
               <div className="relative h-[380px] overflow-hidden bg-[#FAF9F6]">
                 <span className="absolute top-3 left-3 z-10 bg-[#111] text-white text-[10px] tracking-[0.08em] uppercase px-2.5 py-1 rounded-full">Nouveau</span>
-                {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500 relative z-0" /> : <div className="h-full flex items-center justify-center text-xs opacity-40">Sans image</div>}
+                {firstImage(p) ? <img src={firstImage(p)!} alt={p.name} className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500 relative z-0" /> : <div className="h-full flex items-center justify-center text-xs opacity-40">Sans image</div>}
               </div>
               <div className="p-3 border-t border-[#E8E6E1] flex justify-between items-center bg-white relative z-10">
                 <span className="text-xs font-medium truncate">{p.name}</span>
@@ -63,7 +73,7 @@ export default function StorefrontClient({ products, subdomain, merchantSubdomai
               </div>
               <div className="flex-1 overflow-y-auto p-6 space-y-6">
                 <div className="flex gap-4">
-                  {selected.image_url && <img src={selected.image_url} alt={selected.name} className="w-24 h-24 object-cover rounded-[4px] border border-[#E8E6E1]" />}
+                  {firstImage(selected) && <img src={firstImage(selected)!} alt={selected.name} className="w-24 h-24 object-cover rounded-[4px] border border-[#E8E6E1]" />}
                   <div>
                     <h3 className="font-serif text-lg leading-tight">{selected.name}</h3>
                     {selected.description && <p className="text-xs opacity-60 mt-1 line-clamp-2">{selected.description}</p>}
